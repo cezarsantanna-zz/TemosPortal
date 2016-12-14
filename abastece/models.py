@@ -4,10 +4,24 @@ class Form(models.Model):
     active = models.BooleanField()
     name = models.CharField(max_length=25)
 
+    def __str__(self):
+        return self.name
+
 
 class Empresa(models.Model):
     active = models.BooleanField()
     name = models.CharField(max_length=25)
+
+    def __str__(self):
+        return self.name
+
+
+class Warehouse(models.Model):
+    active = models.BooleanField()
+    name = models.CharField(max_length=60)
+
+    def __str__(self):
+        return self.name
 
 
 class Classe(models.Model):
@@ -19,16 +33,25 @@ class Classe(models.Model):
     )
     name = models.CharField(max_length=1, choices=CLASSES)
 
+    def __str__(self):
+        return self.name
+
 
 class Employee(models.Model):
     active = models.BooleanField()
     name = models.CharField(max_length=60)
+
+    def __str__(self):
+        return self.name
 
 
 class ModeloViatura(models.Model):
     active = models.BooleanField()
     name = models.CharField(max_length=15)
     km_rev = models.PositiveIntegerField()
+
+    def __str__(self):
+        return self.name
 
 
 class Viatura(models.Model):
@@ -41,10 +64,8 @@ class Viatura(models.Model):
     employee = models.ForeignKey(Employee, on_delete=models.PROTECT)
     modeloviatura = models.ForeignKey(ModeloViatura, on_delete=models.PROTECT)
 
-
-class Warehouse(models.Model):
-    active = models.BooleanField()
-    name = models.CharField(max_length=60)
+    def __str__(self):
+        return self.placa
 
 
 class Base(models.Model):
@@ -56,10 +77,16 @@ class Base(models.Model):
     viatura = models.ForeignKey(Viatura, on_delete=models.PROTECT)
     warehouse = models.OneToOneField(Warehouse, on_delete=models.PROTECT)
 
+    def __str__(self):
+        return self.name
+
 
 class ModeloEquipamento(models.Model):
     active = models.BooleanField()
     name = models.CharField(max_length=80)    
+
+    def __str__(self):
+        return self.name
 
 
 class Equipamento(models.Model):
@@ -69,6 +96,9 @@ class Equipamento(models.Model):
     assetnumber2 = models.CharField(max_length=80, unique=True, null=True)
     modeloequipamento = models.ForeignKey(ModeloEquipamento, on_delete=models.PROTECT)
     warehouse = models.ForeignKey(Warehouse, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return self.assetnumber1
 
 class Posto(models.Model):
     active = models.BooleanField()
@@ -82,10 +112,16 @@ class Posto(models.Model):
     base = models.ForeignKey(Base, on_delete=models.PROTECT)
     warehouse = models.OneToOneField(Warehouse, on_delete=models.PROTECT)
 
+    def __str__(self):
+        return self.name
+
 
 class TipoEvento(models.Model):
     active = models.BooleanField()
     name = models.CharField(max_length=60)
+
+    def __str__(self):
+        return self.name
 
 
 class Evento(models.Model):
@@ -99,6 +135,9 @@ class Evento(models.Model):
     form = models.ForeignKey(Form, on_delete=models.PROTECT)
     empresa = models.ForeignKey(Empresa, on_delete=models.PROTECT)
 
+    def __str__(self):
+        return self.number
+
 
 class Punch(models.Model):
     active = models.BooleanField()
@@ -107,4 +146,7 @@ class Punch(models.Model):
     coordX = models.CharField(max_length=15)
     coordY = models.CharField(max_length=15)
     employee = models.ForeignKey(Employee, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return self.tipo
 
