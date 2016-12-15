@@ -1,4 +1,7 @@
+daemonize==2.4.7
 Django==1.10.4
 future==0.16.0
+inotify==0.2.8
+pkg-resources==0.0.0
 psycopg2==2.6.2
 six==1.10.0
