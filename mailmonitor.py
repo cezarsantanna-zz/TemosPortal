@@ -5,8 +5,10 @@ import logging.handlers
 import inotify.adapters
 from os import rename
 from time import sleep
+from utils.parser.mailparser import MailParser
+from utils.parser.officetrack import parserOfficeTrack as parseOT
+from utils.parser.servicenow import parserServiceNow as parseSN
 from daemonize import Daemonize
-from utils.parser.mailparser import mailparser
 
 pid = '/tmp/mail_monitor.pid'
 
@@ -52,24 +54,39 @@ def test_log():
     logger.critical('critical message')
 
 
+def parsemail(_mailfile):
+    print(_mailfile)
+    parser = MailParser()
+    parser.parse_from_file(_mailfile)
+    print(parser.X_Original_To_)
+    print(parser.subject)
+    #print(len(parser.attachments_list))
+    #print(type(parser.attachments_list[0]))
+    #print(parser.attachments_list[0].keys())
+    #print(parser.attachments_list[0]['filename'])
+    #print(parser.attachments_list[0]['content_transfer_encoding'])
+    #print(parser.attachments_list[0]['mail_content_type'])
+    #print(parser.attachments_list[0]['payload'])
+
+
 # Função Principal
 def main():
     i = inotify.adapters.Inotify()
-    i.add_watch(bytes(config.watchdog_Maildir.encode('utf-8')), )
+    i.add_watch(bytes(mon_dir.encode('utf-8'), ))
 
     try:
         for event in i.event_gen():
             if event is not None:
                 (header, type_names, watch_path, filename) = event
-                logger.info("WATCH-PATH=[%s] FILENAME=[%s]",
-                    watch_path.decode('utf-8'), filename.decode('utf-8'))
                 #if 'IN_CREATE' in event[1] and len(filename.decode('utf-8')):
                 if 'IN_CLOSE_WRITE' in event[1] and len(filename.decode('utf-8')):
+                    logger.info("WATCH-PATH=[%s] FILENAME=[%s]",
+                        watch_path.decode('utf-8'), filename.decode('utf-8'))
                     mailfile = ('%s/%s') % (watch_path.decode('utf-8'), filename.decode('utf-8'))
-                    parsermail(mailfile)
+                    parsemail(mailfile)
 
     finally:
-        i.remove_watch(bytes(config.watchdog_Maildir.encode('utf-8')), )
+        i.remove_watch(bytes(mon_dir.encode('utf-8'), ))
 
 
 
@@ -81,3 +98,4 @@ if __name__ == '__main__':
         keep_fds=keep_fds
     )
     #daemon.start()
+    main()
