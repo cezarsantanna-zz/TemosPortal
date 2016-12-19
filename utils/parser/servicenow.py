@@ -6,13 +6,15 @@ from lxml import html
 from html2text import HTML2Text
 
 
-def parserServiceNow(_email):
-    if 'INC' in _email['subject']:
-        parserINC(_email)
-    if 'TASK' in _email['subject']:
-        parserTASK(_email)
-    if 'REQ' in _email['subject']:
-        parserREQ(_email)
+def parserServiceNow(_source, _mail):
+    if 'INC' in _mail.subject:
+        return _source.replace('/new/', '/ServiceNow/Incidents/not_parsed/')
+    elif 'TASK' in _mail.subject:
+        return _source.replace('/new/', '/ServiceNow/Tasks/not_parsed/')
+    elif 'REQ' in _mail.subject:
+        return _source.replace('/new/', '/ServiceNow/Requisitions/not_parsed/')
+    else:
+        return _source.replace('/new/', '/ServiceNow/Others/not_parsed/')
 
 
 def parserINC(_email):

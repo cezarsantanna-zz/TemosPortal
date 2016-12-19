@@ -1,5 +1,6 @@
-#!/home/cezar.santanna/.virtualenvs/abastece/bin/python
 # -*- coding: utf-8 -*-
+import psycopg2.extensions
+from base64 import b64decode
 from datetime import datetime
 from lxml import etree
 
@@ -165,133 +166,30 @@ def EventInfo(_xml, _entrytype):
             'attach': _xml,
         }
         
-def parserOfficeTrack(_email):
-    xml = etree.fromstring(_email['attachments'][0].getvalue())
+def parserOfficeTrack(_source, _mail):
+    attach = b64decode(_mail.attachments_list[0]['payload'])
+    xml = etree.fromstring(attach)
     if (getEmployeeName(xml) == 'Eduardo' or 
-        #getEmployeeName(xml) == u'Cezar' or
+        getEmployeeName(xml) == 'Cezar' or
         getEmployeeName(xml) == 'Engenharia E2i9 TESTE API'):
-        return None
+        return _source.replace('/new/', '/trash/')
         pass
     else:
         if getEntryType(xml) == '21':
-            # print 'Sign
-            # In----------------------------------------------------'
-            return None
-            return {
-                'EntryType': '21',
-            }
+            return _source.replace('/new/', '/OfficeTrack/RH/PunchIn/not_parsed/')
         elif getEntryType(xml) == '22':
-            # print 'Sign
-            # Out---------------------------------------------------'
-            return None
-            return {
-                'EntryType': '22',
-            }
-            pass
+            return _source.replace('/new/', '/OfficeTrack/RH/PunchOut/not_parsed/')
         elif getEntryType(xml) == '23':
-            # print 'Start
-            # Task--------------------------------------------------'
-            return None
-            return {
-                'EntryType': '23',
-            }
-            pass
+            return _source.replace('/new/', '/OfficeTrack/Task/Start/not_parsed/')
         elif getEntryType(xml) == '24':
-            # print 'End
-            # Task---------------------------------------------------'
-            return None
-            return {
-                'EntryType': '24',
-            }
-            pass
+            return _source.replace('/new/', '/OfficeTrack/Task/End/not_parsed/')
         elif getEntryType(xml) == '25':
-            # print 'Confirm
-            # Task---------------------------------------------------'
-            return None
-            return {
-                'EntryType': '25',
-            }
-            pass
+            return _source.replace('/new/', '/OfficeTrack/Task/Confirmed/not_parsed/')
         elif getEntryType(xml) == '26':
-            if getFormName(xml) == 'ASBUILT':
-                # print('Close Task------------------------------------')
-                return EventInfo(xml, '26')
-            else:
-                return None
-            pass
+            return _source.replace('/new/', '/OfficeTrack/Task/Close/not_parsed/')
         elif getEntryType(xml) == '29':
-            if getFormName(xml) == 'TAREFA NÃO REALIZADA':
-                # print 'Task not
-                # done---------------------------------------------------'
-                return None
-                pass
-            return None
-            return {
-                'EntryType': '29',
-            }
-            pass
-        elif getEntryType(xml) == '33':
-            # print 'Task Form
-            # Filled-------------------------------------------------'
-            return None
-            return {
-                'EntryType': '33',
-            }
-            pass
-        elif getEntryType(xml) == '34':
-            # print 'En route to
-            # Task---------------------------------------------------'
-            return None
-            return {
-                'EntryType': '34',
-            }
+            return _source.replace('/new/', '/OfficeTrack/Task/NotDone/not_parsed/')
         elif getEntryType(xml) == '60':
-            if getFormName(xml) == 'AÇÕES DE MELHORIAS':
-                return EventInfo(xml, '60')
-                pass
-            elif getFormName(xml) == 'ANTENA 915':
-                return EventInfo(xml, '60')
-                pass
-            elif getFormName(xml) == 'CORRETIVA':
-                return EventInfo(xml, '60')
-                pass
-            elif getFormName(xml) == 'DESINSTALAÇÃO DO POSTO':
-                return None
-                pass
-            elif getFormName(xml) == 'INVENTÁRIO':
-                return None
-                pass
-            elif getFormName(xml) == 'PEDIDO DE MATERIAIS':
-                return None
-                pass
-            elif getFormName(xml) == 'PLANO VERÃO':
-                return EventInfo(xml, '60')
-                pass
-            elif getFormName(xml) == 'PREDITIVA':
-                return EventInfo(xml, '60')
-                pass
-            elif getFormName(xml) == 'PREVENTIVA':
-                return EventInfo(xml, '60')
-                pass
-            elif getFormName(xml) == 'RETIRADA ANTENA 5.8':
-                return EventInfo(xml, '60')
-                pass
-            elif getFormName(xml) == 'SINALIZAÇÃO':
-                return EventInfo(xml, '60')
-                pass
-            elif getFormName(xml) == 'SURVEY':
-                return None
-                pass
-            elif getFormName(xml) == 'TERMO DE RESPONSABILIDADE':
-                return None
-                pass
-            elif getFormName(xml) == 'TREINAMENTO':
-                return None
-                pass
-            else:
-                pass
+            return _source.replace('/new/', '/OfficeTrack/Reports/not_parsed/')
         else:
-            # print u'Evento Não
-            # registrado--------------------------------------------'
-            return None
-            pass
+            return _source.replace('/new/', '/Others/not_parsed/')
