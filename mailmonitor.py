@@ -55,11 +55,18 @@ def test_log():
 
 
 def parsemail(_mailfile):
-    print(_mailfile)
+    source = _mailfile
     parser = MailParser()
     parser.parse_from_file(_mailfile)
-    print(parser.X_Original_To_)
-    print(parser.subject)
+    if parser.X_Original_To_ == 'officetrack@temos.online':
+        destination = source.replace('/new/', '/OfficeTrack/')
+        rename(source, destination)
+    elif parser.X_Original_To_ == 'servicenow@temos.online':
+        destination = source.replace('/new/', '/ServiceNow/')
+        rename(source, destination)
+    else:
+        destination = source.replace('/new/', '/Others/not_parsed/')
+        rename(source, destination)
     #print(len(parser.attachments_list))
     #print(type(parser.attachments_list[0]))
     #print(parser.attachments_list[0].keys())
@@ -71,22 +78,29 @@ def parsemail(_mailfile):
 
 # Função Principal
 def main():
-    i = inotify.adapters.Inotify()
-    i.add_watch(bytes(mon_dir.encode('utf-8'), ))
-
-    try:
-        for event in i.event_gen():
-            if event is not None:
-                (header, type_names, watch_path, filename) = event
-                #if 'IN_CREATE' in event[1] and len(filename.decode('utf-8')):
-                if 'IN_CLOSE_WRITE' in event[1] and len(filename.decode('utf-8')):
-                    logger.info("WATCH-PATH=[%s] FILENAME=[%s]",
-                        watch_path.decode('utf-8'), filename.decode('utf-8'))
-                    mailfile = ('%s/%s') % (watch_path.decode('utf-8'), filename.decode('utf-8'))
-                    parsemail(mailfile)
-
-    finally:
-        i.remove_watch(bytes(mon_dir.encode('utf-8'), ))
+    while True:
+        try:
+            i = inotify.adapters.Inotify()
+            i.add_watch(bytes(mon_dir.encode('utf-8'), ))
+            for event in i.event_gen():
+                if event is not None:
+                    (header, type_names, watch_path, filename) = event
+                    #if 'IN_CREATE' in event[1] and len(filename.decode('utf-8')):
+                    if 'IN_CLOSE_WRITE' in event[1] and len(filename.decode('utf-8')):
+                        logger.info("WATCH-PATH=[%s] FILENAME=[%s]",
+                            watch_path.decode('utf-8'), filename.decode('utf-8'))
+                        mailfile = ('%s/%s') % (watch_path.decode('utf-8'), filename.decode('utf-8'))
+                        parsemail(mailfile)
+        except KeyboardInterrupt:
+            i.remove_watch(bytes(mon_dir.encode('utf-8'), ))
+            break
+        except:
+            logger.error("Mailfile %s, can't be parsed" % mailfile.replace('/new/', '/Others/not_parsed/'))
+            destination = mailfile.replace('/new/', '/Others/not_parsed/')
+            rename(mailfile,  destination)
+            pass
+        finally:
+            i.remove_watch(bytes(mon_dir.encode('utf-8'), ))
 
 
 
