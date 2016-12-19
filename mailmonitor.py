@@ -56,19 +56,19 @@ def test_log():
 
 def parsemail(_mailfile):
     source = _mailfile
-    parser = MailParser()
-    parser.parse_from_file(_mailfile)
-    if parser.X_Original_To_ == 'officetrack@temos.online':
-        destination = source.replace('/new/', '/OfficeTrack/')
+    mail = MailParser()
+    mail.parse_from_file(_mailfile)
+    if mail.X_Original_To_ == 'officetrack@temos.online':
+        destination = parseOT(_mailfile, mail)
         rename(source, destination)
-    elif parser.X_Original_To_ == 'servicenow@temos.online':
-        destination = source.replace('/new/', '/ServiceNow/')
+    elif mail.X_Original_To_ == 'servicenow@temos.online':
+        destination = parseSN(_mailfile, mail)
         rename(source, destination)
     else:
         destination = source.replace('/new/', '/Others/not_parsed/')
         rename(source, destination)
     #print(len(parser.attachments_list))
-    #print(type(parser.attachments_list[0]))
+    #print(type(mail.attachments_list[0]))
     #print(parser.attachments_list[0].keys())
     #print(parser.attachments_list[0]['filename'])
     #print(parser.attachments_list[0]['content_transfer_encoding'])
@@ -95,8 +95,8 @@ def main():
             i.remove_watch(bytes(mon_dir.encode('utf-8'), ))
             break
         except:
-            logger.error("Mailfile %s, can't be parsed" % mailfile.replace('/new/', '/Others/not_parsed/'))
-            destination = mailfile.replace('/new/', '/Others/not_parsed/')
+            logger.error("Mailfile %s, can't be parsed" % mailfile.replace('/new/', '/Errors/'))
+            destination = mailfile.replace('/new/', '/Errors/')
             rename(mailfile,  destination)
             pass
         finally:
