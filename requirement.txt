@@ -1,10 +1,15 @@
 daemonize==2.4.7
 Django==1.10.4
 future==0.16.0
+gmplot==1.1.1
 html2text==2016.9.19
 inotify==0.2.8
 ipaddress==1.0.17
 lxml==3.7.0
+pkg-resources==0.0.0
 psycopg2==2.6.2
+pyasn1==0.1.9
+pyasn1-modules==0.0.8
+requests==2.12.4
 simplejson==3.10.0
 six==1.10.0

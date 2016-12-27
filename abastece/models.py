@@ -161,7 +161,7 @@ class Punch(models.Model):
     active = models.BooleanField(default=True)
     in_time = models.PositiveIntegerField(null=True)
     out_time = models.PositiveIntegerField(null=True)
-    entry_date = models.CharField(max_length=10)
+    entry_date = models.DateField(default='1970-01-01')
     in_coordx = models.CharField(max_length=20, null=True)
     in_coordy = models.CharField(max_length=20, null=True)
     out_coordx = models.CharField(max_length=20, null=True)

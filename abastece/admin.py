@@ -1,4 +1,5 @@
 from django.contrib import admin
+from datetime import datetime
 from .models import Form
 from .models import Empresa
 from .models import Classe
@@ -19,13 +20,26 @@ class PunchAdmin(admin.ModelAdmin):
     list_display = (
         'employee',
         'entry_date',
-        'in_time',
-        'out_time',
+        'inTime',
+        'outTime',
         'in_coordx',
         'in_coordy',
         'out_coordx',
         'out_coordy',
     )
+
+    date_hierarchy = 'entry_date'
+
+    def inTime(self, obj):
+        if obj.in_time is None:
+            return None
+        else:
+            return datetime.fromtimestamp(float(obj.in_time)).strftime('%d/%m/%Y %H:%M:%S')
+    def outTime(self, obj):
+        if obj.out_time is None:
+            return None
+        else:
+            return datetime.fromtimestamp(float(obj.out_time)).strftime('%d/%m/%Y %H:%M:%S')
 
 # Register your models here.
 admin.site.register(Form)
