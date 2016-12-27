@@ -187,10 +187,10 @@ def getRefPOIName(_xml):
         return None
 
 
-def getEquipamentosSub(_xml):
+def getEquipREM(_xml):
     if getEntryType(_xml) == '60':
         for element in _xml.iter("Field"):
-            if element[0].text == 'PERIFÉRICOS SUBSTITUÍDOS':
+            if element[0].text == 'PERIFÉRICOS REMOVIDOS':
                 _rows = element[1]
                 rows = []
                 for _row in _rows.iter("Row"):
@@ -381,7 +381,8 @@ def setTask(_xml, _source):
     elif getEntryType(_xml) == '26':
         return _source.replace('/new/', '/OfficeTrack/Task/Close/not_parsed/')
     elif getEntryType(_xml) == '29':
-        return _source.replace('/new/', '/OfficeTrack/Task/NotDone/not_parsed/')
+        return _source.replace('/new/',
+            '/OfficeTrack/Task/NotDone/not_parsed/')
 
 
 """
@@ -445,7 +446,8 @@ def parserOfficeTrack(_source, _mail):
                   FormName == 'SINALIZAÇÃO'):
                 return setForm(xml, _source)
             else:
-                return _source.replace('/new/', '/OfficeTrack/Others/not_parsed/')
+                return _source.replace('/new/',
+                    '/OfficeTrack/Others/not_parsed/')
 
         else:
             return _source.replace('/new/', '/OfficeTrack/Others/not_parsed/')
