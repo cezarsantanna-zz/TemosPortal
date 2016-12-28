@@ -187,33 +187,83 @@ def getRefPOIName(_xml):
         return None
 
 
-def getEquipamentosSub(_xml):
-    if getEntryType(_xml) == '60':
+def getEquipREM(_xml):
+    if (getEntryType(_xml) == '60' and
+        (getFormName == 'CORRETIVA' or
+         getFormName == 'PREDITIVA' or
+         getFormName == 'AÇÕES DE MELHORIA')):
         for element in _xml.iter("Field"):
-            if element[0].text == 'PERIFÉRICOS SUBSTITUÍDOS':
+            if (element[0].text == 'PERIFÉRICOS REMOVIDOS' or
+                element[0].text == 'PERIFÉRICOS RETIRADOS'):
                 _rows = element[1]
                 rows = []
                 for _row in _rows.iter("Row"):
-                    equipamento = 'N/A'
-                    serial_old = 'N/A'
-                    serial_new = 'N/A'
+                    equipamento = 'Nenhum'
+                    local = 'Nenhum'
+                    serial = 'N/A'
+                    patri = 'N/A'
                     for column in _row.iter("Field"):
-                        if column[0].text == 'EQUIPAMENTO SUBSTITUÍDO':
+                        if (column[0].text == 'Item Removido' or
+                            column[0].text == 'Item Retirado'):
                             equipamento = column[1].text
-                        elif column[0].text == 'SERIAL EQUIPAMENTO RETIRADO':
-                            serial_old = column[1].text
-                        elif column[0].text == 'SERIAL EQUIPAMENTO ADICIONADO':
-                            serial_new = column[1].text
+                        elif column[0].text == 'Local onde estava instalado':
+                            local = column[1].text
+                        elif column[0].text == 'Número Serial':
+                            serial = column[1].text
+                        elif column[0].text == 'Número Patrimônio':
+                            patri = column[1].text
                     row = {
                         'Equipamento': equipamento,
-                        'SerialNew': serial_new,
-                        'SerialOld': serial_old, }
-                    if (equipamento != 'N/A' or
-                        serial_old != 'N/A' or
-                        serial_new != 'N/A'):
+                        'Local': local,
+                        'Serial': serial, 
+                        'Patrimônio': patri,
+                    }
+                    if equipamento != 'Nenhum':
                         rows.append(row)
-                return rows
+                if len(rows) <= 0:
+                    return None
+                elif len(rows) > 0:
+                    return rows
     return None
+
+
+def getEquipADD(_xml):
+    if (getEntryType(_xml) == '60'
+        (getFormName == 'CORRETIVA' or
+         getFormName == 'PREDITIVA' or
+         getFormName == 'AÇÕES DE MELHORIA')):
+        for element in _xml.iter("Field"):
+            if element[0].text == 'PERIFÉRICOS ADICIONADOS':
+                _rows = element[1]
+                rows = []
+                for _row in _rows.iter("Row"):
+                    equipamento = 'Nenhum'
+                    local = 'Nenhum'
+                    serial = 'N/A'
+                    patri = 'N/A'
+                    for column in _row.iter("Field"):
+                        if column[0].text == 'Item Adicionado':
+                            equipamento = column[1].text
+                        elif column[0].text == 'Local onde foi instalado':
+                            local = column[1].text
+                        elif column[0].text == 'Número Serial':
+                            serial = column[1].text
+                        elif column[0].text == 'Número Patrimônio':
+                            patri = column[1].text
+                    row = {
+                        'Equipamento': equipamento,
+                        'Local': local,
+                        'Serial': serial,     
+                        'Patrimônio': patri,
+                    }
+                    if equipamento != 'Nenhum':
+                        rows.append(row)
+                if len(rows) <= 0:
+                    return None
+                elif len(rows) > 0:
+                    return rows
+    return None
+
 
 
 """
@@ -228,7 +278,7 @@ def setPunch(_xml, _source):
     _employee_id = getEmployeeID(EmployeeFirstName)
     entry_date = datetime.fromtimestamp(
                      EntryDateFromEpoch).strftime(
-                         '%d-%m-%Y')
+                         '%Y-%m-%d')
     if EntryType == '21':
         tipo = 'Entrada'
         dest_ok = _source.replace(
@@ -394,7 +444,8 @@ def setForm(_xml, _source):
     print(getFormName(_xml))
     print(getEventNumber(_xml))
     print(getRefPOIName(_xml))
-    print(getEquipamentosSub(_xml))
+    print(getEquipREM(_xml))
+    print(getEquipADD(_xml))
     return _source.replace('/new/', '/OfficeTrack/Reports/not_parsed/')
 
 
@@ -403,6 +454,24 @@ def setInvent(_xml, _source):
     print(getEntryDateFromEpoch(_xml))
     print(getEmployeeFirstName(_xml))
     print(getFormName(_xml))
+    for element in _xml.iter("Field"):
+        if element[0].text:
+            categoria = element[0].text
+            _rows = []
+            rows = element[1]
+            for row in rows.iter("Row"):
+                equipamento = row[0].text
+                for column in row.iter("Field"):
+                    novo = categoria + '01'
+                    usado = categoria + '02'
+                    defeito = categoria + '03'
+                    if column[0].text == novo:
+                        q_novo = float(column[1].text)
+                    elif column[0].text == usado:
+                        q_usado = float(column[1].text)
+                    elif column[0].text == defeito:
+                        q_defeito = float(column[1].text)
+                print(categoria, equipamento, q_novo, q_usado, q_defeito)
     return _source.replace('/new/', '/OfficeTrack/Inventories/not_parsed/')
 
 def parserOfficeTrack(_source, _mail):
@@ -445,7 +514,8 @@ def parserOfficeTrack(_source, _mail):
                   FormName == 'SINALIZAÇÃO'):
                 return setForm(xml, _source)
             else:
-                return _source.replace('/new/', '/OfficeTrack/Others/not_parsed/')
+                return _source.replace('/new/',
+                    '/OfficeTrack/Others/not_parsed/')
 
         else:
             return _source.replace('/new/', '/OfficeTrack/Others/not_parsed/')

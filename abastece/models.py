@@ -83,7 +83,7 @@ class Base(models.Model):
 
 class ModeloEquipamento(models.Model):
     active = models.BooleanField(default=True)
-    name = models.CharField(max_length=80)    
+    name = models.CharField(max_length=80)
 
     def __str__(self):
         return self.name
@@ -91,9 +91,10 @@ class ModeloEquipamento(models.Model):
 
 class Equipamento(models.Model):
     active = models.BooleanField(default=True)
-    serial = models.CharField(max_length=80, unique=True)    
+    serial = models.CharField(max_length=80, unique=True)
     assetnumber1 = models.CharField(max_length=80, unique=True)
     assetnumber2 = models.CharField(max_length=80, unique=True, null=True)
+    analise = models.CharField(max_length=256, null=True)
     modeloequipamento = models.ForeignKey(ModeloEquipamento, on_delete=models.PROTECT)
     warehouse = models.ForeignKey(Warehouse, on_delete=models.PROTECT)
 
@@ -160,7 +161,7 @@ class Punch(models.Model):
     active = models.BooleanField(default=True)
     in_time = models.PositiveIntegerField(null=True)
     out_time = models.PositiveIntegerField(null=True)
-    entry_date = models.CharField(max_length=10)
+    entry_date = models.DateField(default='1970-01-01')
     in_coordx = models.CharField(max_length=20, null=True)
     in_coordy = models.CharField(max_length=20, null=True)
     out_coordx = models.CharField(max_length=20, null=True)
