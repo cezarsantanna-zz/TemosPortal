@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import sys
 import logging
 import logging.handlers
 import inotify.adapters
@@ -20,7 +21,8 @@ mon_dir = '/opt/abastece/Maildir/new'
 logger = logging.getLogger('Mail_Monitor')
 logger.setLevel(logging.DEBUG)
 
-# Definido a Rotação do Arquivo de Log 
+
+# Definido a Rotação do Arquivo de Log
 logfile = logging.handlers.TimedRotatingFileHandler(
     logdirfile,
     when='midnight',
@@ -41,9 +43,10 @@ logfile.setFormatter(formatter)
 
 # Adicionando o arquivo de log ao logger
 logger.addHandler(logfile)
+
+# Passando o arquivo de Log para o Daemonize
 keep_fds = [logfile.stream.fileno()]
 print(keep_fds)
-
 
 #Testando o Arquivo de Log
 def test_log():
@@ -67,13 +70,6 @@ def parsemail(_mailfile):
     else:
         destination = source.replace('/new/', '/Others/not_parsed/')
         rename(source, destination)
-    #print(len(parser.attachments_list))
-    #print(type(mail.attachments_list[0]))
-    #print(parser.attachments_list[0].keys())
-    #print(parser.attachments_list[0]['filename'])
-    #print(parser.attachments_list[0]['content_transfer_encoding'])
-    #print(parser.attachments_list[0]['mail_content_type'])
-    #print(parser.attachments_list[0]['payload'])
 
 
 # Função Principal
@@ -95,6 +91,9 @@ def main():
             i.remove_watch(bytes(mon_dir.encode('utf-8'), ))
             break
         except:
+            import sys, traceback
+            print('Whoops! Problem:', file=sys.stderr)
+            traceback.print_exc(file=sys.stderr)
             logger.error("Mailfile %s, can't be parsed" % mailfile.replace('/new/', '/Errors/'))
             destination = mailfile.replace('/new/', '/Errors/')
             rename(mailfile,  destination)
