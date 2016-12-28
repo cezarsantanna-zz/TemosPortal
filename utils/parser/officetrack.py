@@ -431,8 +431,7 @@ def setTask(_xml, _source):
     elif getEntryType(_xml) == '26':
         return _source.replace('/new/', '/OfficeTrack/Task/Close/not_parsed/')
     elif getEntryType(_xml) == '29':
-        return _source.replace('/new/',
-            '/OfficeTrack/Task/NotDone/not_parsed/')
+        return _source.replace('/new/', '/OfficeTrack/Task/NotDone/not_parsed/')
 
 
 """
@@ -455,15 +454,24 @@ def setInvent(_xml, _source):
     print(getEntryDateFromEpoch(_xml))
     print(getEmployeeFirstName(_xml))
     print(getFormName(_xml))
-    for e1 in _xml.iter("Field"):
-        if e1[0].text:
-            categoria = e1[0].text
-            rows = e1[1]
+    for element in _xml.iter("Field"):
+        if element[0].text:
+            categoria = element[0].text
+            _rows = []
+            rows = element[1]
             for row in rows.iter("Row"):
                 equipamento = row[0].text
                 for column in row.iter("Field"):
-                    print(categoria, equipamento, column[1].text)
-
+                    novo = categoria + '01'
+                    usado = categoria + '02'
+                    defeito = categoria + '03'
+                    if column[0].text == novo:
+                        q_novo = float(column[1].text)
+                    elif column[0].text == usado:
+                        q_usado = float(column[1].text)
+                    elif column[0].text == defeito:
+                        q_defeito = float(column[1].text)
+                print(categoria, equipamento, q_novo, q_usado, q_defeito)
     return _source.replace('/new/', '/OfficeTrack/Inventories/not_parsed/')
 
 def parserOfficeTrack(_source, _mail):
