@@ -17,6 +17,8 @@ dbPass = "tw28()KP"
 """
 Campos comuns em todos os XMLs do OfficeTrack
 """
+
+
 def getEventType(_xml):
     _EventType = _xml.find('EventType')
     if _EventType is not None:
@@ -76,14 +78,15 @@ def getEmployeeID(_EmployeeFirstName):
             with conn_pg.cursor(
             ) as conn_pgs:
                 conn_pgs.execute(
-                    "select id from abastece_employee \
-                     where name = (%s);",
+                    "SELECT id FROM abastece_employee \
+                     WHERE active = True and name = (%s);",
                     (_EmployeeFirstName,)
                 )
                 _employee_id = conn_pgs.fetchone()[0]
                 return _employee_id
     except:
-        import sys, traceback
+        import sys
+        import traceback
         print('Error:', file=sys.stderr)
         traceback.print_exc(file=sys.stderr)
         return None
@@ -93,6 +96,8 @@ def getEmployeeID(_EmployeeFirstName):
 Campos comuns aos XMLs de Tasks
 EntryTypes 21, 22, 23, 24, 25, 26 e 29
 """
+
+
 def getTaskTaskNumber(_xml):
     _TaskTaskNumber = _xml.find('Task/TaskNumber')
     if _TaskTaskNumber is not None:
@@ -153,6 +158,8 @@ def getTaskCustomerName(_xml):
 Campos comuns aos XMLs de Formulários
 EntryType 60
 """
+
+
 def getFormName(_xml):
     _FormName = _xml.find('Form/Name')
     if _FormName is not None:
@@ -164,7 +171,7 @@ def getFormName(_xml):
 def getEventNumber(_xml):
     for _element in _xml.iter("Field"):
         if (_element[0].text == 'NÚMERO DE CHAMADO' or
-            _element[0].text == 'NÚMERO DO CHAMADO'):
+                _element[0].text == 'NÚMERO DO CHAMADO'):
             return _element[1].text.replace(" ", "")
     return None
 
@@ -194,7 +201,7 @@ def getEquipREM(_xml):
          getFormName == 'AÇÕES DE MELHORIA')):
         for element in _xml.iter("Field"):
             if (element[0].text == 'PERIFÉRICOS REMOVIDOS' or
-                element[0].text == 'PERIFÉRICOS RETIRADOS'):
+                    element[0].text == 'PERIFÉRICOS RETIRADOS'):
                 _rows = element[1]
                 rows = []
                 for _row in _rows.iter("Row"):
@@ -204,7 +211,7 @@ def getEquipREM(_xml):
                     patri = 'N/A'
                     for column in _row.iter("Field"):
                         if (column[0].text == 'Item Removido' or
-                            column[0].text == 'Item Retirado'):
+                                column[0].text == 'Item Retirado'):
                             equipamento = column[1].text
                         elif column[0].text == 'Local onde estava instalado':
                             local = column[1].text
@@ -215,7 +222,7 @@ def getEquipREM(_xml):
                     row = {
                         'Equipamento': equipamento,
                         'Local': local,
-                        'Serial': serial, 
+                        'Serial': serial,
                         'Patrimônio': patri,
                     }
                     if equipamento != 'Nenhum':
@@ -253,7 +260,7 @@ def getEquipADD(_xml):
                     row = {
                         'Equipamento': equipamento,
                         'Local': local,
-                        'Serial': serial,     
+                        'Serial': serial,
                         'Patrimônio': patri,
                     }
                     if equipamento != 'Nenhum':
@@ -265,10 +272,32 @@ def getEquipADD(_xml):
     return None
 
 
+def getEquipID(_equipamento):
+    try:
+        with psycopg2.connect(
+            database=dbName,
+            user=dbUser,
+            host=dbHost, password=dbPass
+        ) as conn_pg:
+            with conn_pg.cursor() as conn_pgs:
+                conn_pgs.execute(
+                    "SELECT id from abastece_modeloequipamento \
+                    WHERE active = True and name = (%s);",
+                    (_equipamento,)
+                )
+                return conn_pgs.fetchone()[0]
+    except:
+        import sys
+        import traceback
+        print('Error:', file=sys.stderr)
+        traceback.print_exc(file=sys.stderr)
+        return None
 
 """
 Função exclusiva para PunchIn e PunchOut
 """
+
+
 def setPunch(_xml, _source):
     EntryType = getEntryType(_xml)
     EntryDateFromEpoch = int(getEntryDateFromEpoch(_xml))
@@ -277,18 +306,18 @@ def setPunch(_xml, _source):
     EmployeeFirstName = getEmployeeFirstName(_xml)
     _employee_id = getEmployeeID(EmployeeFirstName)
     entry_date = datetime.fromtimestamp(
-                     EntryDateFromEpoch).strftime(
-                         '%Y-%m-%d')
+        EntryDateFromEpoch).strftime(
+        '%Y-%m-%d')
     if EntryType == '21':
         tipo = 'Entrada'
         dest_ok = _source.replace(
-                      '/new/',
-                      '/OfficeTrack/RH/PunchIn/parsed/'
-                  )
+            '/new/',
+            '/OfficeTrack/RH/PunchIn/parsed/'
+        )
         dest_err = _source.replace(
-                       '/new/',
-                       '/OfficeTrack/RH/PunchIn/not_parsed/'
-                   )
+            '/new/',
+            '/OfficeTrack/RH/PunchIn/not_parsed/'
+        )
         try:
             with psycopg2.connect(
                 database=dbName,
@@ -296,30 +325,16 @@ def setPunch(_xml, _source):
                 host=dbHost,
                 password=dbPass
             ) as conn_pg:
-                with conn_pg.cursor(
-                ) as conn_pgs:
+                with conn_pg.cursor() as conn_pgs:
                     conn_pgs.execute(
                         'INSERT INTO abastece_punch \
-                        (active, \
-                         in_time, \
-                         out_time, \
-                         entry_date, \
-                         in_coordx, \
-                         in_coordy, \
-                         out_coordx, \
-                         out_coordy, \
-                         employee_id) \
+                        (active, in_time, out_time, entry_date, in_coordx, \
+                         in_coordy, out_coordx, out_coordy, employee_id) \
                         VALUES \
                         (%s, %s, %s, %s, %s, %s, %s, %s, %s);',
-                        (True,
-                         EntryDateFromEpoch,
-                         None,
-                         entry_date,
-                         EntryLocationX,
-                         EntryLocationY,
-                         None,
-                         None,
-                         _employee_id,)
+                        (True, EntryDateFromEpoch, None, entry_date,
+                         EntryLocationX, EntryLocationY,
+                         None, None, _employee_id,)
                     )
                     status = conn_pgs.statusmessage
                     if status == 'INSERT 0':
@@ -327,7 +342,8 @@ def setPunch(_xml, _source):
                     else:
                         return dest_ok
         except:
-            import sys, traceback
+            import sys
+            import traceback
             print('Whoops! Problem:', file=sys.stderr)
             traceback.print_exc(file=sys.stderr)
             return dest_err
@@ -335,13 +351,13 @@ def setPunch(_xml, _source):
     elif EntryType == '22':
         tipo = 'Saída'
         dest_ok = _source.replace(
-                      '/new/',
-                      '/OfficeTrack/RH/PunchOut/parsed/'
-                  )
+            '/new/',
+            '/OfficeTrack/RH/PunchOut/parsed/'
+        )
         dest_err = _source.replace(
-                       '/new/',
-                       '/OfficeTrack/RH/PunchOut/not_parsed/'
-                   )
+            '/new/',
+            '/OfficeTrack/RH/PunchOut/not_parsed/'
+        )
         try:
             with psycopg2.connect(
                 database=dbName,
@@ -349,52 +365,29 @@ def setPunch(_xml, _source):
                 host=dbHost,
                 password=dbPass
             ) as conn_pg:
-                with conn_pg.cursor(
-                ) as conn_pgs:
+                with conn_pg.cursor() as conn_pgs:
                     conn_pgs.execute(
-                        'UPDATE abastece_punch SET \
-                         out_time = %s, \
-                         out_coordx = %s, \
-                         out_coordy = %s \
+                        'UPDATE abastece_punch SET out_time = %s, \
+                         out_coordx = %s, out_coordy = %s \
                          WHERE \
-                         entry_date = %s and \
-                         employee_id = %s and \
-                         in_time < %s and \
-                         out_time is %s;',
-                        (EntryDateFromEpoch,
-                         EntryLocationX,
-                         EntryLocationY,
-                         entry_date,
-                         _employee_id,
-                         EntryDateFromEpoch,
-                         None,)
+                         entry_date = %s and employee_id = %s and \
+                         in_time < %s and out_time is %s;',
+                        (EntryDateFromEpoch, EntryLocationX, EntryLocationY,
+                         entry_date, _employee_id, EntryDateFromEpoch, None,)
                     )
                     status = conn_pgs.statusmessage
                     query = conn_pgs.query
                     if status == 'UPDATE 0':
-                        with conn_pg.cursor(
-                        ) as conn_pgs:
+                        with conn_pg.cursor() as conn_pgs:
                             conn_pgs.execute(
                                 'INSERT INTO abastece_punch \
-                                (active, \
-                                 in_time, \
-                                 out_time, \
-                                 entry_date, \
-                                 in_coordx, \
-                                 in_coordy, \
-                                 out_coordx, \
-                                 out_coordy, \
+                                (active, in_time, out_time, entry_date, \
+                                 in_coordx, in_coordy, out_coordx, out_coordy, \
                                  employee_id) \
                                 VALUES \
                                 (%s, %s, %s, %s, %s, %s, %s, %s, %s);',
-                                (True,
-                                 None,
-                                 EntryDateFromEpoch,
-                                 entry_date,
-                                 None,
-                                 None,
-                                 EntryLocationX,
-                                 EntryLocationY,
+                                (True, None, EntryDateFromEpoch, entry_date,
+                                 None, None, EntryLocationX, EntryLocationY,
                                  _employee_id,)
                             )
                             status = conn_pgs.statusmessage
@@ -405,7 +398,8 @@ def setPunch(_xml, _source):
                     else:
                         return dest_ok
         except:
-            import sys, traceback
+            import sys
+            import traceback
             print('Whoops! Problem:', file=sys.stderr)
             traceback.print_exc(file=sys.stderr)
             return dest_err
@@ -414,6 +408,8 @@ def setPunch(_xml, _source):
 """
 Função exclusiva para Tasks Start, Close and Not Done
 """
+
+
 def setTask(_xml, _source):
     print(getEntryType(_xml))
     print(getEntryDateFromEpoch(_xml))
@@ -437,6 +433,8 @@ def setTask(_xml, _source):
 """
 Função exclusiva para Forms de Atendimento
 """
+
+
 def setForm(_xml, _source):
     print(getEntryType(_xml))
     print(getEntryDateFromEpoch(_xml))
@@ -450,10 +448,9 @@ def setForm(_xml, _source):
 
 
 def setInvent(_xml, _source):
-    print(getEntryType(_xml))
-    print(getEntryDateFromEpoch(_xml))
-    print(getEmployeeFirstName(_xml))
-    print(getFormName(_xml))
+    EntryDate = getEntryDateFromEpoch(_xml))
+    FirstName = getEmployeeFirstName(_xml)
+    Employee_id = getEmployeeID(FirstName)
     for element in _xml.iter("Field"):
         if element[0].text:
             categoria = element[0].text
@@ -471,15 +468,56 @@ def setInvent(_xml, _source):
                         q_usado = float(column[1].text)
                     elif column[0].text == defeito:
                         q_defeito = float(column[1].text)
-                print(categoria, equipamento, q_novo, q_usado, q_defeito)
-    return _source.replace('/new/', '/OfficeTrack/Inventories/not_parsed/')
+                updateInventario(EntryDate, Employee_id, equipamento, q_novo,
+                    q_usado, q_defeito, _source)
+    return _source.replace('/new/', '/OfficeTrack/Inventories/not_parsed/'
+
+
+def updateInventario(_EntryDate, _Wharehouse_id, _Equipamento,
+    _q_novo, _q_usado, _q_defeito, _source):
+    dest_ok = _source.replace(
+        '/new/',
+        '/OfficeTrack/Inventories/parsed/'
+    )
+    dest_err = _source.replace(
+        '/new/',
+        '/OfficeTrack/Inventories/not_parsed/'
+    )
+    try:
+        with psycopg2.connect(database=dbName, user=dbUser, host=dbHost,
+            password=dbPass
+        ) as conn_pg:
+            with conn_pg.cursor() as conn_pgs:
+                conn_pgs.execute(
+                    'INSERT INTO abastece_inventory \
+                    (active, in_time, out_time, entry_date, in_coordx, \
+                     in_coordy, out_coordx, out_coordy, employee_id) \
+                    VALUES \
+                    (%s, %s, %s, %s, %s, %s, %s, %s, %s);',
+                    (True, EntryDateFromEpoch, None, entry_date,
+                     EntryLocationX, EntryLocationY,
+                     None, None, _employee_id,)
+                )
+                status = conn_pgs.statusmessage
+                if status == 'INSERT 0':
+                    return dest_err
+                else:
+                    return dest_ok
+    except:
+        import sys
+        import traceback
+        print('Whoops! Problem:', file=sys.stderr)
+        traceback.print_exc(file=sys.stderr)
+        return dest_err
+
+
 
 def parserOfficeTrack(_source, _mail):
     attach = b64decode(_mail.attachments_list[0]['payload'])
     xml = etree.fromstring(attach)
     if (getEmployeeFirstName(xml) == 'Eduardo' or
         getEmployeeFirstName(xml) == 'Cezar' or
-        getEmployeeFirstName(xml) == 'Engenharia E2i9 TESTE API'):
+            getEmployeeFirstName(xml) == 'Engenharia E2i9 TESTE API'):
         return _source.replace('/new/', '/trash/')
         pass
     else:
@@ -501,7 +539,7 @@ def parserOfficeTrack(_source, _mail):
         elif getEntryType(xml) == '60':
             FormName = getFormName(xml)
             if (FormName == 'INVENTÁRIO' or
-                FormName == 'INVENTARIO'):
+                    FormName == 'INVENTARIO'):
                 return setInvent(xml, _source)
             elif (FormName == 'AÇÕES DE MELHORIAS' or
                   FormName == 'ANTENA 915' or
@@ -515,7 +553,7 @@ def parserOfficeTrack(_source, _mail):
                 return setForm(xml, _source)
             else:
                 return _source.replace('/new/',
-                    '/OfficeTrack/Others/not_parsed/')
+                                       '/OfficeTrack/Others/not_parsed/')
 
         else:
             return _source.replace('/new/', '/OfficeTrack/Others/not_parsed/')

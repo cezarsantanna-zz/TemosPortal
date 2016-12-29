@@ -81,25 +81,45 @@ class Base(models.Model):
         return self.name
 
 
-class ModeloEquipamento(models.Model):
+class NomeItem(models.Model):
     active = models.BooleanField(default=True)
     name = models.CharField(max_length=80)
+    model = models.CharField(max_length=40, null=True)
+    maker = models.CharField(max_length=45, null=True)
+    width = models.FloatField(null=True)
+    height = models.FloatField(null=True)
+    depth = models.FloatField(null=True)
+    prazocompra = models.IntegerField(default=0)
 
     def __str__(self):
         return self.name
 
 
-class Equipamento(models.Model):
-    active = models.BooleanField(default=True)
-    serial = models.CharField(max_length=80, unique=True)
-    assetnumber1 = models.CharField(max_length=80, unique=True)
-    assetnumber2 = models.CharField(max_length=80, unique=True, null=True)
-    analise = models.CharField(max_length=256, null=True)
-    modeloequipamento = models.ForeignKey(ModeloEquipamento, on_delete=models.PROTECT)
+class ItemControlado(models.Model):
+    identificador = models.CharField(max_length=16, primary_key=True)
+    serial = models.CharField(max_length=80, null=True)
+    assetnumber = models.CharField(max_length=80, null=True)
+    nomeitem = models.ForeignKey(NomeItem, on_delete=models.PROTECT)
     warehouse = models.ForeignKey(Warehouse, on_delete=models.PROTECT)
 
     def __str__(self):
-        return self.assetnumber1
+        return self.identificador
+
+
+class MoveItem(models.Model):
+    timestamp = models.DateField(auto_now_add=True)
+    warehouse_origin = models.ForeignKey(Warehouse, on_delete=models.PROTECT)
+    warehouse_dest = models.ForeignKey(Warehouse, on_delete=models.PROTECT)
+
+
+class Inventory(models.Model):
+    entrydate = models.PositiveIntegerField()
+    warehouse = models.ForeignKey(Warehouse, on_delete=models.PROTECT)
+    nomeitem = models.ForeignKey(NomeItem, on_delete=models.PROTECT)
+    item_new = models.IntegerField()
+    item_used = models.IntegerField()
+    item_broaked = models.IntegerField()
+
 
 class Posto(models.Model):
     active = models.BooleanField(default=True)
@@ -114,7 +134,7 @@ class Posto(models.Model):
     warehouse = models.OneToOneField(Warehouse, on_delete=models.PROTECT)
 
     def __str__(self):
-        return self.name
+        return self.cgmp
 
 
 class TipoEvento(models.Model):
