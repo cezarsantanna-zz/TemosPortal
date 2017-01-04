@@ -81,7 +81,23 @@ class Base(models.Model):
         return self.name
 
 
-class NomeItem(models.Model):
+class Posto(models.Model):
+    active = models.BooleanField(default=True)
+    name = models.CharField(max_length=60)
+    cgmp = models.CharField(max_length=5)
+    status_opc = models.BooleanField()
+    status_vip = models.BooleanField()
+    coordx = models.CharField(max_length=20)
+    coordy = models.CharField(max_length=20)
+    classe = models.ForeignKey(Classe, on_delete=models.PROTECT)
+    base = models.ForeignKey(Base, on_delete=models.PROTECT)
+    warehouse = models.OneToOneField(Warehouse, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return self.cgmp
+
+
+class Item(models.Model):
     active = models.BooleanField(default=True)
     name = models.CharField(max_length=80)
     model = models.CharField(max_length=40, null=True)
@@ -99,7 +115,8 @@ class ItemControlado(models.Model):
     identificador = models.CharField(max_length=16, primary_key=True)
     serial = models.CharField(max_length=80, null=True)
     assetnumber = models.CharField(max_length=80, null=True)
-    nomeitem = models.ForeignKey(NomeItem, on_delete=models.PROTECT)
+    item = models.ForeignKey(Item, on_delete=models.PROTECT)
+    posto = models.ForeignKey(Posto, on_delete=models.PROTECT, null=True)
     warehouse = models.ForeignKey(Warehouse, on_delete=models.PROTECT)
 
     def __str__(self):
@@ -108,41 +125,17 @@ class ItemControlado(models.Model):
 
 class MoveItem(models.Model):
     timestamp = models.DateField(auto_now_add=True)
-    warehouse_origin = models.ForeignKey(Warehouse, on_delete=models.PROTECT)
-    warehouse_dest = models.ForeignKey(Warehouse, on_delete=models.PROTECT)
+    warehouse_origin = models.ForeignKey(Warehouse, on_delete=models.PROTECT, related_name='origin')
+    warehouse_dest = models.ForeignKey(Warehouse, on_delete=models.PROTECT, related_name='destination')
 
 
 class Inventory(models.Model):
     entrydate = models.PositiveIntegerField()
     warehouse = models.ForeignKey(Warehouse, on_delete=models.PROTECT)
-    nomeitem = models.ForeignKey(NomeItem, on_delete=models.PROTECT)
+    item = models.ForeignKey(Item, on_delete=models.PROTECT)
     item_new = models.IntegerField()
     item_used = models.IntegerField()
     item_broaked = models.IntegerField()
-
-
-class Posto(models.Model):
-    active = models.BooleanField(default=True)
-    name = models.CharField(max_length=60)
-    cgmp = models.CharField(max_length=5)
-    status_opc = models.BooleanField()
-    status_vip = models.BooleanField()
-    coordx = models.CharField(max_length=20)
-    coordy = models.CharField(max_length=20)
-    classe = models.ForeignKey(Classe, on_delete=models.PROTECT)
-    base = models.ForeignKey(Base, on_delete=models.PROTECT)
-    warehouse = models.OneToOneField(Warehouse, on_delete=models.PROTECT)
-
-    def __str__(self):
-        return self.cgmp
-
-
-class TipoEvento(models.Model):
-    active = models.BooleanField(default=True)
-    name = models.CharField(max_length=60)
-
-    def __str__(self):
-        return self.name
 
 
 class Evento(models.Model):

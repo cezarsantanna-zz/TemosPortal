@@ -2,16 +2,15 @@ from django.contrib import admin
 from datetime import datetime
 from .models import Form
 from .models import Empresa
-from .models import Classe
 from .models import Employee
 from .models import ModeloViatura
 from .models import Viatura
 from .models import Warehouse
+from .models import Classe
 from .models import Base
-from .models import ModeloEquipamento
-from .models import Equipamento
+from .models import Item
+from .models import ItemControlado
 from .models import Posto
-from .models import TipoEvento
 from .models import Evento
 from .models import Punch
 
@@ -50,9 +49,8 @@ admin.site.register(ModeloViatura)
 admin.site.register(Viatura)
 admin.site.register(Warehouse)
 admin.site.register(Base)
-admin.site.register(ModeloEquipamento)
-admin.site.register(Equipamento)
+admin.site.register(Item)
+admin.site.register(ItemControlado)
 admin.site.register(Posto)
-admin.site.register(TipoEvento)
 admin.site.register(Evento)
 admin.site.register(Punch, PunchAdmin)

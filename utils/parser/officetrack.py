@@ -17,8 +17,6 @@ dbPass = "tw28()KP"
 """
 Campos comuns em todos os XMLs do OfficeTrack
 """
-
-
 def getEventType(_xml):
     _EventType = _xml.find('EventType')
     if _EventType is not None:
@@ -87,7 +85,7 @@ def getEmployeeID(_EmployeeFirstName):
     except:
         import sys
         import traceback
-        print('Error:', file=sys.stderr)
+        print('Whoops! Problem:', file=sys.stderr)
         traceback.print_exc(file=sys.stderr)
         return None
 
@@ -96,8 +94,6 @@ def getEmployeeID(_EmployeeFirstName):
 Campos comuns aos XMLs de Tasks
 EntryTypes 21, 22, 23, 24, 25, 26 e 29
 """
-
-
 def getTaskTaskNumber(_xml):
     _TaskTaskNumber = _xml.find('Task/TaskNumber')
     if _TaskTaskNumber is not None:
@@ -158,8 +154,6 @@ def getTaskCustomerName(_xml):
 Campos comuns aos XMLs de Formulários
 EntryType 60
 """
-
-
 def getFormName(_xml):
     _FormName = _xml.find('Form/Name')
     if _FormName is not None:
@@ -281,7 +275,7 @@ def getEquipID(_equipamento):
         ) as conn_pg:
             with conn_pg.cursor() as conn_pgs:
                 conn_pgs.execute(
-                    "SELECT id from abastece_modeloequipamento \
+                    "SELECT id from abastece_item \
                     WHERE active = True and name = (%s);",
                     (_equipamento,)
                 )
@@ -296,8 +290,6 @@ def getEquipID(_equipamento):
 """
 Função exclusiva para PunchIn e PunchOut
 """
-
-
 def setPunch(_xml, _source):
     EntryType = getEntryType(_xml)
     EntryDateFromEpoch = int(getEntryDateFromEpoch(_xml))
@@ -408,8 +400,6 @@ def setPunch(_xml, _source):
 """
 Função exclusiva para Tasks Start, Close and Not Done
 """
-
-
 def setTask(_xml, _source):
     print(getEntryType(_xml))
     print(getEntryDateFromEpoch(_xml))
@@ -433,8 +423,6 @@ def setTask(_xml, _source):
 """
 Função exclusiva para Forms de Atendimento
 """
-
-
 def setForm(_xml, _source):
     print(getEntryType(_xml))
     print(getEntryDateFromEpoch(_xml))
@@ -448,7 +436,7 @@ def setForm(_xml, _source):
 
 
 def setInvent(_xml, _source):
-    EntryDate = getEntryDateFromEpoch(_xml))
+    EntryDate = getEntryDateFromEpoch(_xml)
     FirstName = getEmployeeFirstName(_xml)
     Employee_id = getEmployeeID(FirstName)
     for element in _xml.iter("Field"):

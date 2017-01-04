@@ -18,7 +18,9 @@ from django.conf.urls import include
 from django.contrib import admin
 
 urlpatterns = [
-    url(r'^', include('abastece.urls')),
+    url(r'^', include('main.urls')),
+    url(r'^main/', include('main.urls')),
     url(r'^abastece/', include('abastece.urls')),
+    url(r'^condominios/', include('condominios.urls')),
     url(r'^admin/', admin.site.urls),
 ]
