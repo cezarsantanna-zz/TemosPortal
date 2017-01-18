@@ -57,11 +57,11 @@ class ModeloViatura(models.Model):
 class Viatura(models.Model):
     active = models.BooleanField(default=True)
     placa = models.CharField(max_length=7)
-    celular = models.CharField(max_length=11)
-    coordx = models.CharField(max_length=20)
-    coordy = models.CharField(max_length=20)
-    quilometragem = models.PositiveIntegerField()
-    employee = models.ForeignKey(Employee, on_delete=models.PROTECT)
+    celular = models.CharField(max_length=11, null=True)
+    coordx = models.CharField(max_length=20, null=True)
+    coordy = models.CharField(max_length=20, null=True)
+    quilometragem = models.PositiveIntegerField(null=True)
+    employee = models.ForeignKey(Employee, on_delete=models.PROTECT, null=True)
     modeloviatura = models.ForeignKey(ModeloViatura, on_delete=models.PROTECT)
 
     def __str__(self):
@@ -140,6 +140,7 @@ class Inventory(models.Model):
 
 class Evento(models.Model):
     active = models.BooleanField(default=True)
+    entry_date = models.DateField(default='1970-01-01')
     data_planejado = models.PositiveIntegerField()
     data_realizado = models.PositiveIntegerField()
     number = models.CharField(max_length=20)

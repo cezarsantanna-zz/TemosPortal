@@ -6,10 +6,11 @@ import logging.handlers
 import inotify.adapters
 from os import rename
 from time import sleep
+from daemonize import Daemonize
 from utils.parser.mailparser import MailParser
 from utils.parser.officetrack import parserOfficeTrack as parseOT
 from utils.parser.servicenow import parserServiceNow as parseSN
-from daemonize import Daemonize
+
 
 pid = '/tmp/mail_monitor.pid'
 
@@ -46,7 +47,6 @@ logger.addHandler(logfile)
 
 # Passando o arquivo de Log para o Daemonize
 keep_fds = [logfile.stream.fileno()]
-print(keep_fds)
 
 #Testando o Arquivo de Log
 def test_log():
@@ -86,6 +86,7 @@ def main():
                         logger.info("WATCH-PATH=[%s] FILENAME=[%s]",
                             watch_path.decode('utf-8'), filename.decode('utf-8'))
                         mailfile = ('%s/%s') % (watch_path.decode('utf-8'), filename.decode('utf-8'))
+                        print(mailfile)
                         parsemail(mailfile)
         except KeyboardInterrupt:
             i.remove_watch(bytes(mon_dir.encode('utf-8'), ))

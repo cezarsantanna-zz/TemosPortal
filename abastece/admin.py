@@ -15,6 +15,20 @@ from .models import Evento
 from .models import Punch
 
 # Definção de exibição no Admin
+class PostoAdmin(admin.ModelAdmin):
+    list_display = (
+        'name',
+        'cgmp',
+        'status_opc',
+        'status_vip',
+        'coordx',
+        'coordy',
+        'classe',
+        'base',
+        'warehouse',
+    )
+
+
 class PunchAdmin(admin.ModelAdmin):
     list_display = (
         'employee',
@@ -40,6 +54,31 @@ class PunchAdmin(admin.ModelAdmin):
         else:
             return datetime.fromtimestamp(float(obj.out_time)).strftime('%d/%m/%Y %H:%M:%S')
 
+class EventoAdmin(admin.ModelAdmin):
+    list_display= (
+        'entry_date',
+        'number',
+        'planejado',
+        'realizado',
+        'posto',
+        'form',
+        'empresa',
+    )
+
+    date_hierarchy = 'entry_date'
+
+    def planejado(self, obj):
+        if obj.data_planejado is None:
+            return None
+        else:
+            return datetime.fromtimestamp(float(obj.data_planejado)).strftime('%d/%m/%Y %H:%M:%S')
+    def realizado(self, obj):
+        if obj.data_realizado is None:
+            return None
+        else:
+            return datetime.fromtimestamp(float(obj.data_realizado)).strftime('%d/%m/%Y %H:%M:%S')
+
+
 # Register your models here.
 admin.site.register(Form)
 admin.site.register(Empresa)
@@ -51,6 +90,6 @@ admin.site.register(Warehouse)
 admin.site.register(Base)
 admin.site.register(Item)
 admin.site.register(ItemControlado)
-admin.site.register(Posto)
-admin.site.register(Evento)
+admin.site.register(Posto, PostoAdmin)
+admin.site.register(Evento, EventoAdmin)
 admin.site.register(Punch, PunchAdmin)

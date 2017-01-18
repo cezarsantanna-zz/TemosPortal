@@ -1,0 +1,467 @@
+6001;Posto Shell Ramal;True;True;-23,517406463623;-46,7291030883789;A;SP01;Posto Shell Ramal
+6002;Posto Shell Orion;True;False;-23,5540809631348;-46,7429046630859;A;SP01;Posto Shell Orion
+6005;Posto Shell Atlantica;True;False;-23,5322437286377;-46,6590309143066;B;SP02;Posto Shell Atlantica
+6006;Posto Shell Agua Espraiada;True;False;-23,6274013519287;-46,6751365661621;A;SP02;Posto Shell Agua Espraiada
+6007;Posto Shell Abraao de Morais;True;True;-23,6248607635498;-46,6286468505859;A;SP02;Posto Shell Abraao de Morais
+6008;Posto Shell Rimacris;True;False;-23,502462387085;-46,8314971923828;B;SP01;Posto Shell Rimacris
+6009;Posto Shell Hawai;True;False;-23,5147075653076;-46,6991539001465;A;SP01;Posto Shell Hawai
+6010;Posto Shell Napoleão Barros;True;False;-23,6013031005859;-46,6445655822754;B;SP02;Posto Shell Napoleão Barros
+6011;Posto Shell Ralpha;True;False;-23,4986171722412;-46,8520812988281;A;SP01;Posto Shell Ralpha
+6013;Posto Shell Estacao Carandiru;True;False;-23,5063953399658;-46,6238632202148;A;SP02;Posto Shell Estacao Carandiru
+6014;Posto Shell Caetano Alvares;True;True;-23,4939880371094;-46,6595993041992;A;SP01;Posto Shell Caetano Alvares
+6015;Posto Shell Bristol;True;False;-23,5573635101318;-46,5721817016602;A;SP03;Posto Shell Bristol
+6016;Posto Shell Catalao;True;False;-23,5458526611328;-46,6816825866699;B;SP02;Posto Shell Catalao
+6017;Posto Shell Portal Leste;True;True;-23,5507431030273;-46,6067504882813;A;SP02;Posto Shell Portal Leste
+6018;Posto Shell Faga e Bizarria;True;False;-23,5880374908447;-46,7232475280762;B;SP01;Posto Shell Faga e Bizarria
+6019;Posto Shell Fabio Motta Marques;True;True;-23,5206413269043;-46,5551643371582;A;SP03;Posto Shell Fabio Motta Marques
+6020;Posto Shell Alpha Marte;True;False;-23,4628772735596;-46,8752288818359;B;SP01;Posto Shell Alpha Marte
+6021;Posto Shell Monte Carlo;True;False;-23,609920501709;-46,6637573242188;B;SP02;Posto Shell Monte Carlo
+6023;Posto Shell ABV;True;False;-23,6429328918457;-46,6991500854492;D;SP02;Posto Shell ABV
+6024;Posto Shell Tasca;True;True;-23,5360507965088;-46,7725486755371;A;SP01;Posto Shell Tasca
+6025;Posto Shell Batalha;True;True;-23,5810241699219;-46,7307014465332;A;SP01;Posto Shell Batalha
+6026;Posto Shell Cote D'azur;True;False;-23,5500621795654;-46,57177734375;B;SP03;Posto Shell Cote D'azur
+6027;Posto Shell Status do Panamby;True;False;-23,6387004852295;-46,7370223999023;B;SP01;Posto Shell Status do Panamby
+6028;Posto Shell Sao Gualter;True;False;-23,5433807373047;-46,7114067077637;C;SP01;Posto Shell Sao Gualter
+6029;Posto Shell Rio Grande;True;False;-23,5868091583252;-46,643253326416;B;SP02;Posto Shell Rio Grande
+6030;Posto Shell Gigante da Imigrantes;True;True;-23,6147918701172;-46,6274261474609;A;SP02;Posto Shell Gigante da Imigrantes
+6032;Posto Shell M.A;True;False;-23,558614730835;-46,5213775634766;B;SP03;Posto Shell M.A
+6033;Posto Shell Elmar;True;False;-23,639196395874;-46,6428451538086;B;SP02;Posto Shell Elmar
+6034;Posto Shell Prime;True;False;-23,6327781677246;-46,6381034851074;B;SP02;Posto Shell Prime
+6035;Posto Shell Mascote;True;False;-23,6422157287598;-46,6663208007813;D;SP02;Posto Shell Mascote
+6036;Posto Shell Mash;True;True;-23,6160182952881;-46,6089935302734;A;SP02;Posto Shell Mash
+6037;Posto Shell Gipires;True;False;-23,5069351196289;-46,6672859191895;B;SP01;Posto Shell Gipires
+6038;Posto Shell Benets;True;False;-23,5784912109375;-46,7093734741211;A;SP01;Posto Shell Benets
+6040;Posto Shell Carlos Alberto Papacidero;True;True;-23,5135536193848;-46,6718711853027;A;SP01;Posto Shell Carlos Alberto Papacidero
+6041;Posto Shell Marini;True;True;-23,500638961792;-46,6862487792969;A;SP01;Posto Shell Marini
+6042;Posto Shell Jardim Sao Paulo;True;False;-23,4869422912598;-46,6207656860352;B;SP04;Posto Shell Jardim Sao Paulo
+6043;Posto Shell Fukuya Kanemoto;True;True;-23,5088939666748;-46,6851692199707;A;SP01;Posto Shell Fukuya Kanemoto
+6044;Posto Shell Galena;True;False;-23,6030426025391;-46,6256828308105;A;SP02;Posto Shell Galena
+6045;Posto Shell Lutaif;True;True;-23,4919681549072;-46,6113967895508;A;SP04;Posto Shell Lutaif
+6046;Posto Shell Bellagio;True;False;-23,4788932800293;-46,673038482666;B;SP01;Posto Shell Bellagio
+6047;Posto Shell JJ;True;False;-23,6047134399414;-46,6257209777832;B;SP02;Posto Shell JJ
+6048;Posto Shell Summer;True;False;-23,6548633575439;-46,6913261413574;A;SP02;Posto Shell Summer
+6049;Posto Shell Francisco Morato;True;False;-23,5827598571777;-46,7133750915527;B;SP01;Posto Shell Francisco Morato
+6050;Posto Shell BAP;True;False;-23,6642379760742;-46,6597862243652;B;SP02;Posto Shell BAP
+6051;Posto Shell Independencia do cambuci;True;False;-23,567626953125;-46,6131935119629;B;SP02;Posto Shell Independencia do cambuci
+6052;Posto Shell Ponto Solar;True;False;-23,6466579437256;-46,6631736755371;C;SP02;Posto Shell Ponto Solar
+6053;Posto Shell Via Sul;True;False;-23,615255355835;-46,7422752380371;A;SP01;Posto Shell Via Sul
+6054;Posto Shell Vera Cruz;True;False;-23,531852722168;-46,5227088928223;A;SP03;Posto Shell Vera Cruz
+6055;Posto Shell Veloz;True;False;-23,5930767059326;-46,5398445129395;A;SP03;Posto Shell Veloz
+6056;Posto Shell Center Car;True;True;-23,5537967681885;-46,7433967590332;A;SP01;Posto Shell Center Car
+6057;Posto Shell Moinho Velho;True;False;-23,5961627960205;-46,7459335327148;B;SP01;Posto Shell Moinho Velho
+6058;Posto Shell Bordo;True;False;-23,5873508453369;-46,7320442199707;B;SP01;Posto Shell Bordo
+6062;Posto Shell Asturias;True;False;-23,6375293731689;-46,7205200195313;D;SP02;Posto Shell Asturias
+6063;Posto Shell Macedo;True;False;-23,4650726318359;-46,5136451721191;B;SP04;Posto Shell Macedo
+6068;Posto Shell Kll;True;False;-23,6839866638184;-46,4694976806641;D;SP03;Posto Shell Kll
+6070;Posto Shell Paraki;True;False;-23,6218662261963;-46,6719665527344;C;SP02;Posto Shell Paraki
+6071;Posto Shell Oitenta;True;False;-23,6716213226318;-46,4588737487793;B;SP03;Posto Shell Oitenta
+6072;Posto Shell Tonicar;True;False;-23,5918483734131;-46,6277465820313;C;SP02;Posto Shell Tonicar
+6073;Posto Shell Agua Funda 2;True;False;-23,58518409729;-46,6179084777832;C;SP02;Posto Shell Agua Funda 2
+6074;Posto Shell Kobayachi;True;False;-23,6076793670654;-47,0349502563477;B;SP01;Posto Shell Kobayachi
+6075;Posto Shell 45;True;False;-23,6052093505859;-47,0223960876465;B;SP01;Posto Shell 45
+6076;Posto Shell Nova Itapevi;True;False;-23,5362434387207;-46,9398345947266;B;SP01;Posto Shell Nova Itapevi
+6077;Posto Shell Nellu;True;False;-23,6769142150879;-46,4653434753418;C;SP03;Posto Shell Nellu
+6078;Posto Shell Star Red;True;False;-23,7074661254883;-46,5755844116211;B;SP03;Posto Shell Star Red
+6079;Posto Shell Agua funda 1;True;False;-23,6077976226807;-46,6276817321777;B;SP02;Posto Shell Agua funda 1
+6080;Posto Shell Turismo;True;False;-23,6838893890381;-46,6334075927734;B;SP02;Posto Shell Turismo
+6081;Posto Shell Joinha de Guarulhos;True;False;-23,463659286499;-46,5272216796875;B;SP04;Posto Shell Joinha de Guarulhos
+6082;Posto Shell Sao Joaquim;True;False;-23,4559230804443;-46,5600967407227;B;SP04;Posto Shell Sao Joaquim
+6083;Posto Shell Via 10;True;False;-23,6689491271973;-46,6501388549805;C;SP02;Posto Shell Via 10
+6084;Posto Shell 555;True;False;-23,4503555297852;-46,569450378418;D;SP04;Posto Shell 555
+6085;Posto Shell Alcantara;True;False;-23,6966590881348;-46,7148284912109;B;SP01;Posto Shell Alcantara
+6086;Posto Shell Cinadis;True;False;-23,7316913604736;-46,5525054931641;B;SP03;Posto Shell Cinadis
+6087;Posto Shell Tapera Grande;True;False;-23,4514389038086;-46,4745941162109;B;SP04;Posto Shell Tapera Grande
+6088;Posto Shell Estonia 5;True;False;-23,7472553253174;-46,5554084777832;B;SP03;Posto Shell Estonia 5
+6089;Posto Shell Rede Leste;True;False;-23,5500411987305;-46,5084838867188;B;SP03;Posto Shell Rede Leste
+6091;Posto Shell Sergio Motta Marques;True;False;-23,5583209991455;-46,4452171325684;B;SP03;Posto Shell Sergio Motta Marques
+6092;Posto Shell Vielfe Martins;True;False;-23,6250038146973;-46,4615097045898;D;SP03;Posto Shell Vielfe Martins
+6093;Posto Shell Fernão dias;True;True;-23,4688911437988;-46,5689010620117;A;SP04;Posto Shell Fernão dias
+6094;Posto Shell Arco Verde;True;False;-23,5643901824951;-46,4157791137695;B;SP03;Posto Shell Arco Verde
+6095;Posto Shell Jaguare;True;False;-23,5296573638916;-46,7271041870117;B;SP01;Posto Shell Jaguare
+6097;Posto Shell Saint Germain;True;False;-23,5304069519043;-46,7867126464844;B;SP01;Posto Shell Saint Germain
+6099;Posto Shell Jardim 10;True;False;-23,6454639434814;-46,7300415039063;B;SP01;Posto Shell Jardim 10
+6100;Posto Shell Ouro de barueri;True;False;-23,4933052062988;-46,8803596496582;A;SP01;Posto Shell Ouro de barueri
+6101;Posto Shell Estonia 2;True;False;-23,651876449585;-46,5112571716309;B;SP03;Posto Shell Estonia 2
+6102;Posto Shell Marina;True;False;-23,6421012878418;-46,5507202148438;C;SP03;Posto Shell Marina
+6103;Posto Shell Tao Set;True;False;-23,6499366760254;-46,5478363037109;B;SP03;Posto Shell Tao Set
+6104;Posto Shell Estonia;True;False;-23,634147644043;-46,5031547546387;B;SP03;Posto Shell Estonia
+6106;Posto Shell Caracas Oil;True;False;-23,5552234649658;-46,8365173339844;B;SP01;Posto Shell Caracas Oil
+6107;Posto Shell ABD;True;False;-23,679594039917;-46,596019744873;B;SP02;Posto Shell ABD
+6108;Posto Shell Hiperpetro;True;False;-23,6267108917236;-46,5572395324707;B;SP03;Posto Shell Hiperpetro
+6109;Posto Shell Avenida dos estados;True;False;-23,6381893157959;-46,5341606140137;B;SP03;Posto Shell Avenida dos estados
+6110;Posto Shell Estonia 4;True;False;-23,6376934051514;-46,5425605773926;B;SP03;Posto Shell Estonia 4
+6111;Posto Shell Humaita;True;False;-23,6643257141113;-46,5093231201172;B;SP03;Posto Shell Humaita
+6112;Posto Shell Phenix;True;False;-23,5852165222168;-46,6020278930664;B;SP02;Posto Shell Phenix
+6113;Posto Shell Martinelli;True;False;-23,5248012542725;-46,7088279724121;B;SP01;Posto Shell Martinelli
+6115;Posto Shell 2002;True;False;-23,6261863708496;-46,7369117736816;B;SP01;Posto Shell 2002
+6116;Posto Shell Santa terezinha;True;False;-23,5189304351807;-46,8546981811523;A;SP01;Posto Shell Santa terezinha
+6117;Posto Shell CPC;True;False;-23,5181198120117;-46,8527717590332;A;SP01;Posto Shell CPC
+6118;Posto Shell Muraki;True;False;-23,6827697753906;-46,3673706054688;D;SP03;Posto Shell Muraki
+6119;Posto Shell Mairipora;True;False;-23,2923240661621;-46,5739898681641;B;SP04;Posto Shell Mairipora
+6120;Posto Shell Vila rica;True;False;-23,5089015960693;-46,6054267883301;B;SP04;Posto Shell Vila rica
+6121;Posto Shell Novo Milenio;True;False;-23,5592460632324;-46,4461135864258;A;SP03;Posto Shell Novo Milenio
+6123;Posto Shell Estação Anchieta;True;False;-23,6897258758545;-46,5677947998047;A;SP03;Posto Shell Estação Anchieta
+6124;Posto Shell La Caniza;True;False;-23,99001121521;-46,2869567871094;B;SP03;Posto Shell La Caniza
+6127;Posto Shell Osasco Country;True;False;-23,5529651641846;-46,7924194335938;B;SP01;Posto Shell Osasco Country
+6128;Posto Shell Rally;True;False;-23,582010269165;-46,5521697998047;C;SP03;Posto Shell Rally
+6129;Posto Shell Roan;True;False;-23,6087646484375;-46,667293548584;B;SP02;Posto Shell Roan
+6130;Posto Shell Recanto da seringueira;True;True;-23,5246772766113;-46,8118743896484;A;SP01;Posto Shell Recanto da seringueira
+6131;Posto Shell Nautica Frei Gaspar;True;False;-23,9543266296387;-46,4079093933105;D;SP03;Posto Shell Nautica Frei Gaspar
+6132;Posto Shell Vanessa Santos Silva;True;False;-23,6648120880127;-46,4899673461914;C;SP03;Posto Shell Vanessa Santos Silva
+6133;Posto Shell Argetax Anchieta;True;False;-23,6138229370117;-46,60107421875;B;SP02;Posto Shell Argetax Anchieta
+6134;Posto Shell Panamby;True;False;-23,6496620178223;-46,726806640625;B;SP01;Posto Shell Panamby
+6135;Posto Shell Tratto;True;False;-23,7184028625488;-46,6037254333496;B;SP02;Posto Shell Tratto
+6136;Posto Shell Novo Barao 2;True;False;-23,665189743042;-46,4341735839844;D;SP03;Posto Shell Novo Barao 2
+6137;Posto Shell Toninho trinta;True;False;-23,7055149078369;-46,7021789550781;B;SP01;Posto Shell Toninho trinta
+6138;Posto Shell Estonia 3;True;True;-23,705680847168;-46,5506324768066;A;SP03;Posto Shell Estonia 3
+6139;Posto Shell Joia de Guarulhos;True;False;-23,463399887085;-46,5267791748047;B;SP04;Posto Shell Joia de Guarulhos
+6140;Posto Shell O Chefao;True;False;-23,4516143798828;-46,5510063171387;B;SP04;Posto Shell O Chefao
+6142;Posto Shell Morumbi Star;True;False;-23,6115055084229;-46,7342491149902;B;SP01;Posto Shell Morumbi Star
+6143;Posto Shell Veiga Filho;True;False;-23,5389995574951;-46,6613693237305;B;SP02;Posto Shell Veiga Filho
+6145;Posto Shell Novo Barao;True;False;-23,5320568084717;-46,6455612182617;C;SP02;Posto Shell Novo Barao
+6146;Posto Shell Brilhante;True;False;-23,5715465545654;-46,6332969665527;C;SP02;Posto Shell Brilhante
+6150;Posto Shell Moraes Sales;True;False;-22,9052658081055;-47,0513496398926;B;SP06;Posto Shell Moraes Sales
+6151;Posto Shell Center Paraiso;True;False;-23,572322845459;-46,6456108093262;D;SP02;Posto Shell Center Paraiso
+6154;Posto Shell Carlos E L Braga;True;False;-23,6732120513916;-46,7120323181152;B;SP01;Posto Shell Carlos E L Braga
+6155;Posto Shell Antonio Paes;True;False;-23,7308025360107;-46,6978569030762;B;SP01;Posto Shell Antonio Paes
+6156;Posto Shell Luppi;True;False;-23,5876979827881;-46,7269401550293;C;SP01;Posto Shell Luppi
+6159;Posto Shell Ermano Marchetti;True;False;-23,5153846740723;-46,6966514587402;B;SP01;Posto Shell Ermano Marchetti
+6160;Posto Shell Isola;True;False;-23,6739807128906;-46,7125587463379;B;SP01;Posto Shell Isola
+6161;Posto Shell Arco Verde Cotia;True;False;-23,6122741699219;-46,9321899414063;B;SP01;Posto Shell Arco Verde Cotia
+6163;Posto Shell Express Valinhos;True;False;-22,9791603088379;-47,0007438659668;B;SP06;Posto Shell Express Valinhos
+6167;Posto Shell Sao Conrado;True;False;-23,4795589447021;-46,7268295288086;A;SP01;Posto Shell Sao Conrado
+6168;Posto Shell Vida Nova;True;False;-23,6510467529297;-46,6402587890625;B;SP02;Posto Shell Vida Nova
+6169;Posto Shell Lorena;True;False;-23,566385269165;-46,6629257202148;B;SP02;Posto Shell Lorena
+6170;Posto Shell Pole Position;True;False;-22,9227542877197;-47,0508003234863;B;SP06;Posto Shell Pole Position
+6171;Posto Shell Washington Luiz;True;False;-22,9254264831543;-47,0564804077148;B;SP06;Posto Shell Washington Luiz
+6172;Posto Shell Farol;True;False;-23,4230098724365;-46,394889831543;C;SP04;Posto Shell Farol
+6173;Posto Shell Futuro;True;False;-22,835470199585;-47,0793342590332;B;SP06;Posto Shell Futuro
+6174;Posto Shell Vo Joao;True;False;-22,8186302185059;-47,0812721252441;C;SP06;Posto Shell Vo Joao
+6175;Posto Shell Presidente Juscelino;True;False;-22,9302883148193;-47,1019897460938;A;SP06;Posto Shell Presidente Juscelino
+6180;Posto Shell Companheiro;True;False;-22,8908367156982;-47,2307510375977;B;SP06;Posto Shell Companheiro
+6181;Posto Shell Portal Mogi;True;False;-23,5345230102539;-46,1856880187988;B;SP03;Posto Shell Portal Mogi
+6183;Posto Shell Cidade Jardim Americana;True;False;-22,7611904144287;-47,3396911621094;B;SP03;Posto Shell Cidade Jardim Americana
+6184;Posto Shell Fenix Nova Odessa;True;False;-22,7902965545654;-47,2964286804199;D;SP06;Posto Shell Fenix Nova Odessa
+6185;Posto Shell Duque Berrini;True;False;-23,6075458526611;-46,6938667297363;C;SP02;Posto Shell Duque Berrini
+6186;Posto Shell Rebouças;True;False;-22,8144798278809;-47,2779312133789;B;SP06;Posto Shell Rebouças
+6187;Posto Shell Mara Miru;True;False;-23,6118125915527;-46,6652526855469;B;SP02;Posto Shell Mara Miru
+6189;Posto Shell Zonta;True;False;-23,665283203125;-46,6780700683594;C;SP02;Posto Shell Zonta
+6190;Posto Shell Lavapes;True;False;-23,559907913208;-46,6294708251953;D;SP02;Posto Shell Lavapes
+6191;Posto Shell Montana;True;False;-23,5867481231689;-46,6347198486328;C;SP02;Posto Shell Montana
+6193;Posto Shell Jardim colonial;True;False;-23,1091136932373;-47,2310562133789;C;SP06;Posto Shell Jardim colonial
+6195;Posto Shell Saci;True;False;-22,9968757629395;-47,0341873168945;B;SP06;Posto Shell Saci
+6196;Posto Shell SPW;True;False;-23,6028671264648;-46,906623840332;B;SP01;Posto Shell SPW
+6198;Posto Shell Maranelo 2;True;False;-23,5030746459961;-46,6369285583496;A;SP02;Posto Shell Maranelo 2
+6199;Posto Shell Jardim do Trevo;True;True;-22,9291725158691;-47,0699195861816;A;SP06;Posto Shell Jardim do Trevo
+6200;Posto Shell Luiz Venditti;True;False;-22,9200096130371;-47,053108215332;D;SP06;Posto Shell Luiz Venditti
+6201;Posto Shell Tejo;True;False;-23,5649356842041;-46,5896911621094;B;SP03;Posto Shell Tejo
+6203;Posto Shell Casa Grande;True;False;-23,614330291748;-46,6585960388184;A;SP02;Posto Shell Casa Grande
+6204;Posto Shell Mingo;True;False;-23,5542221069336;-46,709644317627;B;SP01;Posto Shell Mingo
+6208;Posto Shell Joruhi;True;False;-23,5954360961914;-46,6697196960449;C;SP02;Posto Shell Joruhi
+6209;Posto Shell Andorinhas;True;True;-22,8872718811035;-47,0449333190918;A;SP06;Posto Shell Andorinhas
+6210;Posto Shell Progresso Mogi;True;False;-22,4327239990234;-46,9529800415039;D;SP06;Posto Shell Progresso Mogi
+6211;Posto Shell Barbieri de Barao Geraldo;True;False;-22,8299865722656;-47,0788269042969;B;SP06;Posto Shell Barbieri de Barao Geraldo
+6213;Posto Shell Luiz Fantinato Filho;True;False;-22,9629383087158;-47,0034141540527;B;SP06;Posto Shell Luiz Fantinato Filho
+6214;Posto Shell 3M;True;False;-23,4009323120117;-46,3183479309082;B;SP04;Posto Shell 3M
+6215;Posto Shell Vila Pagano;True;False;-22,9920501708984;-47,0053901672363;C;SP06;Posto Shell Vila Pagano
+6216;Posto Shell Av Nossa Sra de Fatima;True;False;-22,8772411346436;-47,0434875488281;C;SP06;Posto Shell Av Nossa Sra de Fatima
+6217;Posto Shell Savemo;True;False;-23,6110725402832;-46,6856384277344;C;SP02;Posto Shell Savemo
+6218;Posto Shell Gaivota;True;False;-23,6072940826416;-46,6707611083984;B;SP02;Posto Shell Gaivota
+6219;Posto Shell Diesel Mac;True;False;-23,4896507263184;-46,5650291442871;B;SP04;Posto Shell Diesel Mac
+6220;Posto Shell Aiwa;True;False;-23,5015335083008;-46,5765953063965;B;SP04;Posto Shell Aiwa
+6222;Posto Shell Mestre;True;False;-23,4580211639404;-46,5686874389648;B;SP04;Posto Shell Mestre
+6223;Posto Shell Novo Ouro Negro;True;False;-23,6655769348145;-46,4665565490723;B;SP03;Posto Shell Novo Ouro Negro
+6224;Posto Shell Grand Prix;True;False;-23,6930599212646;-46,6987152099609;B;SP01;Posto Shell Grand Prix
+6226;Posto Shell G5;True;False;-23,4171695709229;-46,455451965332;D;SP04;Posto Shell G5
+6227;Posto Shell Campineira;True;False;-22,8253402709961;-47,0797119140625;C;SP06;Posto Shell Campineira
+6230;Posto Shell Amigao;True;False;-22,73583984375;-47,3576316833496;B;SP06;Posto Shell Amigao
+6234;Posto Shell Tropical Gas;True;False;-23,5524921417236;-46,6215171813965;C;SP02;Posto Shell Tropical Gas
+6235;Posto Shell Guarnel;True;False;-23,5277671813965;-46,7047386169434;B;SP01;Posto Shell Guarnel
+6237;Posto Shell City Cantareira;True;False;-23,4580402374268;-46,6161003112793;B;SP01;Posto Shell City Cantareira
+6238;Posto Shell Formula Shell;True;False;-23,667652130127;-46,6778793334961;B;SP02;Posto Shell Formula Shell
+6239;Posto Shell Jordanopolis;True;False;-23,6835632324219;-46,5727806091309;D;SP03;Posto Shell Jordanopolis
+6240;Posto Shell Lubricar;True;False;-23,6724262237549;-46,5397109985352;B;SP03;Posto Shell Lubricar
+6241;Posto Shell Sol;True;False;-23,6523780822754;-46,5340309143066;D;SP03;Posto Shell Sol
+6242;Posto Shell Portal do Paraiso;True;False;-23,610523223877;-46,7273979187012;C;SP01;Posto Shell Portal do Paraiso
+6244;Posto Shell EG;True;False;-23,6439895629883;-46,742561340332;B;SP01;Posto Shell EG
+6245;Posto Shell Campo limpo;True;False;-23,6248760223389;-46,7647285461426;C;SP01;Posto Shell Campo limpo
+6246;Posto Shell Veneza;True;False;-23,5571708679199;-46,7451286315918;B;SP01;Posto Shell Veneza
+6249;Posto Shell Albano;True;False;-23,5685997009277;-46,5824966430664;D;SP03;Posto Shell Albano
+6250;Posto Shell Riolis;True;False;-23,6699542999268;-46,6480407714844;D;SP02;Posto Shell Riolis
+6252;Posto Shell Nova Campinas;True;False;-22,9024677276611;-47,0462188720703;C;SP06;Posto Shell Nova Campinas
+6253;Posto Shell BE;True;False;-23,6208000183105;-46,690990447998;B;SP02;Posto Shell BE
+6254;Posto Shell Padocka;True;False;-23,6270618438721;-46,535587310791;C;SP03;Posto Shell Padocka
+6255;Posto Shell Vila Galvao;True;False;-23,4548721313477;-46,5664672851563;C;SP04;Posto Shell Vila Galvao
+6256;Posto Shell CRS;True;False;-23,4886283874512;-46,8834953308105;D;SP01;Posto Shell CRS
+6257;Posto Shell Santo Eduardo;True;False;-23,6726322174072;-46,8034286499023;C;SP01;Posto Shell Santo Eduardo
+6261;Posto Shell Carlu;True;False;-23,6569805145264;-46,7173805236816;B;SP01;Posto Shell Carlu
+6262;Posto Shell Moni;True;False;-23,4642601013184;-46,5833511352539;C;SP04;Posto Shell Moni
+6264;Posto Shell Arinella Brooklin;True;False;-23,6297931671143;-46,6869316101074;C;SP02;Posto Shell Arinella Brooklin
+6266;Posto Shell Cardeal;True;False;-23,5529613494873;-46,6738090515137;D;SP02;Posto Shell Cardeal
+6268;Posto Shell Gondola;True;False;-23,6350193023682;-46,6585502624512;D;SP02;Posto Shell Gondola
+6269;Posto Shell Mister Plus;True;False;-23,6052417755127;-46,6753387451172;D;SP02;Posto Shell Mister Plus
+6270;Posto Shell Rocar;True;False;-23,5773849487305;-46,6869316101074;C;SP02;Posto Shell Rocar
+6272;Posto Shell Duque e Cia;True;False;-23,5465564727783;-46,6580848693848;C;SP02;Posto Shell Duque e Cia
+6273;Posto Shell Helio Valdivia;True;False;-22,9003200531006;-47,0583152770996;D;SP06;Posto Shell Helio Valdivia
+6274;Posto Shell Silvia Maria Pinto Santos Abastece;True;False;-23,5856876373291;-46,6181907653809;D;SP02;Posto Shell Silvia Maria Pinto Santos Abastece
+6277;Posto Shell Madia;True;False;-22,9679279327393;-47,0025672912598;C;SP06;Posto Shell Madia
+6280;Posto Shell Castelinho;True;False;-22,8959350585938;-47,0737571716309;B;SP06;Posto Shell Castelinho
+6281;Posto Shell Bate Bola;True;False;-23,1869983673096;-46,8917007446289;B;SP04;Posto Shell Bate Bola
+6282;Posto Shell Parque da Uva;True;False;-23,1905879974365;-46,8978500366211;A;SP04;Posto Shell Parque da Uva
+6283;Posto Shell Progresso;True;False;-23,2119064331055;-46,864315032959;C;SP04;Posto Shell Progresso
+6284;Posto Shell Keeper;True;False;-23,2091121673584;-46,8477630615234;B;SP04;Posto Shell Keeper
+6285;Posto Shell Cidade Do Vinho;True;False;-23,2070026397705;-46,8849449157715;B;SP04;Posto Shell Cidade Do Vinho
+6286;Posto Shell Soledade Gaucha;True;True;-23,4964237213135;-47,466121673584;A;SP07;Posto Shell Soledade Gaucha
+6288;Posto Shell Pimenta;True;False;-23,1230888366699;-47,2254447937012;D;SP06;Posto Shell Pimenta
+6289;Posto Shell Turismo 2;True;False;-23,6802082061768;-46,6004981994629;B;SP02;Posto Shell Turismo 2
+6290;Posto Shell Argetax Guarulhos;True;False;-23,4856719970703;-46,5511817932129;B;SP04;Posto Shell Argetax Guarulhos
+6291;Posto Shell Andrea Santini Rego;True;False;-22,8933715820313;-47,0610198974609;C;SP06;Posto Shell Andrea Santini Rego
+6292;Posto Shell Portal de Americana;True;False;-22,7291870117188;-47,2959747314453;B;SP06;Posto Shell Portal de Americana
+6293;Posto Shell Caxambu;True;False;-23,1494789123535;-46,846248626709;D;SP04;Posto Shell Caxambu
+6294;Posto Shell Telles;True;True;-23,1734237670898;-46,8851737976074;A;SP04;Posto Shell Telles
+6295;Posto Shell Jardim Santa Monica;True;False;-22,8553581237793;-47,1106567382813;D;SP06;Posto Shell Jardim Santa Monica
+6296;Posto Shell Dom Pedro I;True;False;-22,9091968536377;-46,9716911315918;D;SP06;Posto Shell Dom Pedro I
+6297;Posto Shell Grande São Paulo;True;False;-23,5697975158691;-46,64404296875;C;SP02;Posto Shell Grande São Paulo
+6298;Posto Shell Bap Barão;True;False;-23,665096282959;-46,433521270752;D;SP03;Posto Shell Bap Barão
+6299;Posto Shell Dar A;True;True;-23,338020324707;-46,6787223815918;A;SP01;Posto Shell Dar A
+6300;Posto Shell Abdelnor;True;False;-23,1191101074219;-47,2273788452148;D;SP06;Posto Shell Abdelnor
+6302;Posto Shell Parque Villa Lobos;True;False;-23,5456256866455;-46,7176704406738;B;SP01;Posto Shell Parque Villa Lobos
+6303;Posto Shell Santa Cruz de Mogi Mirim;True;False;-22,4363899230957;-46,975341796875;C;SP06;Posto Shell Santa Cruz de Mogi Mirim
+6304;Posto Shell Cristal;True;False;-23,5922451019287;-46,73193359375;D;SP01;Posto Shell Cristal
+6305;Posto Shell SS;True;False;-23,5607872009277;-46,678596496582;C;SP02;Posto Shell SS
+6307;Posto Shell Agua Branca;True;False;-22,7459392547607;-47,6391410827637;D;SP06;Posto Shell Agua Branca
+6308;Posto Shell TM;True;False;-22,7242736816406;-47,6333160400391;C;SP06;Posto Shell TM
+6309;Posto Shell GT;True;False;-22,7328605651855;-47,6341896057129;C;SP06;Posto Shell GT
+6310;Posto Shell Algodoal;True;False;-22,6971378326416;-47,6600379943848;D;SP06;Posto Shell Algodoal
+6311;Posto Shell Dona Francisca;True;False;-22,710823059082;-47,6555023193359;B;SP06;Posto Shell Dona Francisca
+6312;Posto Shell Radial Norte Sul de Piracicaba;True;False;-22,6896629333496;-47,6731910705566;D;SP06;Posto Shell Radial Norte Sul de Piracicaba
+6313;Posto Shell Bongue;True;False;-22,6999530792236;-47,6748580932617;D;SP06;Posto Shell Bongue
+6314;Posto Shell Maravilha;True;False;-21,1728744506836;-47,8068084716797;B;SP05;Posto Shell Maravilha
+6315;Posto Shell Presidente Ribeirao;True;False;-21,2034740447998;-47,8097152709961;B;SP05;Posto Shell Presidente Ribeirao
+6316;Posto Shell Sociedade RD;True;False;-21,1661357879639;-47,7892227172852;C;SP05;Posto Shell Sociedade RD
+6318;Posto Shell Espaço Botanico;True;False;-21,2125091552734;-47,796085357666;B;SP05;Posto Shell Espaço Botanico
+6319;Posto Shell Josimar D Lourenco;True;False;-21,1882438659668;-47,7981224060059;C;SP05;Posto Shell Josimar D Lourenco
+6320;Posto Shell Alcides Costa;True;False;-21,1986885070801;-47,8080787658691;B;SP05;Posto Shell Alcides Costa
+6321;Posto Shell Carro Nobre;True;False;-21,2038192749023;-47,793529510498;D;SP05;Posto Shell Carro Nobre
+6322;Posto Shell Monaco;True;False;-21,1889896392822;-47,7568893432617;C;SP05;Posto Shell Monaco
+6323;Posto Shell Vitrine;True;False;-23,1905040740967;-46,8964157104492;A;SP04;Posto Shell Vitrine
+6324;Posto Shell Bela Vista;True;False;-23,6448154449463;-46,7195243835449;B;SP01;Posto Shell Bela Vista
+6325;Posto Shell Sao Martinho;True;False;-23,5341987609863;-46,6728324890137;B;SP02;Posto Shell Sao Martinho
+6326;Posto Shell Jurua;True;False;-23,5375461578369;-46,6679191589355;C;SP02;Posto Shell Jurua
+6327;Posto Shell Piracena;True;False;-22,738826751709;-47,6305160522461;D;SP06;Posto Shell Piracena
+6329;Posto Shell Avenida Campinas;True;False;-22,5817794799805;-47,3872108459473;C;SP06;Posto Shell Avenida Campinas
+6330;Posto Shell Aeroporto Limeira;True;False;-22,5839729309082;-47,4087905883789;B;SP06;Posto Shell Aeroporto Limeira
+6331;Posto Shell Marun;True;False;-22,7594928741455;-47,6455078125;D;SP06;Posto Shell Marun
+6332;Posto Shell Ipe;True;False;-23,2317504882813;-45,9012641906738;B;SP04;Posto Shell Ipe
+6334;Posto Shell Quality Casablanca;True;False;-23,5518932342529;-46,3197059631348;B;SP03;Posto Shell Quality Casablanca
+6335;Posto Shell Quality Supra;True;False;-23,5590591430664;-46,3326606750488;D;SP03;Posto Shell Quality Supra
+6336;Posto Shell M Super;True;False;-23,5449085235596;-46,2526741027832;B;SP03;Posto Shell M Super
+6338;Posto Shell Portal Presidente;True;False;-21,1893215179443;-47,8065528869629;D;SP05;Posto Shell Portal Presidente
+6342;Posto Shell Alpha De Votorantim;True;False;-23,5525455474854;-47,4650955200195;B;SP07;Posto Shell Alpha De Votorantim
+6343;Posto Shell Universo 2000;True;False;-22,7109966278076;-47,6354560852051;D;SP06;Posto Shell Universo 2000
+6344;Posto Shell Andorinha de Rio Claro;True;False;-22,4128398895264;-47,5601654052734;C;SP05;Posto Shell Andorinha de Rio Claro
+6345;Posto Shell Cedro;True;False;-23,4874229431152;-47,4747772216797;B;SP07;Posto Shell Cedro
+6346;Posto Shell Abraao Ribeiro;True;False;-23,522777557373;-46,6599311828613;B;SP02;Posto Shell Abraao Ribeiro
+6347;Posto Shell Caragua;True;False;-23,6244583129883;-45,4174346923828;C;SP04;Posto Shell Caragua
+6348;Posto Shell Pedro Lessa;True;False;-23,9689502716064;-46,3123588562012;B;SP03;Posto Shell Pedro Lessa
+6349;Posto Shell Pontal da Cruz;True;False;-23,7798595428467;-45,3992195129395;D;SP04;Posto Shell Pontal da Cruz
+6350;Posto Shell Aeroporto de Ubatuba;True;False;-23,443473815918;-45,0704383850098;D;SP04;Posto Shell Aeroporto de Ubatuba
+6351;Posto Shell Jupia;True;False;-23,6652603149414;-46,7829704284668;B;SP01;Posto Shell Jupia
+6352;Posto Shell Martineli City;True;False;-21,2166976928711;-47,8197975158691;C;SP05;Posto Shell Martineli City
+6353;Posto Shell Tiger;True;False;-22,702844619751;-47,647533416748;D;SP06;Posto Shell Tiger
+6354;Posto Shell Azulao;True;False;-23,5735836029053;-46,7101631164551;B;SP01;Posto Shell Azulao
+6355;Posto Shell Quinta Avenida;True;False;-23,5546283721924;-46,6548271179199;D;SP02;Posto Shell Quinta Avenida
+6356;Posto Shell Agronomia;True;False;-22,7151947021484;-47,6326675415039;B;SP06;Posto Shell Agronomia
+6357;Posto Shell Rede Senna;True;False;-23.43251;-46.40539;B;SP04;Posto Shell Rede Senna
+6358;Posto Shell Lince Taubate;True;False;-23,0034656524658;-45,5460968017578;B;SP04;Posto Shell Lince Taubate
+6359;Posto Shell Avenida Brasil;True;False;-22,7525367736816;-47,3482666015625;B;SP06;Posto Shell Avenida Brasil
+6360;Posto Shell Itarare Sao Vicente;True;False;-23,9616088867188;-46,3973197937012;C;SP03;Posto Shell Itarare Sao Vicente
+6361;Posto Shell Retiro;True;False;-23,1786231994629;-46,9130935668945;B;SP04;Posto Shell Retiro
+6362;Posto Shell Garcia de Campinas;True;False;-22,8885478973389;-47,1125144958496;B;SP06;Posto Shell Garcia de Campinas
+6363;Posto Shell Fantinato;True;False;-22,766773223877;-47,1491241455078;B;SP06;Posto Shell Fantinato
+6364;Posto Shell Alpes;True;False;-23,0322513580322;-45,5567436218262;B;SP04;Posto Shell Alpes
+6365;Posto Shell Varsovia;True;False;-23,2433185577393;-45,8823585510254;B;SP04;Posto Shell Varsovia
+6366;Posto Shell Restaurante 3 Vias;True;False;-22,8558254241943;-47,1512985229492;B;SP06;Posto Shell Restaurante 3 Vias
+6367;Posto Shell Maricar;True;False;-23,4816875457764;-46,6556015014648;C;SP01;Posto Shell Maricar
+6373;Posto Shell Sabella e Sabella;True;False;-22,9153785705566;-46,548900604248;D;SP04;Posto Shell Sabella e Sabella
+6374;Posto Shell Virgilio Fernando;True;False;-23,5127143859863;-46,5908584594727;D;SP04;Posto Shell Virgilio Fernando
+6377;Posto Shell Guigui;True;False;-23,6539268493652;-46,5367851257324;D;SP03;Posto Shell Guigui
+6378;Posto Shell Dias;True;False;-23,6718807220459;-46,5267448425293;D;SP03;Posto Shell Dias
+6379;Posto Shell Sabella;True;False;-22,9417514801025;-46,5357208251953;D;SP04;Posto Shell Sabella
+6383;Posto Shell Bandeirante;True;False;-23,200475692749;-45,8857383728027;B;SP04;Posto Shell Bandeirante
+6384;Posto Shell Sete Estrelas;True;False;-23,5069351196289;-46,7468452453613;B;SP01;Posto Shell Sete Estrelas
+6385;Posto Shell Bruno Alves Portero;True;False;-23,5436305999756;-46,5613708496094;D;SP03;Posto Shell Bruno Alves Portero
+6387;Posto Shell Panamericano;True;False;-23,4447898864746;-46,7357902526855;B;SP01;Posto Shell Panamericano
+6389;Posto Shell Nelson Scorsolini;True;False;-21,211181640625;-47,7727127075195;B;SP05;Posto Shell Nelson Scorsolini
+6390;Posto Shell Fera de Itapevi;True;False;-23,5532131195068;-46,9360961914063;D;SP01;Posto Shell Fera de Itapevi
+6391;Posto Shell Jundiai Mirim;True;False;-23,1527824401855;-46,8735656738281;D;SP04;Posto Shell Jundiai Mirim
+6392;Posto Shell Ceiba Speciosa;True;False;-23,2628803253174;-47,285587310791;B;SP06;Posto Shell Ceiba Speciosa
+6393;Posto Shell Castelinho de Sorocaba;True;False;-23,4261665344238;-47,3594131469727;B;SP07;Posto Shell Castelinho de Sorocaba
+6395;Posto Shell Scofano e Scofano;True;False;-22,7442855834961;-45,5999870300293;D;SP04;Posto Shell Scofano e Scofano
+6396;Posto Shell Universitario Sao Carlos;True;False;-22,008752822876;-47,8983001708984;B;SP05;Posto Shell Universitario Sao Carlos
+6397;Posto Shell Mixam;True;False;-22,1396102905273;-51,3978500366211;B;SP05;Posto Shell Mixam
+6398;Posto Shell Mediani Pires;True;False;-20,8251342773438;-49,3665084838867;D;SP05;Posto Shell Mediani Pires
+6399;Posto Shell Bela Cintra;True;False;-23,5534362792969;-46,6583137512207;B;SP02;Posto Shell Bela Cintra
+6400;Posto Shell Rio Claro Center Shopping;True;False;-22,4112205505371;-47,5562324523926;D;SP05;Posto Shell Rio Claro Center Shopping
+6401;Posto Shell Itaipu Bassit;True;False;-20,8238735198975;-49,4026565551758;D;SP05;Posto Shell Itaipu Bassit
+6402;Posto Shell Primavera Murchid;True;False;-20,8273334503174;-49,3658294677734;D;SP05;Posto Shell Primavera Murchid
+6403;Posto Shell Quinta do Golfe;True;False;-20,831563949585;-49,404956817627;C;SP05;Posto Shell Quinta do Golfe
+6404;Posto Shell Atarumin;True;False;-20,7923984527588;-49,3936424255371;D;SP05;Posto Shell Atarumin
+6405;Posto Shell Guaruja Andalo;True;False;-20,8229732513428;-49,3850555419922;D;SP05;Posto Shell Guaruja Andalo
+6406;Posto Shell Axr;True;False;-20,8228416442871;-49,3925590515137;D;SP05;Posto Shell Axr
+6407;Posto Shell Petro Bady;True;False;-20,8177738189697;-49,3955612182617;D;SP05;Posto Shell Petro Bady
+6408;Posto Shell Avenida de Itatiba;True;False;-22,9981727600098;-46,8481254577637;B;SP06;Posto Shell Avenida de Itatiba
+6410;Posto Shell Carrossel;True;False;-23,4745712280273;-46,5316505432129;B;SP04;Posto Shell Carrossel
+6411;Posto Shell Santos Dummont de Franca;True;False;-20,5426807403564;-47,4222793579102;D;SP05;Posto Shell Santos Dummont de Franca
+6412;Posto Shell Duque City;True;False;-23,5489521026611;-46,7061767578125;D;SP01;Posto Shell Duque City
+6413;Posto Shell Hiperion;True;False;-23,6105155944824;-46,677417755127;B;SP02;Posto Shell Hiperion
+6415;Posto Shell Aguia de Haia;True;False;-23,5377807617188;-46,4766006469727;B;SP03;Posto Shell Aguia de Haia
+6417;Posto Shell Acc Radial;True;True;-23,5375595092773;-46,5607452392578;A;SP03;Posto Shell Acc Radial
+6418;Posto Shell Chacaras do Coelho;True;False;-22,888500213623;-47,1672439575195;D;SP06;Posto Shell Chacaras do Coelho
+6419;Posto Shell Petrodutra;True;False;-23,4186706542969;-46,3821182250977;B;SP04;Posto Shell Petrodutra
+6420;Posto Shell Vitoria;True;False;-23,6543788909912;-46,5677185058594;B;SP03;Posto Shell Vitoria
+6421;Posto Shell Sao Bernardo;True;False;-23,7172203063965;-46,5490036010742;D;SP03;Posto Shell Sao Bernardo
+6422;Posto Shell Tigrão da Dutra;True;False;-22,5146884918213;-44,7013511657715;D;SP03;Posto Shell Tigrão da Dutra
+6424;Posto Shell Sigma;True;False;-22,9801940917969;-46,999828338623;D;SP06;Posto Shell Sigma
+6425;Posto Shell Perola de Ubatuba;True;False;-23,4354629516602;-45,0727272033691;D;SP04;Posto Shell Perola de Ubatuba
+6426;Posto Shell Cassiano Ricardo;True;False;-23,2231540679932;-45,911548614502;B;SP04;Posto Shell Cassiano Ricardo
+6428;Posto Shell AJ e AR;True;False;-23,6189403533936;-45,4009246826172;C;SP04;Posto Shell AJ e AR
+6432;Posto Shell Golfe Clube;True;False;-22,9929752349854;-43,2552757263184;D;RJ01;Posto Shell Golfe Clube
+6434;Posto Shell Modelo JMLBG;True;False;-22,9511528015137;-43,1931457519531;D;RJ01;Posto Shell Modelo JMLBG
+6435;Posto Shell Catedral;True;False;-22,9133396148682;-43,1808853149414;D;RJ01;Posto Shell Catedral
+6436;Posto Shell Excede;True;False;-22,9669380187988;-43,2034568786621;B;RJ01;Posto Shell Excede
+6437;Posto Shell Importação;True;False;-22,9854888916016;-43,223274230957;D;RJ01;Posto Shell Importação
+6438;Posto Shell Hawai Rio;True;False;-22,80517578125;-43,2097702026367;B;RJ01;Posto Shell Hawai Rio
+6440;Posto Shell Tirol;True;False;-22,9369144439697;-43,3330955505371;C;RJ01;Posto Shell Tirol
+6442;Posto Shell Grande Amor;True;False;-22,6249866485596;-43,4302024841309;D;RJ01;Posto Shell Grande Amor
+6443;Posto Shell Karapito da Beira;True;False;-22,8748226165771;-43,5541725158691;D;RJ01;Posto Shell Karapito da Beira
+6444;Posto Shell Barra Monteiro;True;False;-22,9238033294678;-43,565357208252;D;RJ01;Posto Shell Barra Monteiro
+6445;Posto Shell Portela Dois;True;False;-22,8927917480469;-43,671947479248;D;RJ01;Posto Shell Portela Dois
+6446;Posto Shell Amor da Leopoldina;True;False;-22,8307247161865;-43,2702178955078;B;RJ01;Posto Shell Amor da Leopoldina
+6447;Posto Shell Rocar Rio;True;False;-23,0020751953125;-43,3262634277344;D;RJ01;Posto Shell Rocar Rio
+6448;Posto Shell Jardim Oceanico;True;False;-23,0122833251953;-43,3051567077637;C;RJ01;Posto Shell Jardim Oceanico
+6449;Posto Shell Jardim Oceanico da Barra;True;False;-23,0065879821777;-43,3089485168457;D;RJ01;Posto Shell Jardim Oceanico da Barra
+6450;Posto Shell Rezende Recreio II;True;False;-23,0181465148926;-43,4828147888184;B;RJ01;Posto Shell Rezende Recreio II
+6453;Posto Shell Duck;True;False;-22,7948932647705;-43,2962265014648;C;RJ01;Posto Shell Duck
+6454;Posto Shell Viaduto de Morato Eireli;True;False;-23,2757873535156;-46,745002746582;C;SP04;Posto Shell Viaduto de Morato Eireli
+6455;Posto Shell Borssato Serrazul;True;False;-23,1047992706299;-47,0101890563965;B;SP06;Posto Shell Borssato Serrazul
+6456;Posto Shell Siqueira e Carbonari;True;False;-23,1562004089355;-47,0448684692383;B;SP06;Posto Shell Siqueira e Carbonari
+6458;Posto Shell Maramar;True;False;-23,0206298828125;-43,5007171630859;D;RJ01;Posto Shell Maramar
+6459;Posto Shell Duque Conde Alphaville;True;False;-23,484504699707;-46,8632431030273;B;SP01;Posto Shell Duque Conde Alphaville
+6461;Posto Shell Brasil Santa Cruz;True;False;-22,8885860443115;-43,6580276489258;D;RJ01;Posto Shell Brasil Santa Cruz
+6462;Posto Shell Estrela;True;False;-23,1748504638672;-46,8862380981445;D;SP04;Posto Shell Estrela
+6463;Posto Shell Amigao de Itaborai;True;False;-22,7472591400146;-42,8120498657227;C;RJ01;Posto Shell Amigao de Itaborai
+6464;Posto Shell Amigão da Dutra;True;False;-22,7382507324219;-43,4762916564941;C;RJ01;Posto Shell Amigão da Dutra
+6465;Posto Shell Araujo Leite;True;False;-22,3283977508545;-49,0669555664063;B;SP05;Posto Shell Araujo Leite
+6466;Posto Shell Nações Bauru;True;False;-22,325647354126;-49,0637054443359;C;SP05;Posto Shell Nações Bauru
+6468;Posto Shell Aeroporto Bauru;True;False;-22,3437061309814;-49,0520133972168;B;SP05;Posto Shell Aeroporto Bauru
+6469;Posto Shell RodoPosto Maristela;True;False;-23,1385593414307;-48,4468612670898;D;SP05;Posto Shell RodoPosto Maristela
+6470;Posto Shell Duque 21 de Moura;True;False;-22,3259410858154;-49,0558662414551;B;SP05;Posto Shell Duque 21 de Moura
+6471;Posto Shell Limoeiro;True;False;-22,8074131011963;-49,5340995788574;D;SP05;Posto Shell Limoeiro
+6472;Posto Shell Carbonari;True;False;-22,8623027801514;-48,4419021606445;C;SP05;Posto Shell Carbonari
+6473;Posto Shell Chalcataya;True;False;-23,0165157318115;-43,4737930297852;B;RJ01;Posto Shell Chalcataya
+6474;Posto Shell JPX;True;False;-23,0006504058838;-43,3752517700195;B;RJ01;Posto Shell JPX
+6475;Posto Shell 2001;True;False;-22,7459888458252;-42,8556632995605;D;RJ01;Posto Shell 2001
+6476;Posto Shell Quinze;True;False;-22,80153465271;-43,4203491210938;B;RJ01;Posto Shell Quinze
+6477;Posto Shell Arrastao;True;False;-22,8710193634033;-43,0044593811035;B;RJ01;Posto Shell Arrastao
+6478;Posto Shell Gazpark Participaçoes;True;False;-22,8598480224609;-43,0285758972168;D;RJ01;Posto Shell Gazpark Participaçoes
+6479;Posto Shell Meriti;True;False;-22,7934303283691;-43,3664588928223;D;RJ01;Posto Shell Meriti
+6480;Posto Shell Suina Derivados de Petroleo;True;False;-22,4929008483887;-44,0920944213867;D;RJ01;Posto Shell Suina Derivados de Petroleo
+6481;Posto Shell Brasil 2000;True;False;-22,8603687286377;-43,5168190002441;C;RJ01;Posto Shell Brasil 2000
+6484;Posto Shell Argetax Vila Guilherme;True;False;-23,5087356567383;-46,6002731323242;B;SP04;Posto Shell Argetax Vila Guilherme
+6486;Posto Shell Portal de Santana;True;False;-23,4239234924316;-46,489185333252;B;SP04;Posto Shell Portal de Santana
+6487;Posto Shell Tasquinha;True;False;-22,9667434692383;-46,5430870056152;D;SP04;Posto Shell Tasquinha
+6489;Posto Shell Flor da Luz;True;False;-23,533224105835;-46,629753112793;D;SP02;Posto Shell Flor da Luz
+6490;Posto Shell Progresso Eloy Chaves;True;False;-23,1872062683105;-46,9600944519043;B;SP04;Posto Shell Progresso Eloy Chaves
+6491;Posto Shell Nova Suiça;True;False;-23,0767574310303;-47,209602355957;B;SP06;Posto Shell Nova Suiça
+6492;Posto Shell Pavao Castelinho;True;False;-23,4162292480469;-47,3460502624512;B;SP07;Posto Shell Pavao Castelinho
+6494;Posto Shell Gasparzinho;True;False;-23,5236587524414;-46,475040435791;B;SP03;Posto Shell Gasparzinho
+6496;Posto Shell Higienopolis Santo Andre;True;False;-23,6720561981201;-46,5397529602051;B;SP03;Posto Shell Higienopolis Santo Andre
+6498;Posto Shell Pistao;True;False;-22,9272785186768;-43,3609771728516;B;RJ01;Posto Shell Pistao
+6499;Posto Shell Mato Alto;True;False;-22,9117012023926;-43,3602752685547;B;RJ01;Posto Shell Mato Alto
+6501;Posto Shell Kalota;True;False;-23,529125213623;-46,5603637695313;B;SP03;Posto Shell Kalota
+6502;Posto Shell Europa Empreendimentos;True;False;-22,9682731628418;-46,543586730957;B;SP04;Posto Shell Europa Empreendimentos
+6503;Posto Shell Arigato;True;False;-23,6246948242188;-46,4838600158691;B;SP03;Posto Shell Arigato
+6504;Posto Shell Delta Mar;True;False;-24,0266418457031;-46,481819152832;B;SP03;Posto Shell Delta Mar
+6505;Posto Shell IATE;True;False;-22,9499568939209;-43,1774444580078;D;RJ01;Posto Shell IATE
+6506;Posto Shell Casa Nova;True;False;-23,5912017822266;-46,5505561828613;C;SP03;Posto Shell Casa Nova
+6507;Posto Shell Senhor Barcelona;True;False;-25,5141277313232;-49,2314758300781;D;PR01;Posto Shell Senhor Barcelona
+6508;Posto Shell Malure;True;True;-23,5845146179199;-46,5779724121094;A;SP03;Posto Shell Malure
+6509;Posto Shell Rodovia de Bauru;True;False;-22,3120803833008;-49,0714454650879;B;SP05;Posto Shell Rodovia de Bauru
+6510;Posto Shell Manhattam;True;False;-21,2285060882568;-50,4377708435059;B;SP05;Posto Shell Manhattam
+6511;Posto Shell Reyssol;True;False;-21,7790546417236;-48,1795539855957;B;SP05;Posto Shell Reyssol
+6512;Posto Shell Trapezio;True;False;-23,6027317047119;-46,5426292419434;B;SP03;Posto Shell Trapezio
+6514;Posto Shell Quatro Trevo;True;False;-23,2049407958984;-45,8832321166992;B;SP04;Posto Shell Quatro Trevo
+6516;Posto Shell Campos do Jordao;True;False;-22,7345314025879;-45,5866813659668;D;SP04;Posto Shell Campos do Jordao
+6521;Posto Shell Duque Moema;True;False;-23,6001758575439;-46,6674461364746;B;SP02;Posto Shell Duque Moema
+6522;Posto Shell Trento;True;False;-23,563045501709;-46,7908515930176;B;SP01;Posto Shell Trento
+6523;Posto Shell Colossal;True;False;-25,4450435638428;-49,304615020752;D;PR01;Posto Shell Colossal
+6525;Posto Shell Lipe;True;False;-22,8819103240967;-43,2929191589355;B;RJ01;Posto Shell Lipe
+6527;Posto Shell Margodete;True;False;-23,5427589416504;-46,570613861084;D;SP03;Posto Shell Margodete
+6531;Posto Shell Galo Branco;True;False;-20,552267074585;-47,4099922180176;B;SP05;Posto Shell Galo Branco
+6532;Posto Shell Antares;True;False;-25,4772758483887;-49,3347015380859;D;PR01;Posto Shell Antares
+6533;Posto Shell Copa Ouro;True;False;-25,5117816925049;-49,332462310791;D;PR01;Posto Shell Copa Ouro
+6534;Posto Shell Alameda Sacoma;True;False;-23,6191291809082;-46,6016235351563;A;SP02;Posto Shell Alameda Sacoma
+6535;Posto Shell Garage Lisboa;True;False;-22,8731594085693;-43,2775993347168;D;RJ01;Posto Shell Garage Lisboa
+6536;Posto Shell Aladin Servicos;True;False;-25,4189128875732;-49,348274230957;D;PR01;Posto Shell Aladin Servicos
+6537;Posto Shell Lord Rodrigo;True;False;-22,7924098968506;-43,3039207458496;D;RJ01;Posto Shell Lord Rodrigo
+6538;Posto Shell Verde Curitiba;True;False;-25,4069023132324;-49,2557678222656;B;PR01;Posto Shell Verde Curitiba
+6539;Posto Shell Pedrazzoli;True;False;-25,4684600830078;-49,263744354248;D;PR01;Posto Shell Pedrazzoli
+6541;Posto Shell Picheth;True;False;-25,5120887756348;-49,2740936279297;D;PR01;Posto Shell Picheth
+6542;Posto Shell Ducati;True;False;-25,3914470672607;-49,2564544677734;D;PR01;Posto Shell Ducati
+6543;Posto Shell Gisela;True;False;-25,4994068145752;-49,2497177124023;D;PR01;Posto Shell Gisela
+6544;Posto Shell Premiere;True;False;-25,4355926513672;-49,3273391723633;D;PR01;Posto Shell Premiere
+6546;Posto Shell Perola;True;False;-25,4434986114502;-49,2679252624512;B;PR01;Posto Shell Perola
+6549;Posto Shell Farol do Parque;True;False;-25,4300270080566;-49,343074798584;D;PR01;Posto Shell Farol do Parque
+6550;Posto Shell Jardim Botanico;True;False;-25,4466514587402;-49,2476768493652;B;PR01;Posto Shell Jardim Botanico
+6551;Posto Shell Banc;True;False;-23,3422393798828;-51,1591567993164;D;PR01;Posto Shell Banc
+6552;Posto Shell Thiago Vinicius;True;False;-23,3005352020264;-51,1863784790039;D;PR01;Posto Shell Thiago Vinicius
+6553;Posto Shell Monza;True;False;-22,9467258453369;-43,0316696166992;C;RJ01;Posto Shell Monza
+6562;Posto Shell Petrogil;True;False;-23,3959217071533;-51,9179649353027;D;PR01;Posto Shell Petrogil
+6563;Posto Shell Sao Jose 3;True;False;-23,4276027679443;-51,9374160766602;D;PR01;Posto Shell Sao Jose 3
+6564;Posto Shell MLL;True;False;-25,5521106719971;-48,5520248413086;D;PR01;Posto Shell MLL
+6566;Posto Shell Artigas;True;False;-25,4510364532471;-49,1793937683105;D;PR01;Posto Shell Artigas
+6567;Posto Shell NSL;True;False;-25,436206817627;-49,1677703857422;D;PR01;Posto Shell NSL
+6568;Posto Shell Paraiso Lubrificantes;True;False;-22,460018157959;-44,4372062683105;D;RJ01;Posto Shell Paraiso Lubrificantes
+6570;Posto Shell Cupim;True;False;-25,609546661377;-49,1722373962402;D;PR01;Posto Shell Cupim
+6571;Posto Shell Rio Lima;True;False;-22,836784362793;-43,3174819946289;C;RJ01;Posto Shell Rio Lima
+6573;Posto Shell FM da Prata;True;False;-22,7609195709229;-43,4264984130859;C;RJ01;Posto Shell FM da Prata
+6575;Posto Shell Santa Amalia;True;False;-22,4099617004395;-43,6710929870605;D;RJ01;Posto Shell Santa Amalia
+6576;Posto Shell Avenida Central de Iraja;True;False;-22,9238033294678;-43,565357208252;D;RJ01;Posto Shell Avenida Central de Iraja
+6577;Posto Shell Casaca;True;False;-22,5633792877197;-42,9994506835938;D;RJ01;Posto Shell Casaca
+6578;Posto Shell LK Vila Universitaria;True;False;-22,3353710174561;-49,0538139343262;C;SP05;Posto Shell LK Vila Universitaria
+6580;Posto Shell Galapagos;True;False;-22,8017559051514;-43,3512153625488;C;RJ01;Posto Shell Galapagos
+6581;Posto Shell Big Aço;True;False;-22,5115299224854;-44,0861701965332;D;RJ01;Posto Shell Big Aço
+6591;Posto Shell ALG;True;False;-22,8721122741699;-43,2584114074707;D;RJ01;Posto Shell ALG
+6593;Posto Shell Monte Santo;True;False;-23,4176025390625;-47,4079437255859;D;SP07;Posto Shell Monte Santo
+6594;Posto Shell Luches;True;False;-22,9245567321777;-48,4516677856445;D;SP05;Posto Shell Luches
+6595;Posto Shell A P F;True;False;-22,5124320983887;-44,0876502990723;D;RJ01;Posto Shell A P F
+6596;Posto Shell Abreu Dois;True;False;-22,7848281860352;-42,9837417602539;D;RJ01;Posto Shell Abreu Dois
+6598;Posto Shell LK Vila Falcao I;True;False;-22,331033706665;-49,0855484008789;D;SP05;Posto Shell LK Vila Falcao I
+6600;Posto Shell Barra Cachamorra;True;False;-22,927490234375;-43,5539932250977;D;RJ01;Posto Shell Barra Cachamorra
+6602;Posto Shell JB Caxias;True;False;-22,6785335540771;-43,2863540649414;D;RJ01;Posto Shell JB Caxias
+6603;Posto Shell Vitoria 040;True;False;-22,5168476104736;-43,2285804748535;D;RJ01;Posto Shell Vitoria 040
+6604;Posto Shell Forgerini e Inouye São Carlos ;True;False;-22,0105304718018;-47,867431640625;D;SP05;Posto Shell Forgerini e Inouye São Carlos
+6605;Posto Shell Morro Azul de Itatiba;True;False;-23,0290908813477;-46,7489013671875;D;SP04;Posto Shell Morro Azul de Itatiba
+6606;Posto Shell Colina Aracatuba;True;False;-21,2255001068115;-50,4446220397949;D;SP05;Posto Shell Colina Aracatuba
+6609;Posto Shell Forgerine e Inouye Itirapina;True;False;-22,2310695648193;-47,7402610778809;D;SP05;Posto Shell Forgerine e Inouye Itirapina
+6610;Posto Shell Cardoso Castro;True;False;-22,8215026855469;-43,4084548950195;D;RJ01;Posto Shell Cardoso Castro
+6611;Posto Shell Gran Penha;True;False;-23,5221843719482;-46,5262031555176;A;SP03;Posto Shell Gran Penha
+6612;Posto Shell Abreu;True;False;-22,8137836456299;-43,0736083984375;D;RJ01;Posto Shell Abreu
+6620;Posto Shell Automix;True;False;-23,6905345916748;-46,5771064758301;B;SP03;Posto Shell Automix
+6622;Posto Shell Manguinhos de Buzios;True;False;-22,774227142334;-41,9285278320313;D;RJ01;Posto Shell Manguinhos de Buzios
+6623;Posto Shell Boa Viagem Friburgo;True;False;-22,2953567504883;-42,5267562866211;D;RJ01;Posto Shell Boa Viagem Friburgo
+6625;Posto Shell Bola Pesada;True;False;-23,6123104095459;-46,6570091247559;D;SP02;Posto Shell Bola Pesada
+6627;Posto Shell LG;True;False;-22,8815288543701;-47,0722808837891;B;SP06;Posto Shell LG
+6628;Posto Shell Almeida e L.Oveira;True;False;-22,9103870391846;-47,096321105957;A;SP06;Posto Shell Almeida e L.Oveira
+6629;Posto Shell Bolla Branca;True;False;-23,2230644226074;-45,9007759094238;C;SP04;Posto Shell Bolla Branca
+6630;Posto Shell Santa Luzia Atibaia;True;False;-23,1172657012939;-46,5802726745605;B;SP04;Posto Shell Santa Luzia Atibaia
+6634;Posto Shell Santana Sao Jose dos Campos;True;False;-23,1637096405029;-45,8946685791016;D;SP04;Posto Shell Santana Sao Jose dos Campos
+6652;Posto Shell Parambos;True;False;-23,6123180389404;-46,618522644043;D;SP02;Posto Shell Parambos
+6653;Posto Shell Beraldo;True;False;-23,6473255157471;-46,5456352233887;D;SP03;Posto Shell Beraldo
+6654;Posto Shell Eco Posto;True;True;-23,6155242919922;-46,6665992736816;A;SP02;Posto Shell Eco Posto
+6655;Posto Shell Sol da Dutra;True;False;-23,1021041870117;-45,6308135986328;D;SP04;Posto Shell Sol da Dutra
+6656;Auto Posto Belezura;True;False;-23,5338306427002;-46,5836791992188;B;SP03;Auto Posto Belezura
+6657;Posto Shell Via Ponte;True;False;-22,8878078460693;-43,1149482727051;C;RJ01;Posto Shell Via Ponte
+6658;Posto Shell Mike;True;False;-23,6857376098633;-46,6168518066406;C;SP02;Posto Shell Mike
+6659;Posto Shell Jardim Marajoara;True;False;-23,6600799560547;-46,6859741210938;D;SP02;Posto Shell Jardim Marajoara
