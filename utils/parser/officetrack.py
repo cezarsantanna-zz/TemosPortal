@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import re
 import psycopg2.extensions
 from base64 import b64decode
 from datetime import datetime
@@ -29,12 +30,12 @@ def getFormID(_FormName):
                      WHERE active = True and name = (%s);",
                     (_FormName,)
                 )
-                _posto_id = conn_pgs.fetchone()[0]
-                return _posto_id
-    except:
+                _id = int(conn_pgs.fetchone()[0])
+                return _id
+    except TypeError:
         import sys
         import traceback
-        print('Whoops! Problem:', file=sys.stderr)
+        print('Erro ao obter ID do Formulário ', _FormName, file=sys.stderr)
         traceback.print_exc(file=sys.stderr)
         return None
 
@@ -54,14 +55,15 @@ def getPostoID(_CGMP):
                      WHERE active = True and cgmp = (%s);",
                     (_CGMP,)
                 )
-                _posto_id = conn_pgs.fetchone()[0]
-                return _posto_id
-    except:
+                _id = int(conn_pgs.fetchone()[0])
+                return _id
+    except TypeError:
         import sys
         import traceback
-        print('Whoops! Problem:', file=sys.stderr)
+        print('Erro ao obter ID do Posto ', _CGMP, file=sys.stderr)
         traceback.print_exc(file=sys.stderr)
         return None
+
 
 
 def getBaseIDFromEmployeeID(_Employee_id):
@@ -79,17 +81,23 @@ def getBaseIDFromEmployeeID(_Employee_id):
                      WHERE active = True and employee_id = (%s);",
                     (_Employee_id,)
                 )
-                _base_id = conn_pgs.fetchone()[0]
-                return _base_id
-    except:
+                _id = int(conn_pgs.fetchone()[0])
+                return _id
+    except TypeError:
         import sys
         import traceback
-        print('Whoops! Problem:', file=sys.stderr)
+        print('Erro ao obter ID da Base via ', _Employee_id, file=sys.stderr)
         traceback.print_exc(file=sys.stderr)
         return None
 
 
 def getEmployeeID(_EmployeeFirstName):
+    try:
+        if _EmployeeFirstName is None:
+            raise ValueNone('Nome do Funcionário não pode ser vazio')
+    except ValueNone:
+        print('Erro encontrado')
+        raise
     try:
         with psycopg2.connect(
             database=dbName,
@@ -104,12 +112,12 @@ def getEmployeeID(_EmployeeFirstName):
                      WHERE active = True and name = (%s);",
                     (_EmployeeFirstName,)
                 )
-                _employee_id = conn_pgs.fetchone()[0]
-                return _employee_id
-    except:
+                _id = int(conn_pgs.fetchone()[0])
+                return _id
+    except TypeError:
         import sys
         import traceback
-        print('Whoops! Problem:', file=sys.stderr)
+        print('Erro ao obter ID do Funcionário ', _EmployeeFirstName, file=sys.stderr)
         traceback.print_exc(file=sys.stderr)
         return None
 
@@ -127,11 +135,12 @@ def getEquipID(_equipamento):
                     WHERE active = True and name = (%s);",
                     (_equipamento,)
                 )
-                return conn_pgs.fetchone()[0]
-    except:
+                _id = int(conn_pgs.fetchone()[0])
+                return _id
+    except TypeError:
         import sys
         import traceback
-        print('Error:', file=sys.stderr)
+        print('Erro ao obter ID do Equipamento ', _equipamento, file=sys.stderr)
         traceback.print_exc(file=sys.stderr)
         return None
 
@@ -158,7 +167,7 @@ def getEntryType(_xml):
 def getEntryDateFromEpoch(_xml):
     _EntryDateFromEpoch = _xml.find('EntryDateFromEpoch')
     if _EntryDateFromEpoch is not None:
-        return _EntryDateFromEpoch.text[0:10]
+        return int(_EntryDateFromEpoch.text[0:10])
     else:
         return None
 
@@ -166,6 +175,30 @@ def getEntryDateFromEpoch(_xml):
 def getEmployeeFirstName(_xml):
     _EmployeeFirstName = _xml.find('Employee/FirstName')
     if _EmployeeFirstName is not None:
+        if 'SP01' in EmployeeFirstName:
+            EmployeeFirstName = 'Wesley'
+        elif 'SP02' in EmployeeFirstName:
+            EmployeeFirstName = 'Alex'
+        elif 'SP03' in EmployeeFirstName:
+            EmployeeFirstName = 'Ítalo'
+        elif 'SP04' in EmployeeFirstName:
+            EmployeeFirstName = 'Renan'
+        elif 'SP05' in EmployeeFirstName:
+            EmployeeFirstName = 'Matheus'
+        elif 'SP06' in EmployeeFirstName:
+            EmployeeFirstName = 'Diego'
+        elif 'SP07' in EmployeeFirstName:
+            EmployeeFirstName = 'Rafhael'
+        elif 'SOR01' in EmployeeFirstName:
+            EmployeeFirstName = 'Wellington'
+        elif 'SOR02' in EmployeeFirstName:
+            EmployeeFirstName = 'Raphael'
+        elif 'PR01' in EmployeeFirstName:
+            EmployeeFirstName = 'Adélio'
+        elif 'RJ01' in EmployeeFirstName:
+            EmployeeFirstName = 'Vitor'
+        elif 'RJ02' in EmployeeFirstName:
+            EmployeeFirstName = 'Vitor'
         return _EmployeeFirstName.text
     else:
         return None
@@ -260,11 +293,43 @@ def getFormName(_xml):
 
 
 def getEventNumber(_xml):
+    FormName = getFormName(_xml)
     for _element in _xml.iter("Field"):
         if (_element[0].text == 'NÚMERO DE CHAMADO' or
-                _element[0].text == 'NÚMERO DO CHAMADO'):
-            return _element[1].text.replace(" ", "")
-    return None
+            _element[0].text == 'NÚMERO DO CHAMADO'):
+           EventNumber = _element[1].text.upper()
+           EventNumber = EventNumber.strip()
+           EventNumber = EventNumber.replace("TASC", "TASK")
+           EventNumber = EventNumber.replace("-", ";")
+           EventNumber = EventNumber.replace("/", ";")
+           EventNumber = EventNumber.replace(",", ";")
+           EventNumber = EventNumber.replace(" ", ";")
+           regex = re.compile('\;+')
+           EventNumber = re.sub(regex, ';', EventNumber)
+
+           if 'INC' in EventNumber:
+               EventNumber = EventNumber.replace("INC;", "INC")
+               EventNumber = EventNumber.replace("INC1", "INC01")
+               EventNumber = EventNumber.replace(";0", ";INC0")
+               EventNumber = EventNumber.replace(";1", ";INC01")
+           elif 'TASK' in EventNumber:
+               EventNumber = EventNumber.replace("TASK;", "TASK")
+               EventNumber = EventNumber.replace("TASK1", "TASK01")
+               EventNumber = EventNumber.replace(";0", ";TASK0")
+               EventNumber = EventNumber.replace(";1", ";TASK01")
+           else:
+               if FormName == 'CORRETIVA':
+                   EventNumber = 'INC' + EventNumber
+                   EventNumber = EventNumber.replace(";", ";INC")
+                   EventNumber = EventNumber.replace("INC1", "INC01")
+               else:
+                   EventNumber = 'TASK' + EventNumber
+                   EventNumber = EventNumber.replace(";", ";TASK")
+                   EventNumber = EventNumber.replace("TASK1", "TASK01")
+           if EventNumber is None:
+               EventNumber = 'Null'
+           return EventNumber
+    return 'Null'
 
 
 def getRefPOICustomerNumber(_xml):
@@ -370,35 +435,11 @@ Função exclusiva para PunchIn e PunchOut
 """
 def setPunch(_xml, _source):
     EntryType = getEntryType(_xml)
-    EntryDateFromEpoch = int(getEntryDateFromEpoch(_xml))
+    EntryDateFromEpoch = getEntryDateFromEpoch(_xml)
     EntryLocationX = getEntryLocationX(_xml)
     EntryLocationY = getEntryLocationY(_xml)
     EmployeeFirstName = getEmployeeFirstName(_xml)
     EmployeeFirstName = getEmployeeFirstName(_xml)
-    if 'SP01' in EmployeeFirstName:
-        EmployeeFirstName = 'Weslei'
-    elif 'SP02' in EmployeeFirstName:
-        EmployeeFirstName = 'Alex'
-    elif 'SP03' in EmployeeFirstName:
-        EmployeeFirstName = 'Ítalo'
-    elif 'SP04' in EmployeeFirstName:
-        EmployeeFirstName = 'Renan'
-    elif 'SP05' in EmployeeFirstName:
-        EmployeeFirstName = 'Matheus'
-    elif 'SP06' in EmployeeFirstName:
-        EmployeeFirstName = 'Roberto'
-    elif 'SP07' in EmployeeFirstName:
-        EmployeeFirstName = 'Rafhael'
-    elif 'SOR01' in EmployeeFirstName:
-        EmployeeFirstName = 'Wellington'
-    elif 'SOR02' in EmployeeFirstName:
-        EmployeeFirstName = 'Raphael'
-    elif 'PR01' in EmployeeFirstName:
-        EmployeeFirstName = 'Adélio'
-    elif 'RJ01' in EmployeeFirstName:
-        EmployeeFirstName = 'Vitor'
-    elif 'RJ02' in EmployeeFirstName:
-        EmployeeFirstName = 'Vitor'
     _employee_id = getEmployeeID(EmployeeFirstName)
     entry_date = datetime.fromtimestamp(
         EntryDateFromEpoch).strftime(
@@ -528,51 +569,30 @@ Função exclusiva para Forms de Atendimento
 """
 def setForm(_xml, _source):
     EntryType = getEntryType(_xml)
-    EntryDate = int(getEntryDateFromEpoch(_xml))
+    EntryDate = getEntryDateFromEpoch(_xml)
     entry_date = datetime.fromtimestamp(
         EntryDate).strftime(
         '%Y-%m-%d')
     EmployeeFirstName = getEmployeeFirstName(_xml)
-    if 'SP01' in EmployeeFirstName:
-        EmployeeFirstName = 'Weslei'
-    elif 'SP02' in EmployeeFirstName:
-        EmployeeFirstName = 'Alex'
-    elif 'SP03' in EmployeeFirstName:
-        EmployeeFirstName = 'Ítalo'
-    elif 'SP04' in EmployeeFirstName:
-        EmployeeFirstName = 'Renan'
-    elif 'SP05' in EmployeeFirstName:
-        EmployeeFirstName = 'Matheus'
-    elif 'SP06' in EmployeeFirstName:
-        EmployeeFirstName = 'Roberto'
-    elif 'SP07' in EmployeeFirstName:
-        EmployeeFirstName = 'Rafhael'
-    elif 'SOR01' in EmployeeFirstName:
-        EmployeeFirstName = 'Wellington'
-    elif 'SOR02' in EmployeeFirstName:
-        EmployeeFirstName = 'Raphael'
-    elif 'PR01' in EmployeeFirstName:
-        EmployeeFirstName = 'Adélio'
-    elif 'RJ01' in EmployeeFirstName:
-        EmployeeFirstName = 'Vitor'
-    elif 'RJ02' in EmployeeFirstName:
-        EmployeeFirstName = 'Vitor'
     FormName = getFormName(_xml)
     EventNumber = getEventNumber(_xml)
+    if ';' in EventNumber:
+        EventNumber = EventNumber.split(';')
+        EventNumber = EventNumber[0]
     POIName = getRefPOIName(_xml)
     POICGMP = getRefPOICustomerNumber(_xml)
     EquipREM = getEquipREM(_xml)
     EquipADD = getEquipADD(_xml)
 
-    posto_id = int(getPostoID(POICGMP))
-    employee_id = int(getEmployeeID(EmployeeFirstName))
-    base_id = int(getBaseIDFromEmployeeID(employee_id))
-    form_id = int(getFormID(FormName))
+    posto_id = getPostoID(POICGMP)
+    employee_id = getEmployeeID(EmployeeFirstName)
+    base_id = getBaseIDFromEmployeeID(employee_id)
+    form_id = getFormID(FormName)
 
     if EmployeeFirstName == 'UNICOM':
-        empresa_id = int('2')
+        empresa_id = 2
     else:
-        empresa_id = int('1')
+        empresa_id = 1
     dest_ok = _source.replace(
         '/new/',
         '/OfficeTrack/Reports/parsed/'
@@ -650,6 +670,14 @@ def setForm(_xml, _source):
                         else:
                             return dest_ok
                     else:
+                        # print(entry_date)
+                        # print(EntryDate)
+                        # print(EventNumber)
+                        # print(posto_id)
+                        # print(base_id)
+                        # print(employee_id)
+                        # print(form_id)
+                        # print(empresa_id)
                         conn_pgs.execute(
                             'INSERT INTO abastece_evento \
                             (active, entry_date, data_planejado, \
@@ -686,8 +714,8 @@ def setForm(_xml, _source):
 
 def setInvent(_xml, _source):
     EntryDate = getEntryDateFromEpoch(_xml)
-    FirstName = getEmployeeFirstName(_xml)
-    Employee_id = getEmployeeID(FirstName)
+    EmployeeFirstName = getEmployeeFirstName(_xml)
+    employee_id = getEmployeeID(EmployeeFirstName)
     for element in _xml.iter("Field"):
         if element[0].text:
             categoria = element[0].text
@@ -700,12 +728,21 @@ def setInvent(_xml, _source):
                     usado = categoria + '02'
                     defeito = categoria + '03'
                     if column[0].text == novo:
-                        q_novo = float(column[1].text)
+                        if column[1].text is None:
+                            q_novo = 0
+                        else:
+                            q_novo = float(column[1].text)
                     elif column[0].text == usado:
-                        q_usado = float(column[1].text)
+                        if column[1].text is None:
+                            q_usado = 0
+                        else:
+                            q_usado = float(column[1].text)
                     elif column[0].text == defeito:
-                        q_defeito = float(column[1].text)
-                updateInventario(EntryDate, Employee_id, equipamento, q_novo,
+                        if column[1].text is None:
+                            q_defeito = 0
+                        else:
+                            q_defeito = float(column[1].text)
+                updateInventario(EntryDate, employee_id, equipamento, q_novo,
                     q_usado, q_defeito, _source)
     return _source.replace('/new/', '/OfficeTrack/Inventories/not_parsed/')
 

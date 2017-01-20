@@ -16,9 +16,30 @@ dbUser = "temos"
 dbPass = "tw28()KP"
 
 
-def getpPostoID():
-    pass
-    return None
+def getPostoID(_p_name):
+    try:
+        with psycopg2.connect(
+            database=dbName,
+            user=dbUser,
+            host=dbHost,
+            password=dbPass
+        ) as conn_pg:
+            with conn_pg.cursor(
+            ) as conn_pgs:
+                conn_pgs.execute(
+                    'SELECT id FROM abastece_posto \
+                     WHERE \
+                     name = %s;',
+                    (_p_name,)
+                )
+                _id = int(conn_pgs.fetchone()[0])
+                return _id
+    except TypeError:
+        import sys
+        import traceback
+        print('Erro ao obter ID do Posto ', _p_name, file=sys.stderr)
+        traceback.print_exc(file=sys.stderr)
+        return None
 
 
 def getWarehouseID(_w_name):
@@ -37,15 +58,14 @@ def getWarehouseID(_w_name):
                      name = %s;',
                     (_w_name,)
                 )
-                _id = conn_pgs.fetchone()[0]
+                _id = int(conn_pgs.fetchone()[0])
                 return _id
-    except:
+    except TypeError:
         import sys
         import traceback
-        print('Whoops! Problem:', file=sys.stderr)
+        print('Erro ao obter ID do Warehouse ', _w_name, file=sys.stderr)
         traceback.print_exc(file=sys.stderr)
         return None
-    return None
 
 
 def getBaseID(_b_name):
@@ -64,15 +84,15 @@ def getBaseID(_b_name):
                      name = %s;',
                     (_b_name,)
                 )
-                _id = conn_pgs.fetchone()[0]
+                _id = int(conn_pgs.fetchone()[0])
                 return _id
-    except:
+    except TypeError:
         import sys
         import traceback
-        print('Whoops! Problem:', file=sys.stderr)
+        print('Erro ao obter ID da Base ', _b_name, file=sys.stderr)
         traceback.print_exc(file=sys.stderr)
         return None
-    return None
+
 
 def getEmployeeID(_e_name):
     try:
@@ -90,15 +110,14 @@ def getEmployeeID(_e_name):
                      name = %s;',
                     (_e_name,)
                 )
-                _id = conn_pgs.fetchone()[0]
+                _id = int(conn_pgs.fetchone()[0])
                 return _id
-    except:
+    except TypeError:
         import sys
         import traceback
-        print('Whoops! Problem:', file=sys.stderr)
+        print('Erro ao obter ID do Funcionário ', _e_name, file=sys.stderr)
         traceback.print_exc(file=sys.stderr)
         return None
-    return None
 
 
 def getClaseeID(_c_name):
@@ -119,13 +138,129 @@ def getClaseeID(_c_name):
                 )
                 _id = conn_pgs.fetchone()[0]
                 return _id
-    except:
+    except TypeError:
         import sys
         import traceback
-        print('Whoops! Problem:', file=sys.stderr)
+        print('Erro ao obter ID da Classe ', _c_name, file=sys.stderr)
         traceback.print_exc(file=sys.stderr)
         return None
-    return None
+
+
+def getFormID(_f_name):
+    try:
+        with psycopg2.connect(
+            database=dbName,
+            user=dbUser,
+            host=dbHost,
+            password=dbPass
+        ) as conn_pg:
+            with conn_pg.cursor(
+            ) as conn_pgs:
+                conn_pgs.execute(
+                    'SELECT id FROM abastece_form \
+                     WHERE \
+                     name = %s;',
+                    (_f_name,)
+                )
+                _id = conn_pgs.fetchone()[0]
+                return _id
+    except TypeError:
+        import sys
+        import traceback
+        print('Erro ao obter ID do Formulário ', _f_name, file=sys.stderr)
+        traceback.print_exc(file=sys.stderr)
+        return None
+
+
+def getBaseIDFromPostoID(_posto_id):
+    try:
+        with psycopg2.connect(
+            database=dbName,
+            user=dbUser,
+            host=dbHost,
+            password=dbPass
+        ) as conn_pg:
+            with conn_pg.cursor(
+            ) as conn_pgs:
+                conn_pgs.execute(
+                    'SELECT base_id FROM abastece_posto \
+                     WHERE \
+                     id = %s;',
+                    (_posto_id,)
+                )
+                _id = conn_pgs.fetchone()[0]
+                return _id
+    except TypeError:
+        import sys
+        import traceback
+        print('Erro ao obter ID da Base via ', _posto_id, file=sys.stderr)
+        traceback.print_exc(file=sys.stderr)
+        return None
+
+
+def getEmployeeIDFromBaseID(_base_id):
+    try:
+        with psycopg2.connect(
+            database=dbName,
+            user=dbUser,
+            host=dbHost,
+            password=dbPass
+        ) as conn_pg:
+            with conn_pg.cursor(
+            ) as conn_pgs:
+                conn_pgs.execute(
+                    'SELECT employee_id FROM abastece_base \
+                     WHERE \
+                     id = %s;',
+                    (_posto_id,)
+                )
+                _id = conn_pgs.fetchone()[0]
+                return _id
+    except TypeError:
+        import sys
+        import traceback
+        print('Erro ao obter ID do Funcionário via ', _base_id, file=sys.stderr)
+        traceback.print_exc(file=sys.stderr)
+        return None
+
+
+def parseEventNumber(_number):
+    EventNumber = _number
+    EventNumber = EventNumber.strip()
+    EventNumber = EventNumber.replace("TASC", "TASK")
+    EventNumber = EventNumber.replace("-", ";")
+    EventNumber = EventNumber.replace("/", ";")
+    EventNumber = EventNumber.replace(",", ";")
+    EventNumber = EventNumber.replace(" ", ";")
+    regex = re.compile('\;+')
+    EventNumber = re.sub(regex, ';', EventNumber)
+    if 'INC' in EventNumber:
+        EventNumber = EventNumber.replace("INC;", "INC")
+        EventNumber = EventNumber.replace("INC1", "INC01")
+        EventNumber = EventNumber.replace(";0", ";INC0")
+        EventNumber = EventNumber.replace(";1", ";INC01")
+        return EventNumber
+    elif 'TASK' in EventNumber:
+        EventNumber = EventNumber.replace("TASK;", "TASK")
+        EventNumber = EventNumber.replace("TASK1", "TASK01")
+        EventNumber = EventNumber.replace(";0", ";TASK0")
+        EventNumber = EventNumber.replace(";1", ";TASK01")
+        return EventNumber
+    else:
+        if FormName == 'CORRETIVA':
+            EventNumber = 'INC' + EventNumber
+            EventNumber = EventNumber.replace(";", ";INC")
+            EventNumber = EventNumber.replace("INC1", "INC01")
+            return EventNumber
+        else:
+            EventNumber = 'TASK' + EventNumber
+            EventNumber = EventNumber.replace(";", ";TASK")
+            EventNumber = EventNumber.replace("TASK1", "TASK01")
+            return EventNumber
+    if EventNumber is None:
+        EventNumber = 'Null'
+        return EventNumber
+
 
 def importPostoCSV(_File):
     try:
@@ -148,12 +283,6 @@ def importPostoCSV(_File):
                         p_classe = getClaseeID(row[6])
                         p_base = getBaseID(row[7])
                         p_warehouse = getWarehouseID(row[8])
-                        print(
-                            p_code,
-                            p_name,
-                            p_classe,
-                            p_warehouse,
-                        )
                         try:
                             with conn_pg.cursor(
                             ) as conn_pgs:
@@ -169,30 +298,24 @@ def importPostoCSV(_File):
                                      p_warehouse)
                                 )
                                 status = conn_pgs.statusmessage
-                                print(status)
                         except:
                             import sys
                             import traceback
-                            print(
-                                p_code,
-                                p_name,
-                                p_classe,
-                                p_warehouse,
-                            )
-                            print('Whoops! Problem:', file=sys.stderr)
+                            print('Erro ao inserir posto no banco:',
+                                  file=sys.stderr)
                             traceback.print_exc(file=sys.stderr)
                             return None
             except:
                 import sys
                 import traceback
-                print('Whoops! Problem:', file=sys.stderr)
+                print('Erro ao conectar com o banco de dados', file=sys.stderr)
                 traceback.print_exc(file=sys.stderr)
                 return None
 
     except:
         import sys
         import traceback
-        print('Whoops! Problem:', file=sys.stderr)
+        print('Erro ao abrir arquivo CSV:', file=sys.stderr)
         traceback.print_exc(file=sys.stderr)
         return None
 
@@ -224,7 +347,7 @@ def importWarehouseCSV(_File):
                             import sys
                             import traceback
                             print(
-                                'Whoops! Problem: %s não pode ser inserido',
+                                'Erro ao inserir %s',
                                 file=sys.stderr
                             ) % (w_name)
                             traceback.print_exc(file=sys.stderr)
@@ -232,14 +355,142 @@ def importWarehouseCSV(_File):
             except:
                 import sys
                 import traceback
-                print('Whoops! Problem:', file=sys.stderr)
+                print('Erro ao conectar com o banco de dados', file=sys.stderr)
                 traceback.print_exc(file=sys.stderr)
                 return None
 
     except:
         import sys
         import traceback
-        print('Whoops! Problem:', file=sys.stderr)
+        print('Erro ao abrir arquivo CSV:', file=sys.stderr)
+        traceback.print_exc(file=sys.stderr)
+        return None
+
+
+def importEventoCSV(_file):
+    try:
+        with open(_File, 'r') as srcfile:
+            reader = csv.reader(srcfile, delimiter=';')
+            try:
+                with psycopg2.connect(
+                    database=dbName,
+                    user=dbUser,
+                    host=dbHost,
+                    password=dbPass
+                ) as conn_pg:
+                    for row in reader:
+                        e_data_planejado = row[0]
+                        e_data_realizado = row[1]
+                        e_posto = getPostoID(row[2])
+                        e_number = parseEventNumber(row[3])
+                        e_tipo = row[5]
+                        e_base = row[6]
+                        try:
+                            with conn_pg.cursor(
+                            ) as conn_pgs:
+                                'UPDATE abastece_evento SET data_realizado = %s \
+                             WHERE \
+                             form_id = %s and posto_id = %s and \
+                             number = %s;',
+                            (EntryDate, form_id, posto_id, EventNumber)
+                        )
+                        status=conn_pgs.statusmessage
+                        query=conn_pgs.query
+                        if status == 'UPDATE 0':
+                            conn_pgs.execute(
+                                'SELECT id FROM abastece_evento \
+                                 WHERE form_id = %s and posto_id = %s and \
+                                 number = %s;',
+                                 (form_id, posto_id, 'Agendado')
+                            )
+                            event_id = conn_pgs.fetchone()
+
+                            if event_id is None:
+                                pass
+                            else:
+                                event_id = event_id[0]
+
+                            if event_id:
+                                conn_pgs.execute(
+                                    'UPDATE abastece_evento SET data_realizado = %s \
+                                     WHERE \
+                                     id = %s;',
+                                    (EntryDate, event_id)
+                                )
+                                status = conn_pgs.statusmessage
+                                query = conn_pgs.query
+                                if status == 'UPDATE 0':
+                                    conn_pgs.execute(
+                                        'INSERT INTO abastece_evento \
+                                        (active, entry_date, data_planejado, \
+                                         data_realizado, number, resumo, posto_id, \
+                                         base_id, employee_id, form_id, empresa_id) \
+                                        VALUES \
+                                        (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);',
+                                        (True,
+                                         entry_date,
+                                         EntryDate,
+                                         EntryDate,
+                                         EventNumber,
+                                         None,
+                                         posto_id,
+                                         base_id,
+                                         employee_id,
+                                         form_id,
+                                         empresa_id)
+                                    )
+                                    status = conn_pgs.statusmessage
+                                    if status == 'INSERT 0':
+                                        return dest_err
+                                    else:
+                                        return dest_ok
+                                else:
+                                    return dest_ok
+                            else:
+                                conn_pgs.execute(
+                                    'INSERT INTO abastece_evento \
+                                    (active, entry_date, data_planejado, \
+                                     data_realizado, number, resumo, posto_id, \
+                                     base_id, employee_id, form_id, empresa_id) \
+                                    VALUES \
+                                    (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);',
+                                    (True,
+                                     entry_date,
+                                     EntryDate,
+                                     EntryDate,
+                                     EventNumber,
+                                     None,
+                                     posto_id,
+                                     base_id,
+                                     employee_id,
+                                     form_id,
+                                     empresa_id)
+                                )
+                                status = conn_pgs.statusmessage
+                                if status == 'INSERT 0':
+                                    return dest_err
+                                else:
+                                    return dest_ok
+                        else:
+                            return dest_ok
+
+                        except:
+                            import sys
+                            import traceback
+                            print('Erro ao inserir posto no banco:', file=sys.stderr)
+                            traceback.print_exc(file=sys.stderr)
+                            return None
+            except:
+                import sys
+                import traceback
+                print('Erro ao conectar com o banco de dados', file=sys.stderr)
+                traceback.print_exc(file=sys.stderr)
+                return None
+
+    except:
+        import sys
+        import traceback
+        print('Erro ao abrir arquivo CSV:', file=sys.stderr)
         traceback.print_exc(file=sys.stderr)
         return None
 
@@ -248,4 +499,6 @@ if __name__ == '__main__':
     if argv[1] == 'warehouse':
         importWarehouseCSV(argv[2])
     elif argv[1] == 'posto':
+        importPostoCSV(argv[2])
+    elif argv[1] == 'evento':
         importPostoCSV(argv[2])

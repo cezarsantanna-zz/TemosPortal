@@ -27,6 +27,16 @@ class PostoAdmin(admin.ModelAdmin):
         'base',
         'warehouse',
     )
+    list_filter = (
+        'classe',
+        'status_vip',
+        'status_opc',
+    )
+    search_fields = (
+        'name',
+        'cgmp',
+    )
+
 
 
 class PunchAdmin(admin.ModelAdmin):
@@ -55,17 +65,34 @@ class PunchAdmin(admin.ModelAdmin):
             return datetime.fromtimestamp(float(obj.out_time)).strftime('%d/%m/%Y %H:%M:%S')
 
 class EventoAdmin(admin.ModelAdmin):
+    model = Evento
     list_display= (
-        'entry_date',
+        'posto',
+        'get_posto_name',
+        'form',
         'number',
         'planejado',
         'realizado',
-        'posto',
+        'empresa',
+    )
+    list_filter = (
         'form',
         'empresa',
     )
+    search_fields = (
+        'posto__name',
+        'posto__cgmp',
+    )
+
+    ordering = ['entry_date', 'posto']
 
     date_hierarchy = 'entry_date'
+
+
+    def get_posto_name(self, obj):
+        return obj.posto.name
+    get_posto_name.admin_order_field = 'posto'
+    get_posto_name.short_description = 'Posto'
 
     def planejado(self, obj):
         if obj.data_planejado is None:
