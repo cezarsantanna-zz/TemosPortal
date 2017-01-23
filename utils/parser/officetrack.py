@@ -1,3 +1,7 @@
+"""
+Esta API tem como função principal processar os arquivos XMLs do OfficeTrack
+e inserir as informações no banco de dados da aplicação abastece
+"""
 # -*- coding: utf-8 -*-
 import re
 import psycopg2.extensions
@@ -16,6 +20,19 @@ dbPass = "tw28()KP"
 
 
 def getFormID(_FormName):
+    """
+    Esta função retorna o ID do formulário na base abastece_form baseada no
+    nome do Formulário definido no relatório do OfficeTrack
+    Este nome pode ser:
+        PREVENTIVA
+        CORRETIVA
+        PREDITIVA
+        AÇÕES DE MELHORIAS
+    ou qualquer outro valor definido no OfficeTrack e cadastrado na base da
+    aplicação abastece.
+    Caso não seja possível encontrar o ID para o formulário fornecido, será
+    retornado o valor None, que deve ser tratado pelo processo chamador.
+    """
     try:
         with psycopg2.connect(
             database=dbName,
@@ -28,7 +45,7 @@ def getFormID(_FormName):
                 conn_pgs.execute(
                     "SELECT id FROM abastece_form \
                      WHERE active = True and name = (%s);",
-                    (_FormName,)
+                    (_FormName.upper(),)
                 )
                 _id = int(conn_pgs.fetchone()[0])
                 return _id
@@ -41,6 +58,19 @@ def getFormID(_FormName):
 
 
 def getPostoID(_CGMP):
+    """
+    Esta função retorna o ID do posto na base abastece_posto baseada no código
+    CGMP de cada posto cadastrado
+    O código CGMP é um número inteiro de 4 digitos.
+    Caso não seja possível encontrar o ID para o código CGMP fornecido, será
+    retornado o valor None, que deve ser tratado pelo processo chamador.
+    """
+    try:
+        if _CGMP is None:
+            raise ValueNone('Código CGMP não pode ser vazio')
+    except ValueNone:
+        print('Erro encontrado')
+        raise
     try:
         with psycopg2.connect(
             database=dbName,
@@ -66,32 +96,13 @@ def getPostoID(_CGMP):
 
 
 
-def getBaseIDFromEmployeeID(_Employee_id):
-    try:
-        with psycopg2.connect(
-            database=dbName,
-            user=dbUser,
-            host=dbHost,
-            password=dbPass
-        ) as conn_pg:
-            with conn_pg.cursor(
-            ) as conn_pgs:
-                conn_pgs.execute(
-                    "SELECT id FROM abastece_base \
-                     WHERE active = True and employee_id = (%s);",
-                    (_Employee_id,)
-                )
-                _id = int(conn_pgs.fetchone()[0])
-                return _id
-    except TypeError:
-        import sys
-        import traceback
-        print('Erro ao obter ID da Base via ', _Employee_id, file=sys.stderr)
-        traceback.print_exc(file=sys.stderr)
-        return None
-
-
 def getEmployeeID(_EmployeeFirstName):
+    """
+    Esta função retorna o ID do funcionário na base abastece_employee baseada
+    no primeiro nome definido no OfficeTrack.
+    Caso não seja possível encontrar o ID para o nome fornecido, será
+    retornado o valor None, que deve ser tratado pelo processo chamador.
+    """
     try:
         if _EmployeeFirstName is None:
             raise ValueNone('Nome do Funcionário não pode ser vazio')
@@ -122,7 +133,58 @@ def getEmployeeID(_EmployeeFirstName):
         return None
 
 
+def getBaseIDFromEmployeeID(_Employee_id):
+    """
+    Esta função retorna o ID da base através do ID do funcionário a ela
+    associado na tabela abastece_base.
+    Caso não seja possível encontrar o ID para o nome fornecido, será
+    retornado o valor None, que deve ser tratado pelo processo chamador.
+    """
+    try:
+        if _Employee_id is None:
+            raise ValueNone('ID do Funcionário não pode ser vazio')
+    except ValueNone:
+        print('Erro encontrado')
+        raise
+    try:
+        with psycopg2.connect(
+            database=dbName,
+            user=dbUser,
+            host=dbHost,
+            password=dbPass
+        ) as conn_pg:
+            with conn_pg.cursor(
+            ) as conn_pgs:
+                conn_pgs.execute(
+                    "SELECT id FROM abastece_base \
+                     WHERE active = True and employee_id = (%s);",
+                    (_Employee_id,)
+                )
+                _id = int(conn_pgs.fetchone()[0])
+                return _id
+    except TypeError:
+        import sys
+        import traceback
+        print('Erro ao obter ID da Base via ', _Employee_id, file=sys.stderr)
+        traceback.print_exc(file=sys.stderr)
+        return None
+
+
 def getEquipID(_equipamento):
+    """
+    Esta função retorna o ID do equipamento, item ou material cadastrado na
+    tabela abastece_item através do nome cadastrado no OfficeTrack, este nome
+    deve ser o mesmo criado na aplicação abastece, sendo que a planilha para
+    cadastro no OfficeTrack deve vir da aplicação abastece.
+    Caso não seja possível encontrar o ID para o nome fornecido, será
+    retornado o valor None, que deve ser tratado pelo processo chamador.
+    """
+    try:
+        if _Employee_id is None:
+            raise ValueNone('Nome do equipamento não pode ser vazio')
+    except ValueNone:
+        print('Erro encontrado')
+        raise
     try:
         with psycopg2.connect(
             database=dbName,
@@ -149,6 +211,14 @@ def getEquipID(_equipamento):
 Campos comuns em todos os XMLs do OfficeTrack
 """
 def getEventType(_xml):
+    """
+    Método para coleta da variável EventType incluída no arquivo XML do
+    OfficeTrack, esta variável para as entradas atualmente utilizadas é 1
+    não tendo sofrido alteração, mas a leitura é mantida para fins de
+    compatibilidade
+    Caso não seja possível encontrar este valor no XML o valor None é retornado
+    e deve ser tratado pelo processo chamador
+    """
     _EventType = _xml.find('EventType')
     if _EventType is not None:
         return _EventType.text
@@ -157,14 +227,51 @@ def getEventType(_xml):
 
 
 def getEntryType(_xml):
+    """
+    Método para coleta da variável EntryType incluída no arquivo XML do
+    OfficeTrack, esta variável pode assumir diferentes valores dependendo do
+    tipo de Entrada realizada pelo funcionário no aplicativo do OfficeTrack.
+    As EntryTypes utilizadas pela aplicação Abastece são:
+    EntryType 21: MS_PunchIn
+    EntryType 22: MS_PunchOut
+    EntryType 23: MS_StartTask
+    EntryType 24: MS_EndTask
+    EntryType 25: MS_ConfirmTask
+    EntryType 26: MS_CloseTask
+    EntryType 29: MS_TaskNotDone
+    EntryType 60: MS_FormFilled
+
+    Caso não seja possível encontrar este valor no XML ou o valor encontrado
+    não corresponder aos prédefinidos o valor None é retornado e deve ser
+    tratado pelo processo chamador
+    """
     _EntryType = _xml.find('EntryType')
     if _EntryType is not None:
-        return _EntryType.text
+        if (_EntryType.text == '21' or
+            _EntryType.text == '22' or
+            _EntryType.text == '23' or
+            _EntryType.text == '24' or
+            _EntryType.text == '25' or
+            _EntryType.text == '26' or
+            _EntryType.text == '29' or
+            _EntryType.text == '60'):
+            return _EntryType.text
+        else:
+            return None
     else:
         return None
 
 
 def getEntryDateFromEpoch(_xml):
+    """
+    Método para coleta da variável EntryDateFromEpoch incluída no arquivo XML do
+    OfficeTrack, esta apresenta o timestamp da Entrada na forma de segundos
+    desde 01/01/1970 também conhecido como EpochTime.
+    O OfficeTrack utiliza milesegundos, por isto coletamos somente os dez
+    primeiros digitos, descartando o valor fracionado.
+    Caso não seja possível encontrar este valor no XML o valor None é retornado
+    e deve ser tratado pelo processo chamador
+    """
     _EntryDateFromEpoch = _xml.find('EntryDateFromEpoch')
     if _EntryDateFromEpoch is not None:
         return int(_EntryDateFromEpoch.text[0:10])
@@ -173,38 +280,70 @@ def getEntryDateFromEpoch(_xml):
 
 
 def getEmployeeFirstName(_xml):
+    """
+    Método para coleta da variável EmployeeFirstName incluída no arquivo XML do
+    OfficeTrack. O valor lido é uma string que deve ser exatamente igual aos
+    valores cadastrados no aplicativo Abastece, pois caso contrario não será
+    possível a associação entre evento e base.
+    Caso não seja possível encontrar este valor no XML o valor None é retornado
+    e deve ser tratado pelo processo chamador
+
+    É utilizada uma estrutura de if_elif para tratar os relatórios antigos que
+    possuem com nome do funcionário a base onde ele deveria estar associado.
+
+    Para os novos relatórios (23/01/2017) esta estrutura não produz efeitos.
+    """
     _EmployeeFirstName = _xml.find('Employee/FirstName')
     if _EmployeeFirstName is not None:
         if 'SP01' in EmployeeFirstName:
             EmployeeFirstName = 'Wesley'
+            return _EmployeeFirstName.text
         elif 'SP02' in EmployeeFirstName:
             EmployeeFirstName = 'Alex'
+            return _EmployeeFirstName.text
         elif 'SP03' in EmployeeFirstName:
             EmployeeFirstName = 'Ítalo'
+            return _EmployeeFirstName.text
         elif 'SP04' in EmployeeFirstName:
             EmployeeFirstName = 'Renan'
+            return _EmployeeFirstName.text
         elif 'SP05' in EmployeeFirstName:
             EmployeeFirstName = 'Matheus'
+            return _EmployeeFirstName.text
         elif 'SP06' in EmployeeFirstName:
             EmployeeFirstName = 'Diego'
+            return _EmployeeFirstName.text
         elif 'SP07' in EmployeeFirstName:
             EmployeeFirstName = 'Rafhael'
+            return _EmployeeFirstName.text
         elif 'SOR01' in EmployeeFirstName:
             EmployeeFirstName = 'Wellington'
+            return _EmployeeFirstName.text
         elif 'SOR02' in EmployeeFirstName:
             EmployeeFirstName = 'Raphael'
+            return _EmployeeFirstName.text
         elif 'PR01' in EmployeeFirstName:
             EmployeeFirstName = 'Adélio'
+            return _EmployeeFirstName.text
         elif 'RJ01' in EmployeeFirstName:
             EmployeeFirstName = 'Vitor'
+            return _EmployeeFirstName.text
         elif 'RJ02' in EmployeeFirstName:
             EmployeeFirstName = 'Vitor'
-        return _EmployeeFirstName.text
+            return _EmployeeFirstName.text
+        else:
+            return _EmployeeFirstName.text
     else:
         return None
 
 
 def getEntryLocationX(_xml):
+    """
+    Função para extrair do XML do OfficeTrack qual a longitude onde a entrada
+    foi realizada.
+    Caso não seja possível encontrar esta informação será retornado None e o
+    mesmo deverá ser tratado pela função chamadora
+    """
     _EntryLocationX = _xml.find('EntryLocation/X')
     if _EntryLocationX is not None:
         return _EntryLocationX.text
@@ -213,6 +352,12 @@ def getEntryLocationX(_xml):
 
 
 def getEntryLocationY(_xml):
+    """
+    Função para extrair do XML do OfficeTrack qual a latitude onde a entrada
+    foi realizada.
+    Caso não seja possível encontrar esta informação será retornado None e o
+    mesmo deverá ser tratado pela função chamadora
+    """
     _EntryLocationY = _xml.find('EntryLocation/Y')
     if _EntryLocationY is not None:
         return _EntryLocationY.text
@@ -568,6 +713,34 @@ def setTask(_xml, _source):
 Função exclusiva para Forms de Atendimento
 """
 def setForm(_xml, _source):
+    """
+    Função para preencher o banco de dados com as informações vindas dos XMLs
+    com EntryType igual a 60.
+
+    Esta função espera como parâmetros o XML do OfficeTrack e o caminho completo
+    do arquivo de e-mail.
+    Do XML são extraidos os dados:
+        EntryType
+        EntryDate
+        EmployeeFirstName
+        FormName
+        POIName
+        POICGMP
+        EquipREM
+        EquipADD
+        EventNumber
+            Para o caso de no mesmo relatório tivermos dois ou mais chamados,
+            serão criadas uma entrada para cada chamado
+
+    Via SQL são obtidos os IDs dos seguintes campos:
+        posto_id, via código CGMP do Posto
+        employee_id, via Nome do funcionário
+        base_id, via employee_id
+        form_id, via nome do Formulário
+
+    Esta função retorna o caminho para qual diretório o email original deve ser
+    movido, sendo processado corretamente ou não
+    """
     EntryType = getEntryType(_xml)
     EntryDate = getEntryDateFromEpoch(_xml)
     entry_date = datetime.fromtimestamp(
@@ -575,10 +748,6 @@ def setForm(_xml, _source):
         '%Y-%m-%d')
     EmployeeFirstName = getEmployeeFirstName(_xml)
     FormName = getFormName(_xml)
-    EventNumber = getEventNumber(_xml)
-    if ';' in EventNumber:
-        EventNumber = EventNumber.split(';')
-        EventNumber = EventNumber[0]
     POIName = getRefPOIName(_xml)
     POICGMP = getRefPOICustomerNumber(_xml)
     EquipREM = getEquipREM(_xml)
@@ -602,54 +771,196 @@ def setForm(_xml, _source):
         '/OfficeTrack/Reports/not_parsed/'
     )
 
-    try:
-        with psycopg2.connect(
-            database=dbName,
-            user=dbUser,
-            host=dbHost,
-            password=dbPass
-        ) as conn_pg:
-            with conn_pg.cursor() as conn_pgs:
-                conn_pgs.execute(
-                    'UPDATE abastece_evento SET data_realizado = %s \
-                     WHERE \
-                     form_id = %s and posto_id = %s and \
-                     number = %s;',
-                    (EntryDate, form_id, posto_id, EventNumber)
-                )
-                status = conn_pgs.statusmessage
-                query = conn_pgs.query
-                if status == 'UPDATE 0':
-                    conn_pgs.execute(
-                        'SELECT id FROM abastece_evento \
-                         WHERE form_id = %s and posto_id = %s and \
-                         number = %s;',
-                         (form_id, posto_id, 'Agendado')
-                    )
-                    event_id = conn_pgs.fetchone()
-
-                    if event_id is None:
-                        pass
-                    else:
-                        event_id = event_id[0]
-
-                    if event_id:
+    EventNumber = getEventNumber(_xml)
+    if ';' in EventNumber:
+        EventNumbers = EventNumber.split(';')
+        for EventNumber in EventNumbers:
+            try:
+                with psycopg2.connect(
+                    database=dbName,
+                    user=dbUser,
+                    host=dbHost,
+                    password=dbPass
+                ) as conn_pg:
+                    with conn_pg.cursor() as conn_pgs:
                         conn_pgs.execute(
                             'UPDATE abastece_evento SET data_realizado = %s \
                              WHERE \
-                             id = %s;',
-                            (EntryDate, event_id)
+                             form_id = %s and posto_id = %s and \
+                             number = %s;',
+                            (EntryDate, form_id, posto_id, EventNumber)
                         )
                         status = conn_pgs.statusmessage
                         query = conn_pgs.query
                         if status == 'UPDATE 0':
                             conn_pgs.execute(
+                                'SELECT id FROM abastece_evento \
+                                 WHERE form_id = %s and posto_id = %s and \
+                                 number = %s;',
+                                 (form_id, posto_id, 'Agendado')
+                            )
+                            event_id = conn_pgs.fetchone()
+
+                            if event_id is None:
+                                pass
+                            else:
+                                event_id = event_id[0]
+
+                            if event_id:
+                                conn_pgs.execute(
+                                    'UPDATE abastece_evento \
+                                     SET data_realizado = %s \
+                                     WHERE \
+                                     id = %s;',
+                                    (EntryDate, event_id)
+                                )
+                                status = conn_pgs.statusmessage
+                                query = conn_pgs.query
+                                if status == 'UPDATE 0':
+                                    conn_pgs.execute(
+                                        'INSERT INTO abastece_evento \
+                                        (active, entry_date, data_planejado, \
+                                         data_realizado, number, resumo, \
+                                         posto_id, base_id, employee_id, \
+                                         form_id, empresa_id) \
+                                        VALUES \
+                                        (%s, %s, %s, %s, %s, %s, \
+                                         %s, %s, %s, %s, %s);',
+                                        (True,
+                                         entry_date,
+                                         EntryDate,
+                                         EntryDate,
+                                         EventNumber,
+                                         None,
+                                         posto_id,
+                                         base_id,
+                                         employee_id,
+                                         form_id,
+                                         empresa_id)
+                                    )
+                                    status = conn_pgs.statusmessage
+                                    if status == 'INSERT 0':
+                                        return dest_err
+                                    else:
+                                        return dest_ok
+                                else:
+                                    return dest_ok
+                            else:
+                                conn_pgs.execute(
+                                    'INSERT INTO abastece_evento \
+                                    (active, entry_date, data_planejado, \
+                                     data_realizado, number, resumo, posto_id, \
+                                     base_id, employee_id, form_id, \
+                                     empresa_id) \
+                                    VALUES \
+                                    (%s, %s, %s, %s, %s, %s, %s, \
+                                     %s, %s, %s, %s);',
+                                    (True,
+                                     entry_date,
+                                     EntryDate,
+                                     EntryDate,
+                                     EventNumber,
+                                     None,
+                                     posto_id,
+                                     base_id,
+                                     employee_id,
+                                     form_id,
+                                     empresa_id)
+                                )
+                                status = conn_pgs.statusmessage
+                                if status == 'INSERT 0':
+                                    return dest_err
+                                else:
+                                    return dest_ok
+                        else:
+                            return dest_ok
+            except:
+                import sys
+                import traceback
+                print('Whoops! Problem:', file=sys.stderr)
+                traceback.print_exc(file=sys.stderr)
+                return dest_err
+    else:
+        try:
+            with psycopg2.connect(
+                database=dbName,
+                user=dbUser,
+                host=dbHost,
+                password=dbPass
+            ) as conn_pg:
+                with conn_pg.cursor() as conn_pgs:
+                    conn_pgs.execute(
+                        'UPDATE abastece_evento SET data_realizado = %s \
+                         WHERE \
+                         form_id = %s and posto_id = %s and \
+                         number = %s;',
+                        (EntryDate, form_id, posto_id, EventNumber)
+                    )
+                    status = conn_pgs.statusmessage
+                    query = conn_pgs.query
+                    if status == 'UPDATE 0':
+                        conn_pgs.execute(
+                            'SELECT id FROM abastece_evento \
+                             WHERE form_id = %s and posto_id = %s and \
+                             number = %s;',
+                             (form_id, posto_id, 'Agendado')
+                        )
+                        event_id = conn_pgs.fetchone()
+
+                        if event_id is None:
+                            pass
+                        else:
+                            event_id = event_id[0]
+
+                        if event_id:
+                            conn_pgs.execute(
+                                'UPDATE abastece_evento \
+                                 SET data_realizado = %s \
+                                 WHERE \
+                                 id = %s;',
+                                (EntryDate, event_id)
+                            )
+                            status = conn_pgs.statusmessage
+                            query = conn_pgs.query
+                            if status == 'UPDATE 0':
+                                conn_pgs.execute(
+                                    'INSERT INTO abastece_evento \
+                                    (active, entry_date, data_planejado, \
+                                     data_realizado, number, resumo, \
+                                     posto_id, base_id, employee_id, \
+                                     form_id, empresa_id) \
+                                    VALUES \
+                                    (%s, %s, %s, %s, %s, %s, \
+                                     %s, %s, %s, %s, %s);',
+                                    (True,
+                                     entry_date,
+                                     EntryDate,
+                                     EntryDate,
+                                     EventNumber,
+                                     None,
+                                     posto_id,
+                                     base_id,
+                                     employee_id,
+                                     form_id,
+                                     empresa_id)
+                                )
+                                status = conn_pgs.statusmessage
+                                if status == 'INSERT 0':
+                                    return dest_err
+                                else:
+                                    return dest_ok
+                            else:
+                                return dest_ok
+                        else:
+                            conn_pgs.execute(
                                 'INSERT INTO abastece_evento \
                                 (active, entry_date, data_planejado, \
                                  data_realizado, number, resumo, posto_id, \
-                                 base_id, employee_id, form_id, empresa_id) \
+                                 base_id, employee_id, form_id, \
+                                 empresa_id) \
                                 VALUES \
-                                (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);',
+                                (%s, %s, %s, %s, %s, %s, %s, \
+                                 %s, %s, %s, %s);',
                                 (True,
                                  entry_date,
                                  EntryDate,
@@ -667,49 +978,14 @@ def setForm(_xml, _source):
                                 return dest_err
                             else:
                                 return dest_ok
-                        else:
-                            return dest_ok
                     else:
-                        # print(entry_date)
-                        # print(EntryDate)
-                        # print(EventNumber)
-                        # print(posto_id)
-                        # print(base_id)
-                        # print(employee_id)
-                        # print(form_id)
-                        # print(empresa_id)
-                        conn_pgs.execute(
-                            'INSERT INTO abastece_evento \
-                            (active, entry_date, data_planejado, \
-                             data_realizado, number, resumo, posto_id, \
-                             base_id, employee_id, form_id, empresa_id) \
-                            VALUES \
-                            (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);',
-                            (True,
-                             entry_date,
-                             EntryDate,
-                             EntryDate,
-                             EventNumber,
-                             None,
-                             posto_id,
-                             base_id,
-                             employee_id,
-                             form_id,
-                             empresa_id)
-                        )
-                        status = conn_pgs.statusmessage
-                        if status == 'INSERT 0':
-                            return dest_err
-                        else:
-                            return dest_ok
-                else:
-                    return dest_ok
-    except:
-        import sys
-        import traceback
-        print('Whoops! Problem:', file=sys.stderr)
-        traceback.print_exc(file=sys.stderr)
-        return dest_err
+                        return dest_ok
+        except:
+            import sys
+            import traceback
+            print('Whoops! Problem:', file=sys.stderr)
+            traceback.print_exc(file=sys.stderr)
+            return dest_err
 
 
 def setInvent(_xml, _source):
@@ -777,6 +1053,12 @@ def parserOfficeTrack(_source, _mail):
         elif getEntryType(xml) == '23':
             return setTask(xml, _source)
 
+        elif getEntryType(xml) == '24':
+            return setTask(xml, _source)
+
+        elif getEntryType(xml) == '25':
+            return setTask(xml, _source)
+
         elif getEntryType(xml) == '26':
             return setTask(xml, _source)
 
@@ -784,19 +1066,23 @@ def parserOfficeTrack(_source, _mail):
             return setTask(xml, _source)
 
         elif getEntryType(xml) == '60':
-            FormName = getFormName(xml)
+            FormName = getFormName(xml).upper()
             if (FormName == 'INVENTÁRIO' or
                     FormName == 'INVENTARIO'):
                 return setInvent(xml, _source)
             elif (FormName == 'AÇÕES DE MELHORIAS' or
-                  FormName == 'ANTENA 915' or
                   FormName == 'CORRETIVA' or
                   FormName == 'DESINSTALAÇÃO DO POSTO' or
                   FormName == 'PLANO VERÃO' or
                   FormName == 'PREDITIVA' or
                   FormName == 'PREVENTIVA' or
                   FormName == 'RETIRADA ANTENA 5.8' or
-                  FormName == 'SINALIZAÇÃO'):
+                  FormName == 'SINALIZAÇÃO'or
+                  FormName == 'ICR - SURVEY' or
+                  FormName == 'ICR - INFRAESTRUTURA' or
+                  FormName == 'ICR - CONEXÃO' or
+                  FormName == 'ANTENA 915' or
+                  FormName == 'TREINAMENTO'):
                 return setForm(xml, _source)
             else:
                 return _source.replace('/new/',
