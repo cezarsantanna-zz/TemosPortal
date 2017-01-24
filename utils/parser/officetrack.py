@@ -67,8 +67,8 @@ def getPostoID(_CGMP):
     """
     try:
         if _CGMP is None:
-            raise ValueNone('Código CGMP não pode ser vazio')
-    except ValueNone:
+            raise ValueError('Código CGMP não pode ser vazio')
+    except ValueError:
         print('Erro encontrado')
         raise
     try:
@@ -95,6 +95,43 @@ def getPostoID(_CGMP):
         return None
 
 
+def getPostoCode(_POIName):
+    """
+    Esta função é utilizada para recuperar o código CGMP de um posto através de
+    seu nome.
+
+    Esta função só é utilizada nos casos em que o número do cliente não foi
+    incluído no relatório, isto ocorreu em alguns relatórios no passado.
+    """
+    try:
+        if _POIName is None:
+            raise ValueError('O nome do posto não pode ser vazio')
+    except ValueError:
+        print('Erro encontrado')
+        raise
+    try:
+        with psycopg2.connect(
+            database=dbName,
+            user=dbUser,
+            host=dbHost,
+            password=dbPass
+        ) as conn_pg:
+            with conn_pg.cursor(
+            ) as conn_pgs:
+                conn_pgs.execute(
+                    "SELECT cgmp FROM abastece_posto \
+                     WHERE active = True and name = (%s);",
+                    (_POIName,)
+                )
+                _cgmp = conn_pgs.fetchone()[0]
+                return _cgmp
+    except TypeError:
+        import sys
+        import traceback
+        print('Erro ao obter Código CGMP do Posto ', _POIName, file=sys.stderr)
+        traceback.print_exc(file=sys.stderr)
+        return None
+
 
 def getEmployeeID(_EmployeeFirstName):
     """
@@ -105,8 +142,8 @@ def getEmployeeID(_EmployeeFirstName):
     """
     try:
         if _EmployeeFirstName is None:
-            raise ValueNone('Nome do Funcionário não pode ser vazio')
-    except ValueNone:
+            raise ValueError('Nome do Funcionário não pode ser vazio')
+    except ValueError:
         print('Erro encontrado')
         raise
     try:
@@ -142,8 +179,8 @@ def getBaseIDFromEmployeeID(_Employee_id):
     """
     try:
         if _Employee_id is None:
-            raise ValueNone('ID do Funcionário não pode ser vazio')
-    except ValueNone:
+            raise ValueError('ID do Funcionário não pode ser vazio')
+    except ValueError:
         print('Erro encontrado')
         raise
     try:
@@ -181,8 +218,8 @@ def getEquipID(_equipamento):
     """
     try:
         if _Employee_id is None:
-            raise ValueNone('Nome do equipamento não pode ser vazio')
-    except ValueNone:
+            raise ValueError('Nome do equipamento não pode ser vazio')
+    except ValueError:
         print('Erro encontrado')
         raise
     try:
@@ -294,45 +331,69 @@ def getEmployeeFirstName(_xml):
     Para os novos relatórios (23/01/2017) esta estrutura não produz efeitos.
     """
     _EmployeeFirstName = _xml.find('Employee/FirstName')
-    if _EmployeeFirstName is not None:
-        if 'SP01' in EmployeeFirstName:
-            EmployeeFirstName = 'Wesley'
-            return _EmployeeFirstName.text
-        elif 'SP02' in EmployeeFirstName:
-            EmployeeFirstName = 'Alex'
-            return _EmployeeFirstName.text
-        elif 'SP03' in EmployeeFirstName:
-            EmployeeFirstName = 'Ítalo'
-            return _EmployeeFirstName.text
-        elif 'SP04' in EmployeeFirstName:
-            EmployeeFirstName = 'Renan'
-            return _EmployeeFirstName.text
-        elif 'SP05' in EmployeeFirstName:
-            EmployeeFirstName = 'Matheus'
-            return _EmployeeFirstName.text
-        elif 'SP06' in EmployeeFirstName:
-            EmployeeFirstName = 'Diego'
-            return _EmployeeFirstName.text
-        elif 'SP07' in EmployeeFirstName:
-            EmployeeFirstName = 'Rafhael'
-            return _EmployeeFirstName.text
-        elif 'SOR01' in EmployeeFirstName:
-            EmployeeFirstName = 'Wellington'
-            return _EmployeeFirstName.text
-        elif 'SOR02' in EmployeeFirstName:
-            EmployeeFirstName = 'Raphael'
-            return _EmployeeFirstName.text
-        elif 'PR01' in EmployeeFirstName:
-            EmployeeFirstName = 'Adélio'
-            return _EmployeeFirstName.text
-        elif 'RJ01' in EmployeeFirstName:
-            EmployeeFirstName = 'Vitor'
-            return _EmployeeFirstName.text
-        elif 'RJ02' in EmployeeFirstName:
-            EmployeeFirstName = 'Vitor'
-            return _EmployeeFirstName.text
+    FirstName = _EmployeeFirstName.text
+    try:
+        if FirstName is not None:
+            if 'SP01' in FirstName:
+                FirstName = 'Wesley'
+                return FirstName
+            elif 'SP02' in FirstName:
+                FirstName = 'Alex'
+                return FirstName
+            elif 'SP03' in FirstName:
+                FirstName = 'Ítalo'
+                return FirstName
+            elif 'SP04' in FirstName:
+                FirstName = 'Renan'
+                return FirstName
+            elif 'SP05' in FirstName:
+                FirstName = 'Matheus'
+                return FirstName
+            elif 'SP06' in FirstName:
+                FirstName = 'Diego'
+                return FirstName
+            elif 'SP07' in FirstName:
+                FirstName = 'Rafhael'
+                return FirstName
+            elif 'SOR01' in FirstName:
+                FirstName = 'Wellington'
+                return FirstName
+            elif 'SOR02' in FirstName:
+                FirstName = 'Raphael'
+                return FirstName
+            elif 'PR01' in FirstName:
+                FirstName = 'Adélio'
+                return FirstName
+            elif 'RJ01' in FirstName:
+                FirstName = 'Vitor'
+                return FirstName
+            elif 'RJ02' in FirstName:
+                FirstName = 'Vitor'
+                return FirstName
+            elif 'Italo' in FirstName:
+                FirstName = 'Ítalo'
+                return FirstName
+            else:
+                return FirstName
         else:
-            return _EmployeeFirstName.text
+            raise ValueError('Não encontrado Employee')
+    except:
+        import sys
+        import traceback
+        print('Error:', file=sys.stderr)
+        traceback.print_exc(file=sys.stderr)
+        return 'Error'
+
+
+def getEntryLocationAddress(_xml):
+    """
+    Função para extrair do XML do OfficeTrack o nome do Posto nos cadastrados em que não foi encontrado o Nome do PointOfInterest.
+    Caso não seja possível encontrar esta informação será retornado None e o
+    mesmo deverá ser tratado pela função chamadora
+    """
+    _EntryLocationAddress = _xml.find('EntryLocation/Address')
+    if _EntryLocationAddress is not None:
+        return _EntryLocationAddress.text
     else:
         return None
 
@@ -584,11 +645,17 @@ def setPunch(_xml, _source):
     EntryLocationX = getEntryLocationX(_xml)
     EntryLocationY = getEntryLocationY(_xml)
     EmployeeFirstName = getEmployeeFirstName(_xml)
-    EmployeeFirstName = getEmployeeFirstName(_xml)
+
+    if EmployeeFirstName == 'Error':
+        dest_err = _source.replace(
+            '/new/',
+            '/Errors/'
+        )
+        return dest_err
+
     _employee_id = getEmployeeID(EmployeeFirstName)
-    entry_date = datetime.fromtimestamp(
-        EntryDateFromEpoch).strftime(
-        '%Y-%m-%d')
+    entry_date = datetime.fromtimestamp(EntryDateFromEpoch).strftime('%Y-%m-%d')
+
     if EntryType == '21':
         tipo = 'Entrada'
         dest_ok = _source.replace(
@@ -703,6 +770,11 @@ def setTask(_xml, _source):
     # print(getTaskCustomerName(_xml))
     if getEntryType(_xml) == '23':
         return _source.replace('/new/', '/OfficeTrack/Task/Start/not_parsed/')
+    elif getEntryType(_xml) == '24':
+        return _source.replace('/new/',
+            '/OfficeTrack/Task/Confirmed/not_parsed/')
+    elif getEntryType(_xml) == '25':
+        return _source.replace('/new/', '/OfficeTrack/Task/End/not_parsed/')
     elif getEntryType(_xml) == '26':
         return _source.replace('/new/', '/OfficeTrack/Task/Close/not_parsed/')
     elif getEntryType(_xml) == '29':
@@ -750,9 +822,11 @@ def setForm(_xml, _source):
     FormName = getFormName(_xml)
     POIName = getRefPOIName(_xml)
     POICGMP = getRefPOICustomerNumber(_xml)
+    if POIName is None:
+        POIName = getEntryLocationAddress(_xml)
+        POICGMP = getPostoCode(POIName)
     EquipREM = getEquipREM(_xml)
     EquipADD = getEquipADD(_xml)
-
     posto_id = getPostoID(POICGMP)
     employee_id = getEmployeeID(EmployeeFirstName)
     base_id = getBaseIDFromEmployeeID(employee_id)
@@ -1042,7 +1116,6 @@ def parserOfficeTrack(_source, _mail):
         getEmployeeFirstName(xml) == 'Cezar' or
             getEmployeeFirstName(xml) == 'Engenharia E2i9 TESTE API'):
         return _source.replace('/new/', '/trash/')
-        pass
     else:
         if getEntryType(xml) == '21':
             return setPunch(xml, _source)

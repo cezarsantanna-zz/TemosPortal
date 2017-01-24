@@ -61,10 +61,11 @@ def parsemail(_mailfile):
     source = _mailfile
     mail = MailParser()
     mail.parse_from_file(_mailfile)
-    if mail.X_Original_To_ == 'officetrack@temos.online':
+    if mail.from_ == 'OfficeTrack Reports <reports@latam.officeTrack.com>':
         destination = parseOT(_mailfile, mail)
+        print(destination)
         rename(source, destination)
-    elif mail.X_Original_To_ == 'servicenow@temos.online':
+    elif mail.from_ == 'SEM PARAR - CS - Central de Serviços <semparar@service-now.com>':
         destination = parseSN(_mailfile, mail)
         rename(source, destination)
     else:
