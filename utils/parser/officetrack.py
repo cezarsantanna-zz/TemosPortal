@@ -473,7 +473,7 @@ def getTaskTaskTypeName(_xml):
 def getTaskCustomerCustomerNumber(_xml):
     _TaskCustomerCustomerNumber = _xml.find('Task/Customer/CustomerNumber')
     if _TaskCustomerCustomerNumber is not None:
-        return _TaskCustomerCustomerNumber.text
+        return _TaskCustomerCustomerNumber.text[0:4]
     else:
         return None
 
@@ -493,7 +493,16 @@ EntryType 60
 def getFormName(_xml):
     _FormName = _xml.find('Form/Name')
     if _FormName is not None:
-        return _FormName.text
+        _FormNameText = _FormName.text
+        if 'PREDITIVA' in _FormNameText:
+            _FormNameText = 'PREDITIVA'
+        elif 'PREVENTIVA' in _FormNameText:
+            _FormNameText = 'PREVENTIVA'
+        elif 'CORRETIVA' in _FormNameText:
+            _FormNameText = 'CORRETIVA'
+        else:
+            pass
+        return _FormNameText
     else:
         return None
 
@@ -1139,7 +1148,7 @@ def parserOfficeTrack(_source, _mail):
             return setTask(xml, _source)
 
         elif getEntryType(xml) == '60':
-            FormName = getFormName(xml).upper()
+            FormName = getFormName(xml)
             if (FormName == 'INVENTÁRIO' or
                     FormName == 'INVENTARIO'):
                 return setInvent(xml, _source)

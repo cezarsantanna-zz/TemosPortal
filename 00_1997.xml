@@ -1,0 +1,99 @@
+b'<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Entry>
+    <EventType>1</EventType>
+    <EntryType>60</EntryType>
+    <EntryDate>02042016090225</EntryDate>
+    <EntryDateAge>-1458</EntryDateAge>
+    <EntryDateFromEpoch>1459598545000</EntryDateFromEpoch>
+    <EntryLocation>
+        <Address>DUCATI</Address>
+        <X>-49.256175994873</X>
+        <Y>-25.3915748596191</Y>
+        <MSISDN>+5514364287</MSISDN>
+        <Date>02042016090148</Date>
+        <DateAge>-1496</DateAge>
+        <DateFromEpoch>1459598508000</DateFromEpoch>
+    </EntryLocation>
+    <Form>
+        <Name>RELAT\xc3\x93RIO FOTOGR\xc3\x81FICO - ABASTECE</Name>
+        <Version>1</Version>
+        <CustomerNumber>06542</CustomerNumber>
+        <Fields>
+            <Field>
+                <Id>NOME DO T\xc3\x89CNICO</Id>
+                <Value>AD\xc3\x89LIO / EDMAR</Value>
+            </Field>
+            <Field>
+                <Id>STATUS DO POSTO</Id>
+                <Value>OPC</Value>
+            </Field>
+            <Field>
+                <Id>CHAMADO E SERVI\xc3\x87O</Id>
+                <Value>Preventiva</Value>
+            </Field>
+            <Field>
+                <Id>N\xc3\x9aMERO DE CHAMADO</Id>
+                <Value>TASK01114141</Value>
+            </Field>
+            <Field>
+                <Id>OBSERVA\xc3\x87\xc3\x95ES DO ARM\xc3\x81RIO 1</Id>
+                <Value>SEM ALTERA\xc3\x87\xc3\x83O</Value>
+            </Field>
+            <Field>
+                <Id>STATUS DAS LUMIN\xc3\x81RIAS</Id>
+                <Value>N\xc3\xa3o atuamos na parte do teto</Value>
+            </Field>
+            <Field>
+                <Id>OBSERVA\xc3\x87\xc3\x95ES DO ARM\xc3\x81RIO II</Id>
+                <Value>SEM ALTERA\xc3\x87\xc3\x83O</Value>
+            </Field>
+            <Field>
+                <Id>SERVIDOR</Id>
+                <Value>Ok</Value>
+            </Field>
+            <Field>
+                <Id>LOCAL DO SERVIDOR</Id>
+                <Value>Outros</Value>
+            </Field>
+            <Field>
+                <Id>OUTROS LOCAIS</Id>
+                <Value>DEP\xc3\x93SITO</Value>
+            </Field>
+            <Field>
+                <Id>DESCRITO O QUE FOI FEITO PASSO A PASSO</Id>
+                <Value>Chamado: TASK 0111441 -PREVENTIVA -Check in - Bruno - Check out - Bruno - Limpeza dos pain\xc3\xa9is e dos equipamentos. -Acompanhado abastecimento com cliente na pista, registrado em fotos.- Teste nas antenas 5.8 e 915MHz, teste nas
+                    c\xc3\xa2meras laterais e nas Ocr, teste nos sensores e nas pistas com o caminh\xc3\xa3o, sistema abastece liberado com o Tiv e Tag.
+                </Value>
+            </Field>
+            <Field>
+                <Id>NOME DO RESPONS\xc3\x81VEL</Id>
+                <Value>Ana</Value>
+            </Field>
+            <Field>
+                <Id>
+                    Email</Id>
+                <Value>pmo@e2i9.com; rodolfo.amigo@semparar.net;
+                </Value>
+            </Field>
+        </Fields>
+    </Form>
+    <Employee>
+        <FirstName>TABLET PR</FirstName>
+        <EmployeeNumber>BASE PR</EmployeeNumber>
+        <Group>
+            <Name>ABASTECE</Name>
+        </Group>
+    </Employee>
+    <ReferencedPointsOfInterest>
+        <PointOfInterest>
+            <City>Curitiba</City>
+            <CustomerNumber>06542</CustomerNumber>
+            <Name>DUCATI</Name>
+            <State>PR</State>
+            <Street>Rua Claudio Paulino Dariva, 304</Street>
+            <Layer>
+                <Name>POSTOS PR</Name>
+            </Layer>
+        </PointOfInterest>
+    </ReferencedPointsOfInterest>
+</Entry>
