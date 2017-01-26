@@ -368,6 +368,20 @@ def importWarehouseCSV(_File):
 
 
 def importEventoCSV(_file):
+    """
+    Função para importar eventos planejados e/ou realizados via arquivo CSV
+    o arquivo deve seguir o seguinte formato:
+    Separador ou Delimitador ;
+    Ordem dos campos:
+        data_plan;date_real;cgmp;chamado;tipo;funcionário
+        data_plan: Data para qual a atividade foi planejada
+        data_real: Data na qual a atividade foi efetivamente realizada
+        cgmp: Código de 4 digitos que indentificam o Posto na Sem Parar
+        chamado: Número do chamado no Service Now (TASK ou INC)
+        tipo: Tipo de eventos, estão descritos na tabela abastece_form
+        funcionário: primeiro nome do técnico que atendeu o chamado, deve ser
+            ao indicado no OfficeTrack
+    """
     try:
         with open(_File, 'r') as srcfile:
             reader = csv.reader(srcfile, delimiter=';')
@@ -384,42 +398,78 @@ def importEventoCSV(_file):
                         e_posto = getPostoID(row[2])
                         e_number = parseEventNumber(row[3])
                         e_tipo = row[5]
-                        e_base = row[6]
-                        try:
-                            with conn_pg.cursor(
-                            ) as conn_pgs:
-                                'UPDATE abastece_evento SET data_realizado = %s \
-                             WHERE \
-                             form_id = %s and posto_id = %s and \
-                             number = %s;',
-                            (EntryDate, form_id, posto_id, EventNumber)
-                        )
-                        status=conn_pgs.statusmessage
-                        query=conn_pgs.query
-                        if status == 'UPDATE 0':
-                            conn_pgs.execute(
-                                'SELECT id FROM abastece_evento \
-                                 WHERE form_id = %s and posto_id = %s and \
-                                 number = %s;',
-                                 (form_id, posto_id, 'Agendado')
-                            )
-                            event_id = conn_pgs.fetchone()
+                        e_employee = row[6]
+                        if e_data_realizado is not None:
+                            try:
+                                with conn_pg.cursor(
+                                ) as conn_pgs:
+                                    conn_pgs.execute(
+                                        'UPDATE abastece_evento \
+                                         SET data_realizado = %s \
+                                         WHERE \
+                                         form_id = %s and \
+                                         posto_id = %s and \
+                                         number = %s;',
+                                        (EntryDate,
+                                         form_id,
+                                         posto_id,
+                                         EventNumber)
+                                    )
+                                    status=conn_pgs.statusmessage
+                                    query=conn_pgs.query
+                                    if status == 'UPDATE 0':
+                                        conn_pgs.execute(
+                                            'SELECT id FROM abastece_evento \
+                                             WHERE form_id = %s and \
+                                             posto_id = %s and \
+                                             number = %s;',
+                                            (form_id,
+                                             posto_id,
+                                             'Agendado')
+                                        )
+                                        event_id = conn_pgs.fetchone()
 
-                            if event_id is None:
-                                pass
-                            else:
-                                event_id = event_id[0]
-
-                            if event_id:
-                                conn_pgs.execute(
-                                    'UPDATE abastece_evento SET data_realizado = %s \
-                                     WHERE \
-                                     id = %s;',
-                                    (EntryDate, event_id)
-                                )
-                                status = conn_pgs.statusmessage
-                                query = conn_pgs.query
-                                if status == 'UPDATE 0':
+                                if event_id is not None:
+                                    event_id = event_id[0]
+                                    conn_pgs.execute(
+                                        'UPDATE abastece_evento SET data_realizado = %s \
+                                         WHERE \
+                                         id = %s;',
+                                        (EntryDate, event_id)
+                                    )
+                                    status = conn_pgs.statusmessage
+                                    query = conn_pgs.query
+                                    if status == 'UPDATE 0':
+                                        conn_pgs.execute(
+                                            'INSERT INTO abastece_evento \
+                                            (active, entry_date, \
+                                             data_planejado, \
+                                             data_realizado, number, resumo, \
+                                             posto_id, base_id, employee_id, \
+                                             form_id, empresa_id) \
+                                            VALUES \
+                                            (%s, %s, %s, %s, %s, %s, %s, %s, \
+                                             %s, %s, %s);',
+                                            (True,
+                                             entry_date,
+                                             EntryDate,
+                                             EntryDate,
+                                             EventNumber,
+                                             None,
+                                             posto_id,
+                                             base_id,
+                                             employee_id,
+                                             form_id,
+                                             empresa_id)
+                                        )
+                                        status = conn_pgs.statusmessage
+                                        if status == 'INSERT 0':
+                                            return dest_err
+                                        else:
+                                            return dest_ok
+                                    else:
+                                        return dest_ok
+                                else:
                                     conn_pgs.execute(
                                         'INSERT INTO abastece_evento \
                                         (active, entry_date, data_planejado, \
@@ -444,42 +494,109 @@ def importEventoCSV(_file):
                                         return dest_err
                                     else:
                                         return dest_ok
-                                else:
-                                    return dest_ok
                             else:
-                                conn_pgs.execute(
-                                    'INSERT INTO abastece_evento \
-                                    (active, entry_date, data_planejado, \
-                                     data_realizado, number, resumo, posto_id, \
-                                     base_id, employee_id, form_id, empresa_id) \
-                                    VALUES \
-                                    (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);',
-                                    (True,
-                                     entry_date,
-                                     EntryDate,
-                                     EntryDate,
-                                     EventNumber,
-                                     None,
-                                     posto_id,
-                                     base_id,
-                                     employee_id,
-                                     form_id,
-                                     empresa_id)
-                                )
-                                status = conn_pgs.statusmessage
-                                if status == 'INSERT 0':
-                                    return dest_err
-                                else:
-                                    return dest_ok
+                                return dest_ok
+                            except:
+                                import sys
+                                import traceback
+                                print('Erro ao inserir posto no banco:', file=sys.stderr)
+                                traceback.print_exc(file=sys.stderr)
+                                return None
                         else:
-                            return dest_ok
+                            try:
+                                with conn_pg.cursor(
+                                ) as conn_pgs:
+                                    'UPDATE abastece_evento \
+                                    SET data_realizado = %s \
+                                 WHERE \
+                                 form_id = %s and posto_id = %s and \
+                                 number = %s;',
+                                (EntryDate, form_id, posto_id, EventNumber)
+                            )
+                            status=conn_pgs.statusmessage
+                            query=conn_pgs.query
+                            if status == 'UPDATE 0':
+                                conn_pgs.execute(
+                                    'SELECT id FROM abastece_evento \
+                                     WHERE form_id = %s and posto_id = %s and \
+                                     number = %s;',
+                                     (form_id, posto_id, 'Agendado')
+                                )
+                                event_id = conn_pgs.fetchone()
 
-                        except:
-                            import sys
-                            import traceback
-                            print('Erro ao inserir posto no banco:', file=sys.stderr)
-                            traceback.print_exc(file=sys.stderr)
-                            return None
+                                if event_id is not None:
+                                    event_id = event_id[0]
+                                    conn_pgs.execute(
+                                        'UPDATE abastece_evento SET data_realizado = %s \
+                                         WHERE \
+                                         id = %s;',
+                                        (EntryDate, event_id)
+                                    )
+                                    status = conn_pgs.statusmessage
+                                    query = conn_pgs.query
+                                    if status == 'UPDATE 0':
+                                        conn_pgs.execute(
+                                            'INSERT INTO abastece_evento \
+                                            (active, entry_date, \
+                                             data_planejado, \
+                                             data_realizado, number, resumo, \
+                                             posto_id, base_id, employee_id, \
+                                             form_id, empresa_id) \
+                                            VALUES \
+                                            (%s, %s, %s, %s, %s, %s, %s, %s, \
+                                             %s, %s, %s);',
+                                            (True,
+                                             entry_date,
+                                             EntryDate,
+                                             EntryDate,
+                                             EventNumber,
+                                             None,
+                                             posto_id,
+                                             base_id,
+                                             employee_id,
+                                             form_id,
+                                             empresa_id)
+                                        )
+                                        status = conn_pgs.statusmessage
+                                        if status == 'INSERT 0':
+                                            return dest_err
+                                        else:
+                                            return dest_ok
+                                    else:
+                                        return dest_ok
+                                else:
+                                    conn_pgs.execute(
+                                        'INSERT INTO abastece_evento \
+                                        (active, entry_date, data_planejado, \
+                                         data_realizado, number, resumo, posto_id, \
+                                         base_id, employee_id, form_id, empresa_id) \
+                                        VALUES \
+                                        (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);',
+                                        (True,
+                                         entry_date,
+                                         EntryDate,
+                                         EntryDate,
+                                         EventNumber,
+                                         None,
+                                         posto_id,
+                                         base_id,
+                                         employee_id,
+                                         form_id,
+                                         empresa_id)
+                                    )
+                                    status = conn_pgs.statusmessage
+                                    if status == 'INSERT 0':
+                                        return dest_err
+                                    else:
+                                        return dest_ok
+                            else:
+                                return dest_ok
+                            except:
+                                import sys
+                                import traceback
+                                print('Erro ao inserir posto no banco:', file=sys.stderr)
+                                traceback.print_exc(file=sys.stderr)
+                                return None
             except:
                 import sys
                 import traceback

@@ -1,41 +1,80 @@
-
-SELECT date_trunc('day', to_timestamp(data_realizado)),
-       sum(CASE
-               WHEN abastece_evento.form_id = 1 THEN form_id
-           END) AS MELHORIAS,
-       sum(CASE
-               WHEN abastece_evento.form_id = 2 THEN form_id
-           END) AS CORRETIVAS,
-       sum(CASE
-               WHEN abastece_evento.form_id = 3 THEN form_id
-           END) AS DESINSTALAR,
-       sum(CASE
-               WHEN abastece_evento.form_id = 5 THEN form_id
-           END) AS ANTENA915,
-       sum(CASE
-               WHEN abastece_evento.form_id = 6 THEN form_id
-           END) AS PLANOVERAO,
-       sum(CASE
-               WHEN abastece_evento.form_id = 7 THEN form_id
-           END) AS PREDITIVA,
-       sum(CASE
-               WHEN abastece_evento.form_id = 8 THEN form_id
-           END) AS PREVENTIVA,
-       sum(CASE
-               WHEN abastece_evento.form_id = 9 THEN form_id
-           END) AS ANTENA58,
-       sum(CASE
-               WHEN abastece_evento.form_id = 10 THEN form_id
-           END) AS SINAL,
-       sum(CASE
-               WHEN abastece_evento.form_id = 11 THEN form_id
-           END) AS ICRSURVEY,
-       sum(CASE
-               WHEN abastece_evento.form_id = 14 THEN form_id
-           END) AS ICRINFRA,
-       sum(CASE
-               WHEN abastece_evento.form_id = 15 THEN form_id
-           END) AS ICRCONEX
-FROM abastece_evento
-WHERE empresa_id = 1
-GROUP BY date_trunc('day', to_timestamp(data_realizado));
+SELECT base.real,
+       SUM(sum(base.MEL)) OVER (
+                                ORDER BY base.real) AS SUM_MEL,
+       SUM(sum(base.COR)) OVER (
+                                ORDER BY base.real) AS SUM_COR,
+       SUM(sum(base.DES)) OVER (
+                                ORDER BY base.real) AS SUM_DES,
+       SUM(sum(base.ANT915)) OVER (
+                                   ORDER BY base.real) AS SUM_ANT915,
+       SUM(sum(base.PLAV)) OVER (
+                                 ORDER BY base.real) AS SUM_PLAV,
+       SUM(sum(base.PRED)) OVER (
+                                 ORDER BY base.real) AS SUM_PRED,
+       SUM(sum(base.PREV)) OVER (
+                                 ORDER BY base.real) AS SUM_PREV,
+       SUM(sum(base.RET58)) OVER (
+                                  ORDER BY base.real) AS SUM_RET58,
+       SUM(sum(base.SIN)) OVER (
+                                ORDER BY base.real) AS SUM_SIN,
+       SUM(sum(base.ICRS)) OVER (
+                                 ORDER BY base.real) AS SUM_ICRS,
+       SUM(sum(base.ICRI)) OVER (
+                                 ORDER BY base.real) AS SUM_ICRI,
+       SUM(sum(base.ICRC)) OVER (
+                                 ORDER BY base.real) AS SUM_ICRC
+FROM
+    (SELECT date_trunc('day', to_timestamp(data_realizado)::TIMESTAMP WITHOUT TIME ZONE) AS real,
+            sum(CASE
+                    WHEN abastece_evento.form_id = 1 THEN 1
+                    ELSE 0
+                END) AS MEL,
+            sum(CASE
+                    WHEN abastece_evento.form_id = 2 THEN 1
+                    ELSE 0
+                END) AS COR,
+            sum(CASE
+                    WHEN abastece_evento.form_id = 3 THEN 1
+                    ELSE 0
+                END) AS DES,
+            sum(CASE
+                    WHEN abastece_evento.form_id = 5 THEN 1
+                    ELSE 0
+                END) AS ANT915,
+            sum(CASE
+                    WHEN abastece_evento.form_id = 6 THEN 1
+                    ELSE 0
+                END) AS PLAV,
+            sum(CASE
+                    WHEN abastece_evento.form_id = 7 THEN 1
+                    ELSE 0
+                END) AS PRED,
+            sum(CASE
+                    WHEN abastece_evento.form_id = 8 THEN 1
+                    ELSE 0
+                END) AS PREV,
+            sum(CASE
+                    WHEN abastece_evento.form_id = 9 THEN 1
+                    ELSE 0
+                END) AS RET58,
+            sum(CASE
+                    WHEN abastece_evento.form_id = 10 THEN 1
+                    ELSE 0
+                END) AS SIN,
+            sum(CASE
+                    WHEN abastece_evento.form_id = 11 THEN 1
+                    ELSE 0
+                END) AS ICRS,
+            sum(CASE
+                    WHEN abastece_evento.form_id = 14 THEN 1
+                    ELSE 0
+                END) AS ICRI,
+            sum(CASE
+                    WHEN abastece_evento.form_id = 15 THEN 1
+                    ELSE 0
+                END) AS ICRC
+     FROM abastece_evento
+     WHERE empresa_id = 1
+     GROUP BY real
+     ORDER BY real) AS base
+GROUP BY base.real;
