@@ -7,6 +7,7 @@ import re
 import psycopg2.extensions
 from base64 import b64decode
 from datetime import datetime
+from datetime import date
 from lxml import etree
 
 
@@ -824,9 +825,7 @@ def setForm(_xml, _source):
     """
     EntryType = getEntryType(_xml)
     EntryDate = getEntryDateFromEpoch(_xml)
-    entry_date = datetime.fromtimestamp(
-        EntryDate).strftime(
-        '%Y-%m-%d')
+    entry_date = date.today()
     EmployeeFirstName = getEmployeeFirstName(_xml)
     FormName = getFormName(_xml)
     POIName = getRefPOIName(_xml)
@@ -867,11 +866,13 @@ def setForm(_xml, _source):
                 ) as conn_pg:
                     with conn_pg.cursor() as conn_pgs:
                         conn_pgs.execute(
-                            'UPDATE abastece_evento SET data_realizado = %s \
+                            'UPDATE abastece_evento SET data_realizado = %s, \
+                             number = %s \
                              WHERE \
                              form_id = %s and posto_id = %s and \
-                             number = %s;',
-                            (EntryDate, form_id, posto_id, EventNumber)
+                             number = %s and data_realizado is Null;',
+                            (EntryDate, EventNumber, form_id, posto_id,
+                             EventNumber)
                         )
                         status = conn_pgs.statusmessage
                         query = conn_pgs.query
@@ -879,7 +880,7 @@ def setForm(_xml, _source):
                             conn_pgs.execute(
                                 'SELECT id FROM abastece_evento \
                                  WHERE form_id = %s and posto_id = %s and \
-                                 number = %s;',
+                                 number = %s and data_realizado is Null;',
                                  (form_id, posto_id, 'Agendado')
                             )
                             event_id = conn_pgs.fetchone()
@@ -889,43 +890,19 @@ def setForm(_xml, _source):
                             else:
                                 event_id = event_id[0]
 
-                            if event_id:
+                            if event_id is not None:
                                 conn_pgs.execute(
                                     'UPDATE abastece_evento \
-                                     SET data_realizado = %s \
-                                     WHERE \
-                                     id = %s;',
-                                    (EntryDate, event_id)
+                                    SET data_realizado = %s, \
+                                    number = %s \
+                                    WHERE \
+                                    id = %s;',
+                                    (EntryDate, EventNumber, event_id)
                                 )
                                 status = conn_pgs.statusmessage
                                 query = conn_pgs.query
                                 if status == 'UPDATE 0':
-                                    conn_pgs.execute(
-                                        'INSERT INTO abastece_evento \
-                                        (active, entry_date, data_planejado, \
-                                         data_realizado, number, resumo, \
-                                         posto_id, base_id, employee_id, \
-                                         form_id, empresa_id) \
-                                        VALUES \
-                                        (%s, %s, %s, %s, %s, %s, \
-                                         %s, %s, %s, %s, %s);',
-                                        (True,
-                                         entry_date,
-                                         EntryDate,
-                                         EntryDate,
-                                         EventNumber,
-                                         None,
-                                         posto_id,
-                                         base_id,
-                                         employee_id,
-                                         form_id,
-                                         empresa_id)
-                                    )
-                                    status = conn_pgs.statusmessage
-                                    if status == 'INSERT 0':
-                                        return dest_err
-                                    else:
-                                        return dest_ok
+                                    return dest_err
                                 else:
                                     return dest_ok
                             else:
@@ -940,7 +917,7 @@ def setForm(_xml, _source):
                                      %s, %s, %s, %s);',
                                     (True,
                                      entry_date,
-                                     EntryDate,
+                                     None,
                                      EntryDate,
                                      EventNumber,
                                      None,
@@ -973,11 +950,12 @@ def setForm(_xml, _source):
             ) as conn_pg:
                 with conn_pg.cursor() as conn_pgs:
                     conn_pgs.execute(
-                        'UPDATE abastece_evento SET data_realizado = %s \
+                        'UPDATE abastece_evento SET data_realizado = %s, \
+                         number = %s \
                          WHERE \
                          form_id = %s and posto_id = %s and \
-                         number = %s;',
-                        (EntryDate, form_id, posto_id, EventNumber)
+                         number = %s and data_realizado is Null;',
+                        (EntryDate, EventNumber, form_id, posto_id, EventNumber)
                     )
                     status = conn_pgs.statusmessage
                     query = conn_pgs.query
@@ -985,7 +963,7 @@ def setForm(_xml, _source):
                         conn_pgs.execute(
                             'SELECT id FROM abastece_evento \
                              WHERE form_id = %s and posto_id = %s and \
-                             number = %s;',
+                             number = %s and data_realizado is Null;',
                              (form_id, posto_id, 'Agendado')
                         )
                         event_id = conn_pgs.fetchone()
@@ -995,43 +973,19 @@ def setForm(_xml, _source):
                         else:
                             event_id = event_id[0]
 
-                        if event_id:
+                        if event_id is not None:
                             conn_pgs.execute(
                                 'UPDATE abastece_evento \
-                                 SET data_realizado = %s \
-                                 WHERE \
-                                 id = %s;',
-                                (EntryDate, event_id)
+                                SET data_realizado = %s, \
+                                number = %s \
+                                WHERE \
+                                id = %s;',
+                                (EntryDate, EventNumber, event_id)
                             )
                             status = conn_pgs.statusmessage
                             query = conn_pgs.query
                             if status == 'UPDATE 0':
-                                conn_pgs.execute(
-                                    'INSERT INTO abastece_evento \
-                                    (active, entry_date, data_planejado, \
-                                     data_realizado, number, resumo, \
-                                     posto_id, base_id, employee_id, \
-                                     form_id, empresa_id) \
-                                    VALUES \
-                                    (%s, %s, %s, %s, %s, %s, \
-                                     %s, %s, %s, %s, %s);',
-                                    (True,
-                                     entry_date,
-                                     EntryDate,
-                                     EntryDate,
-                                     EventNumber,
-                                     None,
-                                     posto_id,
-                                     base_id,
-                                     employee_id,
-                                     form_id,
-                                     empresa_id)
-                                )
-                                status = conn_pgs.statusmessage
-                                if status == 'INSERT 0':
-                                    return dest_err
-                                else:
-                                    return dest_ok
+                                return dest_err
                             else:
                                 return dest_ok
                         else:
@@ -1046,7 +1000,7 @@ def setForm(_xml, _source):
                                  %s, %s, %s, %s);',
                                 (True,
                                  entry_date,
-                                 EntryDate,
+                                 None,
                                  EntryDate,
                                  EventNumber,
                                  None,

@@ -22,7 +22,6 @@ end_date = date.today()
 start_contract = '2016-08-22'
 start_date = end_date - timedelta(days=7)
 
-
 def getAtendimentoAcumulados(_emp_id):
     try:
         with psycopg2.connect(
@@ -145,48 +144,48 @@ def getAtendimentoAcumulados(_emp_id):
                 )
                 realizados = conn_pgs.fetchall()
                 conn_pgs.execute(
-                    "SELECT base.real,\
+                    "SELECT base.planejada,\
                            SUM(sum(base.MEL)) OVER (\
-                                                    ORDER BY base.real) \
+                                                    ORDER BY base.planejada) \
                                                     AS SUM_MEL,\
                            SUM(sum(base.COR)) OVER (\
-                                                    ORDER BY base.real) \
+                                                    ORDER BY base.planejada) \
                                                     AS SUM_COR,\
                            SUM(sum(base.DES)) OVER (\
-                                                    ORDER BY base.real) \
+                                                    ORDER BY base.planejada) \
                                                     AS SUM_DES,\
                            SUM(sum(base.ANT915)) OVER (\
-                                                       ORDER BY base.real) \
+                                                       ORDER BY base.planejada) \
                                                        AS SUM_ANT915,\
                            SUM(sum(base.PLAV)) OVER (\
-                                                     ORDER BY base.real) \
+                                                     ORDER BY base.planejada) \
                                                      AS SUM_PLAV,\
                            SUM(sum(base.PRED)) OVER (\
-                                                     ORDER BY base.real) \
+                                                     ORDER BY base.planejada) \
                                                      AS SUM_PRED,\
                            SUM(sum(base.PREV)) OVER (\
-                                                     ORDER BY base.real) \
+                                                     ORDER BY base.planejada) \
                                                      AS SUM_PREV,\
                            SUM(sum(base.RET58)) OVER (\
-                                                      ORDER BY base.real) \
+                                                      ORDER BY base.planejada) \
                                                       AS SUM_RET58,\
                            SUM(sum(base.SIN)) OVER (\
-                                                    ORDER BY base.real) \
+                                                    ORDER BY base.planejada) \
                                                     AS SUM_SIN,\
                            SUM(sum(base.ICRS)) OVER (\
-                                                     ORDER BY base.real) \
+                                                     ORDER BY base.planejada) \
                                                      AS SUM_ICRS,\
                            SUM(sum(base.ICRI)) OVER (\
-                                                     ORDER BY base.real) \
+                                                     ORDER BY base.planejada) \
                                                      AS SUM_ICRI,\
                            SUM(sum(base.ICRC)) OVER (\
-                                                     ORDER BY base.real) \
+                                                     ORDER BY base.planejada) \
                                                      AS SUM_ICRC\
                     FROM\
                         (SELECT date_trunc('day', \
                         to_timestamp(data_planejado)::TIMESTAMP WITHOUT \
                         TIME ZONE) \
-                        AS real,\
+                        AS planejada,\
                                 sum(CASE\
                                         WHEN abastece_evento.form_id = 1 \
                                         THEN 1\
@@ -249,9 +248,9 @@ def getAtendimentoAcumulados(_emp_id):
                                     END) AS ICRC\
                          FROM abastece_evento\
                          WHERE empresa_id = %s\
-                         GROUP BY real\
-                         ORDER BY real) AS base\
-                    GROUP BY base.real;",
+                         GROUP BY planejada\
+                         ORDER BY planejada) AS base\
+                    GROUP BY base.planejada;",
                         (_emp_id)
                 )
                 previstos = conn_pgs.fetchall()
@@ -292,7 +291,7 @@ def getAtendimentoAcumulados(_emp_id):
                     inplace=True
                 )
                 df1 = df1.sort_values(by='Data', ascending=[1])
-                df2 = df1.sort_values(by='Data', ascending=[1])
+                df2 = df2.sort_values(by='Data', ascending=[1])
 
                 trace1_a = Scatter(
                     x=df1['Data'],
@@ -552,7 +551,6 @@ def getAtendimentoAcumulados(_emp_id):
                     'Desinstalações de Postos'
                     ),
                     shared_xaxes=True,
-                    shared_yaxes=False,
                 )
                 fig.append_trace(trace2_a, 1, 1)
                 fig.append_trace(trace2_b, 1, 1)
@@ -580,7 +578,7 @@ def getAtendimentoAcumulados(_emp_id):
                 fig.append_trace(trace3_b, 12, 1)
 
                 fig['layout'].update(
-                    height=2500,
+                    height=3500,
                     #width=650,
                     showlegend=False,
                     title='<b>Atendimentos Acumulado</b>',
@@ -588,24 +586,21 @@ def getAtendimentoAcumulados(_emp_id):
                     plot_bgcolor='rgba(230, 230, 230, 1)',
                     autosize=True,
                     margin=Margin(
-                        l=25,
-                        r=25,
+                        l=35,
+                        r=35,
                         b=0,
                         t=60,
-                        pad=4
                     ),
                     xaxis=dict(
                         range=(start_contract, end_date),
                         type='date',
                         autorange=False,
                     ),
-
-
                 )
                 html = py.offline.plot(fig,
                     show_link=False,
                     output_type='div',
-                    include_plotlyjs=False,
+                    include_plotlyjs=True,
                     auto_open=False
                 )
                 return html
@@ -804,242 +799,290 @@ def getAtendimentoDia(_emp_id):
                     inplace=True
                 )
                 df1 = df1.sort_values(by='Data', ascending=[1])
-                df2 = df1.sort_values(by='Data', ascending=[1])
+                df2 = df2.sort_values(by='Data', ascending=[1])
 
-                trace1_a = Scatter(
+                mel_plan = Scatter(
                     x=df1['Data'],
                     y=df1['MEL'],
                     mode='line',
+                    xaxis='x',
+                    yaxis='y',
                     line=dict(
                         color = ('rgb(0, 0, 0)'),
                         width = 1,
                     ),
                     name='Previsto'
                 )
-                trace1_b = Scatter(
+                mel_real = Scatter(
                     x=df2['Data'],
                     y=df2['MEL'],
                     mode='line',
+                    xaxis='x',
+                    yaxis='y',
                     line=dict(
                         color = ('rgb(205, 12, 24)'),
                         width = 1,
                     ),
                     name='Realizado'
                 )
-                trace2_a = Scatter(
+                cor_plan = Scatter(
                     x=df1['Data'],
                     y=df1['COR'],
                     mode='line',
+                    xaxis='x2',
+                    yaxis='y2',
                     line=dict(
                         color = ('rgb(0, 0, 0)'),
                         width = 1,
                     ),
                     name='Previsto'
                 )
-                trace2_b = Scatter(
+                cor_real = Scatter(
                     x=df2['Data'],
                     y=df2['COR'],
                     mode='line',
+                    xaxis='x2',
+                    yaxis='y2',
                     line=dict(
                         color = ('rgb(205, 12, 24)'),
                         width = 1,
                     ),
                     name='Realizado'
                 )
-                trace3_a = Scatter(
+                des_plan = Scatter(
                     x=df1['Data'],
                     y=df1['DES'],
                     mode='line',
+                    xaxis='x3',
+                    yaxis='y3',
                     line=dict(
                         color = ('rgb(0, 0, 0)'),
                         width = 1,
                     ),
                     name='Previsto'
                 )
-                trace3_b = Scatter(
+                des_real = Scatter(
                     x=df2['Data'],
                     y=df2['DES'],
                     mode='line',
+                    xaxis='x3',
+                    yaxis='y3',
                     line=dict(
                         color = ('rgb(205, 12, 24)'),
                         width = 1,
                     ),
                     name='Realizado'
                 )
-                trace4_a = Scatter(
+                ant915_plan = Scatter(
                     x=df1['Data'],
                     y=df1['ANT915'],
                     mode='line',
+                    xaxis='x4',
+                    yaxis='y4',
                     line=dict(
                         color = ('rgb(0, 0, 0)'),
                         width = 1,
                     ),
                     name='Previsto'
                 )
-                trace4_b = Scatter(
+                ant915_real = Scatter(
                     x=df2['Data'],
                     y=df2['ANT915'],
                     mode='line',
+                    xaxis='x4',
+                    yaxis='y4',
                     line=dict(
                         color = ('rgb(205, 12, 24)'),
                         width = 1,
                     ),
                     name='Realizado'
                 )
-                trace5_a = Scatter(
+                planv_plan = Scatter(
                     x=df1['Data'],
                     y=df1['PLANV'],
                     mode='line',
+                    xaxis='x5',
+                    yaxis='y5',
                     line=dict(
                         color = ('rgb(0, 0, 0)'),
                         width = 1,
                     ),
                     name='Previsto'
                 )
-                trace5_b = Scatter(
+                planv_real = Scatter(
                     x=df2['Data'],
                     y=df2['PLANV'],
                     mode='line',
+                    xaxis='x5',
+                    yaxis='y5',
                     line=dict(
                         color = ('rgb(205, 12, 24)'),
                         width = 1,
                     ),
                     name='Realizado'
                 )
-                trace6_a = Scatter(
+                pred_plan = Scatter(
                     x=df1['Data'],
                     y=df1['PRED'],
                     mode='line',
+                    xaxis='x6',
+                    yaxis='y6',
                     line=dict(
                         color = ('rgb(0, 0, 0)'),
                         width = 1,
                     ),
                     name='Previsto'
                 )
-                trace6_b = Scatter(
+                pred_real = Scatter(
                     x=df2['Data'],
                     y=df2['PRED'],
                     mode='line',
+                    xaxis='x6',
+                    yaxis='y6',
                     line=dict(
                         color = ('rgb(205, 12, 24)'),
                         width = 1,
                     ),
                     name='Realizado'
                 )
-                trace7_a = Scatter(
+                prev_plan = Scatter(
                     x=df1['Data'],
                     y=df1['PREV'],
                     mode='line',
+                    xaxis='x7',
+                    yaxis='y7',
                     line=dict(
                         color = ('rgb(0, 0, 0)'),
                         width = 1,
                     ),
                     name='Previsto'
                 )
-                trace7_b = Scatter(
+                prev_real = Scatter(
                     x=df2['Data'],
                     y=df2['PREV'],
                     mode='line',
+                    xaxis='x7',
+                    yaxis='y7',
                     line=dict(
                         color = ('rgb(205, 12, 24)'),
                         width = 1,
                     ),
                     name='Realizado'
                 )
-                trace8_a = Scatter(
+                ret58_plan = Scatter(
                     x=df1['Data'],
                     y=df1['RET58'],
                     mode='line',
+                    xaxis='x8',
+                    yaxis='y8',
                     line=dict(
                         color = ('rgb(0, 0, 0)'),
                         width = 1,
                     ),
                     name='Previsto'
                 )
-                trace8_b = Scatter(
+                ret58_real = Scatter(
                     x=df2['Data'],
                     y=df2['RET58'],
                     mode='line',
+                    xaxis='x8',
+                    yaxis='y8',
                     line=dict(
                         color = ('rgb(205, 12, 24)'),
                         width = 1,
                     ),
                     name='Realizado'
                 )
-                trace9_a = Scatter(
+                sin_plan = Scatter(
                     x=df1['Data'],
                     y=df1['SIN'],
                     mode='line',
+                    xaxis='x9',
+                    yaxis='y9',
                     line=dict(
                         color = ('rgb(0, 0, 0)'),
                         width = 1,
                     ),
                     name='Previsto'
                 )
-                trace9_b = Scatter(
+                sin_real = Scatter(
                     x=df2['Data'],
                     y=df2['SIN'],
                     mode='line',
+                    xaxis='x9',
+                    yaxis='y9',
                     line=dict(
                         color = ('rgb(205, 12, 24)'),
                         width = 1,
                     ),
                     name='Realizado'
                 )
-                trace10_a = Scatter(
+                icrs_plan = Scatter(
                     x=df1['Data'],
                     y=df1['ICRS'],
                     mode='line',
+                    xaxis='x10',
+                    yaxis='y10',
                     line=dict(
                         color = ('rgb(0, 0, 0)'),
                         width = 1,
                     ),
                     name='Previsto'
                 )
-                trace10_b = Scatter(
+                icrs_real = Scatter(
                     x=df2['Data'],
                     y=df2['ICRS'],
                     mode='line',
+                    xaxis='x10',
+                    yaxis='y10',
                     line=dict(
                         color = ('rgb(205, 12, 24)'),
                         width = 1,
                     ),
                     name='Realizado'
                 )
-                trace11_a = Scatter(
+                icri_plan = Scatter(
                     x=df1['Data'],
                     y=df1['ICRI'],
                     mode='line',
+                    xaxis='x11',
+                    yaxis='y11',
                     line=dict(
                         color = ('rgb(0, 0, 0)'),
                         width = 1,
                     ),
                     name='Previsto'
                 )
-                trace11_b = Scatter(
+                icri_real = Scatter(
                     x=df2['Data'],
                     y=df2['ICRI'],
                     mode='line',
+                    xaxis='x11',
+                    yaxis='y11',
                     line=dict(
                         color = ('rgb(205, 12, 24)'),
                         width = 1,
                     ),
                     name='Realizado'
                 )
-                trace12_a = Scatter(
+                icrc_plan = Scatter(
                     x=df1['Data'],
                     y=df1['ICRC'],
                     mode='line',
+                    xaxis='x12',
+                    yaxis='y12',
                     line=dict(
                         color = ('rgb(0, 0, 0)'),
                         width = 1,
                     ),
                     name='Previsto'
                 )
-                trace12_b = Scatter(
+                icrc_real = Scatter(
                     x=df2['Data'],
                     y=df2['ICRC'],
                     mode='line',
+                    xaxis='x12',
+                    yaxis='y12',
                     line=dict(
                         color = ('rgb(205, 12, 24)'),
                         width = 1,
@@ -1064,35 +1107,46 @@ def getAtendimentoDia(_emp_id):
                     'Desinstalações de Postos'
                     ),
                     shared_xaxes=True,
-                    shared_yaxes=False,
                 )
-                fig.append_trace(trace2_a, 1, 1)
-                fig.append_trace(trace2_b, 1, 1)
-                fig.append_trace(trace7_a, 2, 1)
-                fig.append_trace(trace7_b, 2, 1)
-                fig.append_trace(trace6_a, 3, 1)
-                fig.append_trace(trace6_b, 3, 1)
-                fig.append_trace(trace1_a, 4, 1)
-                fig.append_trace(trace1_b, 4, 1)
-                fig.append_trace(trace5_a, 5, 1)
-                fig.append_trace(trace5_b, 5, 1)
-                fig.append_trace(trace8_a, 6, 1)
-                fig.append_trace(trace8_b, 6, 1)
-                fig.append_trace(trace4_a, 7, 1)
-                fig.append_trace(trace4_b, 7, 1)
-                fig.append_trace(trace10_a, 8, 1)
-                fig.append_trace(trace10_b, 8, 1)
-                fig.append_trace(trace11_a, 9, 1)
-                fig.append_trace(trace11_b, 9, 1)
-                fig.append_trace(trace12_a, 10, 1)
-                fig.append_trace(trace12_b, 10, 1)
-                fig.append_trace(trace9_a, 11, 1)
-                fig.append_trace(trace9_b, 11, 1)
-                fig.append_trace(trace3_a, 12, 1)
-                fig.append_trace(trace3_b, 12, 1)
+                fig.append_trace(cor_plan, 1, 1)
+                fig.append_trace(cor_real, 1, 1)
+                fig.append_trace(prev_plan, 2, 1)
+                fig.append_trace(prev_real, 2, 1)
+                fig.append_trace(pred_plan, 3, 1)
+                fig.append_trace(pred_real, 3, 1)
+                fig.append_trace(mel_plan, 4, 1)
+                fig.append_trace(mel_real, 4, 1)
+                fig.append_trace(planv_plan, 5, 1)
+                fig.append_trace(planv_real, 5, 1)
+                fig.append_trace(ret58_plan, 6, 1)
+                fig.append_trace(ret58_real, 6, 1)
+                fig.append_trace(ant915_plan, 7, 1)
+                fig.append_trace(ant915_real, 7, 1)
+                fig.append_trace(icrs_plan, 8, 1)
+                fig.append_trace(icrs_real, 8, 1)
+                fig.append_trace(icri_plan, 9, 1)
+                fig.append_trace(icri_real, 9, 1)
+                fig.append_trace(icrc_plan, 10, 1)
+                fig.append_trace(icrc_real, 10, 1)
+                fig.append_trace(sin_plan, 11, 1)
+                fig.append_trace(sin_real, 11, 1)
+                fig.append_trace(des_plan, 12, 1)
+                fig.append_trace(des_real, 12, 1)
 
+                fig['layout']['yaxis1'].update(range=[0, 25])
+                fig['layout']['yaxis2'].update(range=[0, 12])
+                fig['layout']['yaxis3'].update(range=[0, 12])
+                fig['layout']['yaxis4'].update(range=[0, 12])
+                fig['layout']['yaxis5'].update(range=[0, 12])
+                fig['layout']['yaxis6'].update(range=[0, 12])
+                fig['layout']['yaxis7'].update(range=[0, 12])
+                fig['layout']['yaxis8'].update(range=[0, 12])
+                fig['layout']['yaxis9'].update(range=[0, 12])
+                fig['layout']['yaxis10'].update(range=[0, 12])
+                fig['layout']['yaxis11'].update(range=[0, 12])
+                fig['layout']['yaxis12'].update(range=[0, 12])
                 fig['layout'].update(
-                    height=2500,
+                    height=3500,
                     #width=650,
                     showlegend=False,
                     title='<b>Atendimentos Diários</b>',
@@ -1100,23 +1154,21 @@ def getAtendimentoDia(_emp_id):
                     plot_bgcolor='rgba(230, 230, 230, 1)',
                     autosize=True,
                     margin=Margin(
-                        l=25,
-                        r=25,
-                        b=0,
-                        t=60,
-                        pad=4
+                        l=35,
+                        r=35,
+                        b=50,
+                        t=50,
                     ),
                     xaxis=dict(
                         range=(start_date, end_date),
                         type='date',
                         autorange=False,
                     ),
-
                 )
                 html = py.offline.plot(fig,
                     show_link=False,
                     output_type='div',
-                    include_plotlyjs=False,
+                    include_plotlyjs=True,
                     auto_open=False
                 )
                 return html

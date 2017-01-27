@@ -74,6 +74,7 @@ class EventoAdmin(admin.ModelAdmin):
         'planejado',
         'realizado',
         'empresa',
+        'is_finished',
     )
     list_filter = (
         'form',
@@ -84,7 +85,7 @@ class EventoAdmin(admin.ModelAdmin):
         'posto__cgmp',
     )
 
-    ordering = ['entry_date', 'posto']
+    ordering = ['entry_date', 'posto',]
 
     date_hierarchy = 'entry_date'
 
@@ -98,12 +99,31 @@ class EventoAdmin(admin.ModelAdmin):
         if obj.data_planejado is None:
             return None
         else:
-            return datetime.fromtimestamp(float(obj.data_planejado)).strftime('%d/%m/%Y %H:%M:%S')
+            planejado = datetime.utcfromtimestamp(
+                float(obj.data_planejado)).strftime('%d/%m/%Y %H:%M:%S')
+            return planejado
+    planejado.short_description = ('Planejada para')
+    planejado.admin_order_field = 'data_planejado'
+
+
     def realizado(self, obj):
         if obj.data_realizado is None:
             return None
         else:
-            return datetime.fromtimestamp(float(obj.data_realizado)).strftime('%d/%m/%Y %H:%M:%S')
+            realizado = datetime.utcfromtimestamp(
+                float(obj.data_realizado)).strftime('%d/%m/%Y %H:%M:%S')
+            return realizado
+    realizado.short_description = ('Realizada em')
+    realizado.admin_order_field = 'data_realizado'
+
+    def is_finished(self, obj):
+        if obj.data_realizado is None:
+            return False
+        else:
+            return True
+    is_finished.short_description = ('Encerrado')
+    is_finished.admin_order_field = ('data_realizado')
+    is_finished.boolean = True
 
 
 # Register your models here.
