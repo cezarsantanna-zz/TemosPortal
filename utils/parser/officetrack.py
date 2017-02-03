@@ -495,8 +495,8 @@ def getFormName(_xml):
     _FormName = _xml.find('Form/Name')
     if _FormName is not None:
         _FormNameText = _FormName.text
-        if 'PREDITIVA' in _FormNameText:
-            _FormNameText = 'PREDITIVA'
+        if 'AÇÕES' in _FormNameText:
+            _FormNameText = 'AÇÕES DE MELHORIAS'
         elif 'PREVENTIVA' in _FormNameText:
             _FormNameText = 'PREVENTIVA'
         elif 'CORRETIVA' in _FormNameText:
@@ -513,38 +513,38 @@ def getEventNumber(_xml):
     for _element in _xml.iter("Field"):
         if (_element[0].text == 'NÚMERO DE CHAMADO' or
             _element[0].text == 'NÚMERO DO CHAMADO'):
-           EventNumber = _element[1].text.upper()
-           EventNumber = EventNumber.strip()
-           EventNumber = EventNumber.replace("TASC", "TASK")
-           EventNumber = EventNumber.replace("-", ";")
-           EventNumber = EventNumber.replace("/", ";")
-           EventNumber = EventNumber.replace(",", ";")
-           EventNumber = EventNumber.replace(" ", ";")
-           regex = re.compile('\;+')
-           EventNumber = re.sub(regex, ';', EventNumber)
-
-           if 'INC' in EventNumber:
-               EventNumber = EventNumber.replace("INC;", "INC")
-               EventNumber = EventNumber.replace("INC1", "INC01")
-               EventNumber = EventNumber.replace(";0", ";INC0")
-               EventNumber = EventNumber.replace(";1", ";INC01")
-           elif 'TASK' in EventNumber:
-               EventNumber = EventNumber.replace("TASK;", "TASK")
-               EventNumber = EventNumber.replace("TASK1", "TASK01")
-               EventNumber = EventNumber.replace(";0", ";TASK0")
-               EventNumber = EventNumber.replace(";1", ";TASK01")
-           else:
-               if FormName == 'CORRETIVA':
-                   EventNumber = 'INC' + EventNumber
-                   EventNumber = EventNumber.replace(";", ";INC")
-                   EventNumber = EventNumber.replace("INC1", "INC01")
-               else:
-                   EventNumber = 'TASK' + EventNumber
-                   EventNumber = EventNumber.replace(";", ";TASK")
-                   EventNumber = EventNumber.replace("TASK1", "TASK01")
-           if EventNumber is None:
-               EventNumber = 'Null'
-           return EventNumber
+            EventNumber = _element[1].text.upper()
+            EventNumber = EventNumber.strip()
+            EventNumber = EventNumber.replace("TASC", "TASK")
+            EventNumber = EventNumber.replace("-", ";")
+            EventNumber = EventNumber.replace("/", ";")
+            EventNumber = EventNumber.replace(",", ";")
+            EventNumber = EventNumber.replace(" ", ";")
+            regex = re.compile('\;+')
+            EventNumber = re.sub(regex, ';', EventNumber)
+            if 'INC' in EventNumber:
+                EventNumber = EventNumber.replace("INC;", "INC")
+                EventNumber = EventNumber.replace("INC1", "INC01")
+                EventNumber = EventNumber.replace(";0", ";INC0")
+                EventNumber = EventNumber.replace(";1", ";INC01")
+            elif 'TASK' in EventNumber:
+                EventNumber = EventNumber.replace("TASK;", "TASK")
+                EventNumber = EventNumber.replace("TASK1", "TASK01")
+                EventNumber = EventNumber.replace(";0", ";TASK0")
+                EventNumber = EventNumber.replace(";1", ";TASK01")
+            else:
+                if FormName == 'CORRETIVA':
+                    EventNumber = 'INC' + EventNumber
+                    EventNumber = EventNumber.replace(";", ";INC")
+                    EventNumber = EventNumber.replace("INC1", "INC01")
+                else:
+                    EventNumber = 'TASK' + EventNumber
+                    EventNumber = EventNumber.replace(";", ";TASK")
+                    EventNumber = EventNumber.replace("TASK1", "TASK01")
+            if EventNumber is None:
+                EventNumber = 'Null'
+            print(EventNumber)
+            return EventNumber
     return 'Null'
 
 
@@ -571,7 +571,7 @@ def getEquipREM(_xml):
     if (getEntryType(_xml) == '60' and
         (FormName == 'CORRETIVA' or
          FormName == 'PREDITIVA' or
-         FormName == 'AÇÕES DE MELHORIA')):
+         FormName == 'AÇÕES DE MELHORIAS')):
         for element in _xml.iter("Field"):
             if (element[0].text == 'PERIFÉRICOS REMOVIDOS' or
                     element[0].text == 'PERIFÉRICOS RETIRADOS'):
@@ -612,7 +612,7 @@ def getEquipADD(_xml):
     if (getEntryType(_xml) == '60' and
         (FormName == 'CORRETIVA' or
          FormName == 'PREDITIVA' or
-         FormName == 'AÇÕES DE MELHORIA')):
+         FormName == 'AÇÕES DE MELHORIAS')):
         for element in _xml.iter("Field"):
             if element[0].text == 'PERIFÉRICOS ADICIONADOS':
                 _rows = element[1]
@@ -865,6 +865,71 @@ def setForm(_xml, _source):
                     password=dbPass
                 ) as conn_pg:
                     with conn_pg.cursor() as conn_pgs:
+                        if form_id == 2:
+                            conn_pgs.execute(
+                                "SELECT id from abastece_evento\
+                                 WHERE form_id = %s\
+                                    and\
+                                    date_trunc('day',\
+                                        to_timestamp(\
+                                            data_planejado -\
+                                            extract(\
+                                                timezone\
+                                                from\
+                                                date_trunc('day',\
+                                                    to_timestamp(\
+                                                        data_planejado\
+                                                    )\
+                                                )\
+                                            )\
+                                        )\
+                                    ) = \
+                                    date_trunc('day',\
+                                        to_timestamp(\
+                                            %s -\
+                                            extract(\
+                                                timezone\
+                                                from\
+                                                date_trunc('day',\
+                                                    to_timestamp(\
+                                                        %s\
+                                                    )\
+                                                )\
+                                            )\
+                                        )\
+                                    )\
+                                    and\
+                                    data_realizado is Null;",
+                                    (form_id,
+                                     EntryDate,
+                                     EntryDate)
+                            )
+                            event_id = conn_pgs.fetchone()
+                            print("ID da correiva:", event_id)
+                            conn_pgs.execute(
+                                "UPDATE abastece_evento \
+                                 SET posto_id = %s,\
+                                     data_realizado = %s,\
+                                     number = %s,\
+                                     base_id = %s,\
+                                     employee_id = %s\
+                                 WHERE\
+                                     id = %s",
+                                (posto_id,
+                                 EntryDate,
+                                 EventNumber,
+                                 base_id,
+                                 employee_id,
+                                 event_id)
+                            )
+                            status = conn_pgs.statusmessage
+                            query = conn_pgs.query
+                            print(query)
+                            if status == 'UPDATE 0':
+                                print('Erro no Update')
+                            else:
+                                return dest_ok
+
                         conn_pgs.execute(
                             'UPDATE abastece_evento SET data_realizado = %s, \
                              number = %s \
@@ -881,7 +946,7 @@ def setForm(_xml, _source):
                                 'SELECT id FROM abastece_evento \
                                  WHERE form_id = %s and posto_id = %s and \
                                  number = %s and data_realizado is Null;',
-                                 (form_id, posto_id, 'Agendado')
+                                (form_id, posto_id, 'Agendado')
                             )
                             event_id = conn_pgs.fetchone()
 
@@ -1075,9 +1140,13 @@ def updateInventario(_EntryDate, _Wharehouse_id, _Equipamento,
 def parserOfficeTrack(_source, _mail):
     attach = b64decode(_mail.attachments_list[0]['payload'])
     xml = etree.fromstring(attach)
-    if (getEmployeeFirstName(xml) == 'Eduardo' or
-        getEmployeeFirstName(xml) == 'Cezar' or
-            getEmployeeFirstName(xml) == 'Engenharia E2i9 TESTE API'):
+    EmployeeFirstName = getEmployeeFirstName(xml)
+    FormName = getFormName(xml)
+    if ((EmployeeFirstName == 'Eduardo' and
+         FormName != 'ICR - SURVEY') or
+         EmployeeFirstName == 'Cezar' or
+         EmployeeFirstName == 'Engenharia E2i9 TESTE API' or
+         'TABLET' in EmployeeFirstName):
         return _source.replace('/new/', '/trash/')
     else:
         if getEntryType(xml) == '21':

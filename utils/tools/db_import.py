@@ -404,7 +404,7 @@ def importEventoCSV(_File):
     o arquivo deve seguir o seguinte formato:
     Separador ou Delimitador ;
     Ordem dos campos:
-        data_plan;date_real;cgmp;chamado;tipo;funcionário
+        data_plan;date_real;cgmp;chamado;tipo;base
         data_plan: Data para qual a atividade foi planejada
         data_real: Data na qual a atividade foi efetivamente realizada
         cgmp: Código de 4 digitos que indentificam o Posto na Sem Parar
@@ -444,7 +444,7 @@ def importEventoCSV(_File):
 
                         entry_date = date.today()
 
-                        if e_data_realizado != '':
+                        if e_data_realizado != '' and e_data_planejado == '0':
                             try:
                                 with conn_pg.cursor() as conn_pgs:
                                     conn_pgs.execute(
@@ -507,7 +507,7 @@ def importEventoCSV(_File):
                                                  %s, %s, %s, %s, %s);',
                                                 (True,
                                                  entry_date,
-                                                 e_data_planejado,
+                                                 None,
                                                  e_data_realizado,
                                                  _number,
                                                  None,
@@ -638,6 +638,205 @@ def importEventoCSV(_File):
         return None
 
 
+def importLinhaBaseCSV(_File):
+    """
+    Função para importar linha de base via arquivo CSV
+    o arquivo deve seguir o seguinte formato:
+    Separador ou Delimitador ;
+    Ordem dos campos:
+        cgmp;data_planejado;tipo;chamado
+        cgmp: Código de 4 digitos que indentificam o Posto na Sem Parar
+        data_plan: Data para qual a atividade foi planejada
+        tipo: Tipo de eventos, estão descritos na tabela abastece_form
+        chamado: Número do chamado no Service Now (TASK ou INC) ou Agendado
+    """
+    try:
+        with open(_File, 'r') as srcfile:
+            reader = csv.reader(srcfile, delimiter=';')
+            try:
+                with psycopg2.connect(
+                    database=dbName,
+                    user=dbUser,
+                    host=dbHost,
+                    password=dbPass
+                ) as conn_pg:
+                    linha=1
+                    for row in reader:
+                        e_posto = row[0]
+                        e_data_planejado = row[1]
+                        e_data_realizado = None
+                        e_tipo = row[2]
+                        e_number = row[3]
+                        e_emp = 'E2i9'
+
+                        _posto_id = getPostoIDFromCode(e_posto)
+                        _number = parseEventNumber(e_number, e_tipo)
+                        _form_id = getFormIDFromName(e_tipo)
+                        _base_id = getBaseIDFromPostoID(_posto_id)
+                        _employee_id = getEmployeeIDFromBaseID(_base_id)
+
+                        if e_emp == 'UNICOM':
+                            _empresa_id = 2
+                        elif e_emp == 'E2i9':
+                            _empresa_id = 1
+
+                        entry_date = date.today()
+                        e_data_realizado = None
+                        try:
+                            with conn_pg.cursor() as conn_pgs:
+                                conn_pgs.execute(
+                                    'INSERT INTO \
+                                     abastece_evento \
+                                     (active, entry_date, \
+                                     data_planejado, \
+                                     data_realizado, number, \
+                                     resumo, posto_id, base_id,\
+                                     employee_id, \
+                                     form_id, empresa_id) \
+                                    VALUES \
+                                    (%s, %s, %s, \
+                                     %s, %s, %s, \
+                                     %s, %s, %s, %s, %s);',
+                                    (True,
+                                     entry_date,
+                                     e_data_planejado,
+                                     e_data_realizado,
+                                     _number,
+                                     None,
+                                     _posto_id,
+                                     _base_id,
+                                     _employee_id,
+                                     _form_id,
+                                     _empresa_id)
+                                )
+                                status = conn_pgs.statusmessage
+                                query = conn_pgs.query
+                                if status == 'INSERT 0':
+                                    print('Erro ao importar \
+                                          linha', linha)
+                                else:
+                                    print('Linha',linha,'importada')
+                        except:
+                            import sys
+                            import traceback
+                            print('Erro ao inserir posto no banco:', file=sys.stderr)
+                            traceback.print_exc(file=sys.stderr)
+                            return None
+                        linha = linha + 1
+            except:
+                import sys
+                import traceback
+                print('Erro ao conectar com o banco de dados', file=sys.stderr)
+                traceback.print_exc(file=sys.stderr)
+                return None
+
+    except:
+        import sys
+        import traceback
+        print('Erro ao abrir arquivo CSV:', file=sys.stderr)
+        traceback.print_exc(file=sys.stderr)
+        return None
+
+
+def importCorretivasCSV(_File):
+    """
+    Função para importar média de corretivas por dia via arquivo CSV
+    o arquivo deve seguir o seguinte formato:
+    Separador ou Delimitador ;
+    Ordem dos campos:
+        data_planejado;numero de eventos no dia
+        data_plan: Data para qual a atividade foi planejada
+        número de eventos no dia: Média de eventos esperados para o dia
+        informado em data_planejado
+    """
+    try:
+        with open(_File, 'r') as srcfile:
+            reader = csv.reader(srcfile, delimiter=';')
+            try:
+                with psycopg2.connect(
+                    database=dbName,
+                    user=dbUser,
+                    host=dbHost,
+                    password=dbPass
+                ) as conn_pg:
+                    linha=1
+                    for row in reader:
+                        e_data_planejado = row[0]
+                        e_n_eventos = int(row[1])
+                        e_data_realizado = None
+                        e_tipo = 'CORRETIVA'
+                        e_number = None
+                        e_emp = 'E2i9'
+
+                        _posto_id = None
+                        _number = 'Agendado'
+                        _form_id = getFormIDFromName(e_tipo)
+                        _base_id = None
+                        _employee_id = None
+
+                        if e_emp == 'UNICOM':
+                            _empresa_id = 2
+                        elif e_emp == 'E2i9':
+                            _empresa_id = 1
+
+                        entry_date = date.today()
+                        try:
+                            for i in range(e_n_eventos):
+                                with conn_pg.cursor() as conn_pgs:
+                                    conn_pgs.execute(
+                                        'INSERT INTO \
+                                         abastece_evento \
+                                         (active, entry_date, \
+                                         data_planejado, \
+                                         data_realizado, number, \
+                                         resumo, posto_id, base_id,\
+                                         employee_id, \
+                                         form_id, empresa_id) \
+                                        VALUES \
+                                        (%s, %s, %s, \
+                                         %s, %s, %s, \
+                                         %s, %s, %s, %s, %s);',
+                                        (True,
+                                         entry_date,
+                                         e_data_planejado,
+                                         e_data_realizado,
+                                         _number,
+                                         None,
+                                         _posto_id,
+                                         _base_id,
+                                         _employee_id,
+                                         _form_id,
+                                         _empresa_id)
+                                    )
+                                    status = conn_pgs.statusmessage
+                                    query = conn_pgs.query
+                                    if status == 'INSERT 0':
+                                        print('Erro ao importar \
+                                              linha', linha)
+                                    else:
+                                        print('Linha',linha,'importada')
+                        except:
+                            import sys
+                            import traceback
+                            print('Erro ao inserir posto no banco:', file=sys.stderr)
+                            traceback.print_exc(file=sys.stderr)
+                            return None
+                        linha = linha + 1
+            except:
+                import sys
+                import traceback
+                print('Erro ao conectar com o banco de dados', file=sys.stderr)
+                traceback.print_exc(file=sys.stderr)
+                return None
+
+    except:
+        import sys
+        import traceback
+        print('Erro ao abrir arquivo CSV:', file=sys.stderr)
+        traceback.print_exc(file=sys.stderr)
+        return None
+
+
 if __name__ == '__main__':
     if argv[1] == 'warehouse':
         importWarehouseCSV(argv[2])
@@ -645,3 +844,7 @@ if __name__ == '__main__':
         importPostoCSV(argv[2])
     elif argv[1] == 'evento':
         importEventoCSV(argv[2])
+    elif argv[1] == 'linhabase':
+        importLinhaBaseCSV(argv[2])
+    elif argv[1] == 'corretivas':
+        importCorretivasCSV(argv[2])

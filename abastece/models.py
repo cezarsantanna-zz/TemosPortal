@@ -140,14 +140,16 @@ class Inventory(models.Model):
 
 class Evento(models.Model):
     active = models.BooleanField(default=True)
-    entry_date = models.DateField(default='1970-01-01')
-    data_planejado = models.PositiveIntegerField()
-    data_realizado = models.PositiveIntegerField()
-    number = models.CharField(max_length=20)
+    entry_date = models.DateField(null=True)
+    data_planejado = models.PositiveIntegerField(null=True)
+    data_realizado = models.PositiveIntegerField(null=True)
+    number = models.CharField(max_length=20, null=True)
     resumo = models.TextField(null=True)
-    posto = models.ForeignKey(Posto, on_delete=models.PROTECT)
-    base = models.ForeignKey(Base, on_delete=models.PROTECT)
-    employee = models.ForeignKey(Employee, null=True, on_delete=models.PROTECT)
+    posto = models.ForeignKey(Posto, on_delete=models.PROTECT, null=True)
+    base = models.ForeignKey(Base, on_delete=models.PROTECT, null=True)
+    employee = models.ForeignKey(Employee,
+                                 null=True,
+                                 on_delete=models.PROTECT)
     form = models.ForeignKey(Form, on_delete=models.PROTECT)
     empresa = models.ForeignKey(Empresa, on_delete=models.PROTECT)
 
@@ -184,3 +186,23 @@ class Punch(models.Model):
 
     def __str__(self):
         return self.entry_date
+
+
+class Incidente(models.Model):
+    active = models.BooleanField(default=True)
+    encerrado = models.BooleanField(default=False)
+    numero = models.CharField(max_length=10, unique=True)
+    data_atribuido = models.PositiveIntegerField(null=True)
+    data_fechado = models.PositiveIntegerField(null=True)
+    posto = models.ForeignKey(Posto, on_delete=models.PROTECT, null=True)
+    description = models.CharField(max_length=1024, null=True)
+
+
+class Task(models.Model):
+    active = models.BooleanField(default=True)
+    encerrado = models.BooleanField(default=False)
+    numero = models.CharField(max_length=10, unique=True)
+    data_atribuido = models.PositiveIntegerField(null=True)
+    data_fechado = models.PositiveIntegerField(null=True)
+    posto = models.ForeignKey(Posto, on_delete=models.PROTECT, null=True)
+    description = models.CharField(max_length=1024, null=True)

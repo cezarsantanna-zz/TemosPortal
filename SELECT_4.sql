@@ -24,7 +24,8 @@ SELECT base.planejada,
        SUM(sum(base.ICRC)) OVER (
                                  ORDER BY base.planejada) AS SUM_ICRC
 FROM
-    (SELECT date_trunc('day', to_timestamp(data_planejado)::TIMESTAMP WITHOUT TIME ZONE) AS planejada,
+    (SELECT date_trunc('day', to_timestamp(data_planejado - extract(timezone
+                                                                    FROM date_trunc('day', to_timestamp(data_planejado))))) AS data_planejado,
             sum(CASE
                     WHEN abastece_evento.form_id = 1 THEN 1
                     ELSE 0

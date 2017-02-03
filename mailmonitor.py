@@ -63,7 +63,7 @@ def parsemail(_mailfile):
     mail.parse_from_file(_mailfile)
     if mail.from_ == 'OfficeTrack Reports <reports@latam.officeTrack.com>':
         destination = parseOT(_mailfile, mail)
-        print(destination)
+        #print(destination)
         rename(source, destination)
     elif mail.from_ == 'SEM PARAR - CS - Central de Serviços <semparar@service-now.com>':
         destination = parseSN(_mailfile, mail)
