@@ -1,0 +1,1703 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+         Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="0.9.0-alpha1" last-position="0,0" last-zoom="0.5"
+	 default-schema="public" default-owner="postgres">
+<role name="abastece"
+      createdb="true"
+      createrole="true"
+      inherit="true"
+      login="true"
+      encrypted="true"
+      password="********">
+</role>
+
+<role name="temos"
+      createdb="true"
+      createrole="true"
+      inherit="true"
+      login="true"
+      encrypted="true"
+      password="********">
+</role>
+
+<database name="temosportal" encoding="UTF8" lc-collate="pt_BR.UTF-8" lc-ctype="pt_BR.UTF-8">
+	<role name="temos"/>
+	<tablespace name="pg_default"/>
+</database>
+
+<schema name="public" rect-visible="true" fill-color="#e1e1e1" sql-disabled="true">
+</schema>
+
+<sequence name="django_migrations_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="9223372036854775807"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="temos"/>
+</sequence>
+
+<table name="django_migrations">
+	<schema name="public"/>
+	<role name="temos"/>
+	<position x="50" y="2152"/>
+	<column name="id" not-null="true" sequence="public.django_migrations_id_seq">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="app" not-null="true">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="applied" not-null="true">
+		<type name="timestamp with time zone" length="0" with-timezone="true"/>
+	</column>
+	<constraint name="django_migrations_pkey" type="pk-constr" table="public.django_migrations">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="abastece_base_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="9223372036854775807"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="temos"/>
+</sequence>
+
+<table name="abastece_base">
+	<schema name="public"/>
+	<role name="temos"/>
+	<position x="650" y="920"/>
+	<column name="id" not-null="true" sequence="public.abastece_base_id_seq">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="active" not-null="true">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="5"/>
+	</column>
+	<column name="coordx" not-null="true">
+		<type name="character varying" length="20"/>
+	</column>
+	<column name="coordy" not-null="true">
+		<type name="character varying" length="20"/>
+	</column>
+	<column name="warehouse_id" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="employee_id" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="viatura_id" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="abastece_base_pkey" type="pk-constr" table="public.abastece_base">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="abastece_base_warehouse_id_key" type="uq-constr" table="public.abastece_base">
+		<columns names="warehouse_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="abastece_classe_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="9223372036854775807"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="temos"/>
+</sequence>
+
+<table name="abastece_classe">
+	<schema name="public"/>
+	<role name="temos"/>
+	<position x="2070" y="410"/>
+	<column name="id" not-null="true" sequence="public.abastece_classe_id_seq">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="1"/>
+	</column>
+	<constraint name="abastece_classe_pkey" type="pk-constr" table="public.abastece_classe">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="abastece_employee_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="9223372036854775807"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="temos"/>
+</sequence>
+
+<table name="abastece_employee">
+	<schema name="public"/>
+	<role name="temos"/>
+	<position x="1690" y="870"/>
+	<column name="id" not-null="true" sequence="public.abastece_employee_id_seq">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="active" not-null="true">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="60"/>
+	</column>
+	<constraint name="abastece_employee_pkey" type="pk-constr" table="public.abastece_employee">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="abastece_empresa_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="9223372036854775807"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="temos"/>
+</sequence>
+
+<table name="abastece_empresa">
+	<schema name="public"/>
+	<role name="temos"/>
+	<position x="110" y="140"/>
+	<column name="id" not-null="true" sequence="public.abastece_empresa_id_seq">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="active" not-null="true">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="25"/>
+	</column>
+	<constraint name="abastece_empresa_pkey" type="pk-constr" table="public.abastece_empresa">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="abastece_evento_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="9223372036854775807"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="temos"/>
+</sequence>
+
+<table name="abastece_evento">
+	<schema name="public"/>
+	<role name="temos"/>
+	<position x="1220" y="660"/>
+	<column name="id" not-null="true" sequence="public.abastece_evento_id_seq">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="active" not-null="true">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="data_planejado" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="data_realizado" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="number" not-null="true">
+		<type name="character varying" length="20"/>
+	</column>
+	<column name="resumo">
+		<type name="text" length="0"/>
+	</column>
+	<column name="empresa_id" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="form_id" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="base_id" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="posto_id" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="employee_id">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="abastece_evento_data_planejado_check" type="ck-constr" table="public.abastece_evento">
+			<expression><![CDATA[(data_planejado >= 0)]]></expression>
+	</constraint>
+	<constraint name="abastece_evento_data_realizado_check" type="ck-constr" table="public.abastece_evento">
+			<expression><![CDATA[(data_realizado >= 0)]]></expression>
+	</constraint>
+	<constraint name="abastece_evento_pkey" type="pk-constr" table="public.abastece_evento">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="abastece_form_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="9223372036854775807"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="temos"/>
+</sequence>
+
+<table name="abastece_form">
+	<schema name="public"/>
+	<role name="temos"/>
+	<position x="100" y="250"/>
+	<column name="id" not-null="true" sequence="public.abastece_form_id_seq">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="active" not-null="true">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="25"/>
+	</column>
+	<constraint name="abastece_form_pkey" type="pk-constr" table="public.abastece_form">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="abastece_inventory_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="9223372036854775807"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="temos"/>
+</sequence>
+
+<table name="abastece_inventory">
+	<schema name="public"/>
+	<role name="temos"/>
+	<position x="650" y="630"/>
+	<column name="id" not-null="true" sequence="public.abastece_inventory_id_seq">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="entrydate" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="item_new" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="item_used" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="item_broaked" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="item_id" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="warehouse_id" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="abastece_inventory_entrydate_check" type="ck-constr" table="public.abastece_inventory">
+			<expression><![CDATA[(entrydate >= 0)]]></expression>
+	</constraint>
+	<constraint name="abastece_inventory_pkey" type="pk-constr" table="public.abastece_inventory">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="abastece_item_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="9223372036854775807"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="temos"/>
+</sequence>
+
+<table name="abastece_item">
+	<schema name="public"/>
+	<role name="temos"/>
+	<position x="90" y="390"/>
+	<column name="id" not-null="true" sequence="public.abastece_item_id_seq">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="active" not-null="true">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="80"/>
+	</column>
+	<column name="model">
+		<type name="character varying" length="40"/>
+	</column>
+	<column name="maker">
+		<type name="character varying" length="45"/>
+	</column>
+	<column name="width">
+		<type name="double precision" length="0"/>
+	</column>
+	<column name="height">
+		<type name="double precision" length="0"/>
+	</column>
+	<column name="depth">
+		<type name="double precision" length="0"/>
+	</column>
+	<column name="prazocompra" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="abastece_item_pkey" type="pk-constr" table="public.abastece_item">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="abastece_itemcontrolado">
+	<schema name="public"/>
+	<role name="temos"/>
+	<position x="650" y="450"/>
+	<column name="identificador" not-null="true">
+		<type name="character varying" length="16"/>
+	</column>
+	<column name="serial">
+		<type name="character varying" length="80"/>
+	</column>
+	<column name="assetnumber">
+		<type name="character varying" length="80"/>
+	</column>
+	<column name="item_id" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="warehouse_id" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="posto_id">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="abastece_itemcontrolado_pkey" type="pk-constr" table="public.abastece_itemcontrolado">
+		<columns names="identificador" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="abastece_modeloviatura_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="9223372036854775807"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="temos"/>
+</sequence>
+
+<table name="abastece_modeloviatura">
+	<schema name="public"/>
+	<role name="temos"/>
+	<position x="2590" y="1070"/>
+	<column name="id" not-null="true" sequence="public.abastece_modeloviatura_id_seq">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="active" not-null="true">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="20"/>
+	</column>
+	<column name="km_rev" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="abastece_modeloviatura_km_rev_check" type="ck-constr" table="public.abastece_modeloviatura">
+			<expression><![CDATA[(km_rev >= 0)]]></expression>
+	</constraint>
+	<constraint name="abastece_modeloviatura_pkey" type="pk-constr" table="public.abastece_modeloviatura">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="abastece_moveitem_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="9223372036854775807"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="temos"/>
+</sequence>
+
+<table name="abastece_moveitem">
+	<schema name="public"/>
+	<role name="temos"/>
+	<position x="650" y="800"/>
+	<column name="id" not-null="true" sequence="public.abastece_moveitem_id_seq">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="timestamp" not-null="true">
+		<type name="date" length="0"/>
+	</column>
+	<column name="warehouse_dest_id" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="warehouse_origin_id" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="abastece_moveitem_pkey" type="pk-constr" table="public.abastece_moveitem">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="abastece_posto_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="9223372036854775807"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="temos"/>
+</sequence>
+
+<table name="abastece_posto">
+	<schema name="public"/>
+	<role name="temos"/>
+	<position x="1250" y="140"/>
+	<column name="id" not-null="true" sequence="public.abastece_posto_id_seq">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="active" not-null="true">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="60"/>
+	</column>
+	<column name="cgmp" not-null="true">
+		<type name="character varying" length="5"/>
+	</column>
+	<column name="status_opc" not-null="true">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="status_vip" not-null="true">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="coordx" not-null="true">
+		<type name="character varying" length="20"/>
+	</column>
+	<column name="coordy" not-null="true">
+		<type name="character varying" length="20"/>
+	</column>
+	<column name="base_id" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="classe_id" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="warehouse_id" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="abastece_posto_pkey" type="pk-constr" table="public.abastece_posto">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="abastece_posto_warehouse_id_key" type="uq-constr" table="public.abastece_posto">
+		<columns names="warehouse_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="abastece_punch_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="9223372036854775807"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="temos"/>
+</sequence>
+
+<table name="abastece_punch">
+	<schema name="public"/>
+	<role name="temos"/>
+	<position x="2070" y="690"/>
+	<column name="id" not-null="true" sequence="public.abastece_punch_id_seq">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="active" not-null="true">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="in_time">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="out_time">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="entry_date" not-null="true">
+		<type name="date" length="0"/>
+	</column>
+	<column name="in_coordx">
+		<type name="character varying" length="20"/>
+	</column>
+	<column name="in_coordy">
+		<type name="character varying" length="20"/>
+	</column>
+	<column name="out_coordx">
+		<type name="character varying" length="20"/>
+	</column>
+	<column name="out_coordy">
+		<type name="character varying" length="20"/>
+	</column>
+	<column name="employee_id" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="abastece_punch_in_time_check" type="ck-constr" table="public.abastece_punch">
+			<expression><![CDATA[(in_time >= 0)]]></expression>
+	</constraint>
+	<constraint name="abastece_punch_out_time_check" type="ck-constr" table="public.abastece_punch">
+			<expression><![CDATA[(out_time >= 0)]]></expression>
+	</constraint>
+	<constraint name="abastece_punch_pkey" type="pk-constr" table="public.abastece_punch">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="abastece_tarefa_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="9223372036854775807"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="temos"/>
+</sequence>
+
+<table name="abastece_tarefa">
+	<schema name="public"/>
+	<role name="temos"/>
+	<position x="2060" y="130"/>
+	<column name="id" not-null="true" sequence="public.abastece_tarefa_id_seq">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="active" not-null="true">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="number" not-null="true">
+		<type name="character varying" length="10"/>
+	</column>
+	<column name="status" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="description" not-null="true">
+		<type name="character varying" length="20"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="45"/>
+	</column>
+	<column name="start_date">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="end_date">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="start_coordx" not-null="true">
+		<type name="character varying" length="20"/>
+	</column>
+	<column name="start_coordy" not-null="true">
+		<type name="character varying" length="20"/>
+	</column>
+	<column name="end_coordx" not-null="true">
+		<type name="character varying" length="20"/>
+	</column>
+	<column name="end_coordy" not-null="true">
+		<type name="character varying" length="20"/>
+	</column>
+	<column name="employee_id" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="posto_id" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="abastece_tarefa_start_date_check" type="ck-constr" table="public.abastece_tarefa">
+			<expression><![CDATA[(start_date >= 0)]]></expression>
+	</constraint>
+	<constraint name="abastece_tarefa_end_date_check" type="ck-constr" table="public.abastece_tarefa">
+			<expression><![CDATA[(end_date >= 0)]]></expression>
+	</constraint>
+	<constraint name="abastece_tarefa_pkey" type="pk-constr" table="public.abastece_tarefa">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="abastece_tarefa_number_key" type="uq-constr" table="public.abastece_tarefa">
+		<columns names="number" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="abastece_viatura_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="9223372036854775807"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="temos"/>
+</sequence>
+
+<table name="abastece_viatura">
+	<schema name="public"/>
+	<role name="temos"/>
+	<position x="2070" y="990"/>
+	<column name="id" not-null="true" sequence="public.abastece_viatura_id_seq">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="active" not-null="true">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="placa" not-null="true">
+		<type name="character varying" length="7"/>
+	</column>
+	<column name="celular" not-null="true">
+		<type name="character varying" length="11"/>
+	</column>
+	<column name="coordx" not-null="true">
+		<type name="character varying" length="20"/>
+	</column>
+	<column name="coordy" not-null="true">
+		<type name="character varying" length="20"/>
+	</column>
+	<column name="quilometragem" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="employee_id" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="modeloviatura_id" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="abastece_viatura_quilometragem_check" type="ck-constr" table="public.abastece_viatura">
+			<expression><![CDATA[(quilometragem >= 0)]]></expression>
+	</constraint>
+	<constraint name="abastece_viatura_pkey" type="pk-constr" table="public.abastece_viatura">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="abastece_warehouse_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="9223372036854775807"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="temos"/>
+</sequence>
+
+<table name="abastece_warehouse">
+	<schema name="public"/>
+	<role name="temos"/>
+	<position x="110" y="770"/>
+	<column name="id" not-null="true" sequence="public.abastece_warehouse_id_seq">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="active" not-null="true">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="60"/>
+	</column>
+	<constraint name="abastece_warehouse_pkey" type="pk-constr" table="public.abastece_warehouse">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<index name="abastece_evento_078dce83" table="public.abastece_evento"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="90">
+		<idxelement use-sorting="false">
+			<column name="base_id"/>
+		</idxelement>
+</index>
+
+<index name="abastece_evento_dcc97e32" table="public.abastece_evento"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="90">
+		<idxelement use-sorting="false">
+			<column name="employee_id"/>
+		</idxelement>
+</index>
+
+<index name="abastece_evento_e8f8b1ef" table="public.abastece_evento"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="90">
+		<idxelement use-sorting="false">
+			<column name="empresa_id"/>
+		</idxelement>
+</index>
+
+<index name="abastece_itemcontrolado_82bfda79" table="public.abastece_itemcontrolado"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="90">
+		<idxelement use-sorting="false">
+			<column name="item_id"/>
+		</idxelement>
+</index>
+
+<index name="abastece_itemcontrolado_identificador_8db2c711_like" table="public.abastece_itemcontrolado"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="90">
+		<idxelement use-sorting="false">
+			<column name="identificador"/>
+		</idxelement>
+</index>
+
+<index name="abastece_posto_078dce83" table="public.abastece_posto"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="90">
+		<idxelement use-sorting="false">
+			<column name="base_id"/>
+		</idxelement>
+</index>
+
+<index name="abastece_posto_889ff0f8" table="public.abastece_posto"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="90">
+		<idxelement use-sorting="false">
+			<column name="classe_id"/>
+		</idxelement>
+</index>
+
+<index name="abastece_punch_dcc97e32" table="public.abastece_punch"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="90">
+		<idxelement use-sorting="false">
+			<column name="employee_id"/>
+		</idxelement>
+</index>
+
+<index name="abastece_tarefa_dcc97e32" table="public.abastece_tarefa"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="90">
+		<idxelement use-sorting="false">
+			<column name="employee_id"/>
+		</idxelement>
+</index>
+
+<index name="abastece_tarefa_6e6afa60" table="public.abastece_tarefa"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="90">
+		<idxelement use-sorting="false">
+			<column name="posto_id"/>
+		</idxelement>
+</index>
+
+<index name="abastece_tarefa_number_57170ec7_like" table="public.abastece_tarefa"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="90">
+		<idxelement use-sorting="false">
+			<column name="number"/>
+		</idxelement>
+</index>
+
+<index name="abastece_viatura_dcc97e32" table="public.abastece_viatura"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="90">
+		<idxelement use-sorting="false">
+			<column name="employee_id"/>
+		</idxelement>
+</index>
+
+<index name="abastece_viatura_cc54b7e1" table="public.abastece_viatura"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="90">
+		<idxelement use-sorting="false">
+			<column name="modeloviatura_id"/>
+		</idxelement>
+</index>
+
+<index name="abastece_moveitem_77df4f1b" table="public.abastece_moveitem"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="90">
+		<idxelement use-sorting="false">
+			<column name="warehouse_dest_id"/>
+		</idxelement>
+</index>
+
+<index name="abastece_moveitem_962aa9d8" table="public.abastece_moveitem"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="90">
+		<idxelement use-sorting="false">
+			<column name="warehouse_origin_id"/>
+		</idxelement>
+</index>
+
+<index name="abastece_itemcontrolado_9744817e" table="public.abastece_itemcontrolado"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="90">
+		<idxelement use-sorting="false">
+			<column name="warehouse_id"/>
+		</idxelement>
+</index>
+
+<index name="abastece_inventory_82bfda79" table="public.abastece_inventory"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="90">
+		<idxelement use-sorting="false">
+			<column name="item_id"/>
+		</idxelement>
+</index>
+
+<index name="abastece_inventory_9744817e" table="public.abastece_inventory"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="90">
+		<idxelement use-sorting="false">
+			<column name="warehouse_id"/>
+		</idxelement>
+</index>
+
+<index name="abastece_evento_d6cba1ad" table="public.abastece_evento"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="90">
+		<idxelement use-sorting="false">
+			<column name="form_id"/>
+		</idxelement>
+</index>
+
+<index name="abastece_evento_6e6afa60" table="public.abastece_evento"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="90">
+		<idxelement use-sorting="false">
+			<column name="posto_id"/>
+		</idxelement>
+</index>
+
+<index name="abastece_base_dcc97e32" table="public.abastece_base"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="90">
+		<idxelement use-sorting="false">
+			<column name="employee_id"/>
+		</idxelement>
+</index>
+
+<index name="abastece_base_cfa4ea63" table="public.abastece_base"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="90">
+		<idxelement use-sorting="false">
+			<column name="viatura_id"/>
+		</idxelement>
+</index>
+
+<sequence name="django_content_type_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="9223372036854775807"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="temos"/>
+</sequence>
+
+<table name="django_content_type">
+	<schema name="public"/>
+	<role name="temos"/>
+	<position x="1390" y="2209"/>
+	<column name="id" not-null="true" sequence="public.django_content_type_id_seq">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="app_label" not-null="true">
+		<type name="character varying" length="100"/>
+	</column>
+	<column name="model" not-null="true">
+		<type name="character varying" length="100"/>
+	</column>
+	<constraint name="django_content_type_pkey" type="pk-constr" table="public.django_content_type">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="django_content_type_app_label_76bd3d3b_uniq" type="uq-constr" table="public.django_content_type">
+		<columns names="app_label,model" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="auth_permission_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="9223372036854775807"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="temos"/>
+</sequence>
+
+<table name="auth_permission">
+	<schema name="public"/>
+	<role name="temos"/>
+	<position x="940" y="2092"/>
+	<column name="id" not-null="true" sequence="public.auth_permission_id_seq">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="255"/>
+	</column>
+	<column name="content_type_id" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="codename" not-null="true">
+		<type name="character varying" length="100"/>
+	</column>
+	<constraint name="auth_permission_pkey" type="pk-constr" table="public.auth_permission">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="auth_permission_content_type_id_01ab375a_uniq" type="uq-constr" table="public.auth_permission">
+		<columns names="content_type_id,codename" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="auth_group_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="9223372036854775807"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="temos"/>
+</sequence>
+
+<table name="auth_group">
+	<schema name="public"/>
+	<role name="temos"/>
+	<position x="950" y="2222"/>
+	<column name="id" not-null="true" sequence="public.auth_group_id_seq">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="character varying" length="80"/>
+	</column>
+	<constraint name="auth_group_pkey" type="pk-constr" table="public.auth_group">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="auth_group_name_key" type="uq-constr" table="public.auth_group">
+		<columns names="name" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="auth_group_permissions_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="9223372036854775807"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="temos"/>
+</sequence>
+
+<table name="auth_group_permissions">
+	<schema name="public"/>
+	<role name="temos"/>
+	<position x="460" y="2152"/>
+	<column name="id" not-null="true" sequence="public.auth_group_permissions_id_seq">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="group_id" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="permission_id" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="auth_group_permissions_pkey" type="pk-constr" table="public.auth_group_permissions">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="auth_group_permissions_group_id_0cd325b0_uniq" type="uq-constr" table="public.auth_group_permissions">
+		<columns names="group_id,permission_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="auth_user_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="9223372036854775807"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="temos"/>
+</sequence>
+
+<table name="auth_user">
+	<schema name="public"/>
+	<role name="temos"/>
+	<position x="400" y="1862"/>
+	<column name="id" not-null="true" sequence="public.auth_user_id_seq">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="password" not-null="true">
+		<type name="character varying" length="128"/>
+	</column>
+	<column name="last_login">
+		<type name="timestamp with time zone" length="0" with-timezone="true"/>
+	</column>
+	<column name="is_superuser" not-null="true">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="username" not-null="true">
+		<type name="character varying" length="150"/>
+	</column>
+	<column name="first_name" not-null="true">
+		<type name="character varying" length="30"/>
+	</column>
+	<column name="last_name" not-null="true">
+		<type name="character varying" length="30"/>
+	</column>
+	<column name="email" not-null="true">
+		<type name="character varying" length="254"/>
+	</column>
+	<column name="is_staff" not-null="true">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="is_active" not-null="true">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="date_joined" not-null="true">
+		<type name="timestamp with time zone" length="0" with-timezone="true"/>
+	</column>
+	<constraint name="auth_user_pkey" type="pk-constr" table="public.auth_user">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="auth_user_username_key" type="uq-constr" table="public.auth_user">
+		<columns names="username" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="auth_user_groups_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="9223372036854775807"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="temos"/>
+</sequence>
+
+<table name="auth_user_groups">
+	<schema name="public"/>
+	<role name="temos"/>
+	<position x="800" y="1842"/>
+	<column name="id" not-null="true" sequence="public.auth_user_groups_id_seq">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="user_id" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="group_id" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="auth_user_groups_pkey" type="pk-constr" table="public.auth_user_groups">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="auth_user_groups_user_id_94350c0c_uniq" type="uq-constr" table="public.auth_user_groups">
+		<columns names="user_id,group_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="auth_user_user_permissions_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="9223372036854775807"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="temos"/>
+</sequence>
+
+<table name="auth_user_user_permissions">
+	<schema name="public"/>
+	<role name="temos"/>
+	<position x="1070" y="1862"/>
+	<column name="id" not-null="true" sequence="public.auth_user_user_permissions_id_seq">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="user_id" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="permission_id" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="auth_user_user_permissions_pkey" type="pk-constr" table="public.auth_user_user_permissions">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="auth_user_user_permissions_user_id_14a6b632_uniq" type="uq-constr" table="public.auth_user_user_permissions">
+		<columns names="user_id,permission_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<index name="auth_permission_417f1b1c" table="public.auth_permission"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="90">
+		<idxelement use-sorting="false">
+			<column name="content_type_id"/>
+		</idxelement>
+</index>
+
+<index name="auth_group_name_a6ea08ec_like" table="public.auth_group"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="90">
+		<idxelement use-sorting="false">
+			<column name="name"/>
+		</idxelement>
+</index>
+
+<index name="auth_group_permissions_0e939a4f" table="public.auth_group_permissions"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="90">
+		<idxelement use-sorting="false">
+			<column name="group_id"/>
+		</idxelement>
+</index>
+
+<index name="auth_group_permissions_8373b171" table="public.auth_group_permissions"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="90">
+		<idxelement use-sorting="false">
+			<column name="permission_id"/>
+		</idxelement>
+</index>
+
+<index name="auth_user_groups_e8701ad4" table="public.auth_user_groups"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="90">
+		<idxelement use-sorting="false">
+			<column name="user_id"/>
+		</idxelement>
+</index>
+
+<index name="auth_user_groups_0e939a4f" table="public.auth_user_groups"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="90">
+		<idxelement use-sorting="false">
+			<column name="group_id"/>
+		</idxelement>
+</index>
+
+<index name="auth_user_user_permissions_e8701ad4" table="public.auth_user_user_permissions"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="90">
+		<idxelement use-sorting="false">
+			<column name="user_id"/>
+		</idxelement>
+</index>
+
+<index name="auth_user_user_permissions_8373b171" table="public.auth_user_user_permissions"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="90">
+		<idxelement use-sorting="false">
+			<column name="permission_id"/>
+		</idxelement>
+</index>
+
+<sequence name="django_admin_log_id_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="9223372036854775807"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+	<role name="temos"/>
+</sequence>
+
+<table name="django_admin_log">
+	<schema name="public"/>
+	<role name="temos"/>
+	<position x="1420" y="1862"/>
+	<column name="id" not-null="true" sequence="public.django_admin_log_id_seq">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="action_time" not-null="true">
+		<type name="timestamp with time zone" length="0" with-timezone="true"/>
+	</column>
+	<column name="object_id">
+		<type name="text" length="0"/>
+	</column>
+	<column name="object_repr" not-null="true">
+		<type name="character varying" length="200"/>
+	</column>
+	<column name="action_flag" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="change_message" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="content_type_id">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="user_id" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="django_admin_log_action_flag_check" type="ck-constr" table="public.django_admin_log">
+			<expression><![CDATA[(action_flag >= 0)]]></expression>
+	</constraint>
+	<constraint name="django_admin_log_pkey" type="pk-constr" table="public.django_admin_log">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<index name="django_admin_log_417f1b1c" table="public.django_admin_log"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="90">
+		<idxelement use-sorting="false">
+			<column name="content_type_id"/>
+		</idxelement>
+</index>
+
+<index name="django_admin_log_e8701ad4" table="public.django_admin_log"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="90">
+		<idxelement use-sorting="false">
+			<column name="user_id"/>
+		</idxelement>
+</index>
+
+<index name="auth_user_username_6821ab7c_like" table="public.auth_user"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="90">
+		<idxelement use-sorting="false">
+			<column name="username"/>
+		</idxelement>
+</index>
+
+<table name="django_session">
+	<schema name="public"/>
+	<role name="temos"/>
+	<position x="60" y="2002"/>
+	<column name="session_key" not-null="true">
+		<type name="character varying" length="40"/>
+	</column>
+	<column name="session_data" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="expire_date" not-null="true">
+		<type name="timestamp with time zone" length="0" with-timezone="true"/>
+	</column>
+	<constraint name="django_session_pkey" type="pk-constr" table="public.django_session">
+		<columns names="session_key" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<index name="django_session_de54fa62" table="public.django_session"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="90">
+		<idxelement use-sorting="false">
+			<column name="expire_date"/>
+		</idxelement>
+</index>
+
+<index name="django_session_session_key_c0390e0f_like" table="public.django_session"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="90">
+		<idxelement use-sorting="false">
+			<column name="session_key"/>
+		</idxelement>
+</index>
+
+<index name="abastece_itemcontrolado_6e6afa60" table="public.abastece_itemcontrolado"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="90">
+		<idxelement use-sorting="false">
+			<column name="posto_id"/>
+		</idxelement>
+</index>
+
+<constraint name="abastece_base_employee_id_639beeb6_fk_abastece_employee_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.abastece_employee"
+	deferrable="true" defer-type="INITIALLY DEFERRED"
+ table="public.abastece_base">
+	<columns names="employee_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="abastece_base_viatura_id_c66d5ab7_fk_abastece_viatura_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.abastece_viatura"
+	deferrable="true" defer-type="INITIALLY DEFERRED"
+ table="public.abastece_base">
+	<columns names="viatura_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="abastece_base_warehouse_id_6fdeafd1_fk_abastece_warehouse_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.abastece_warehouse"
+	deferrable="true" defer-type="INITIALLY DEFERRED"
+ table="public.abastece_base">
+	<columns names="warehouse_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="abastece_evento_base_id_45144a9d_fk_abastece_base_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.abastece_base"
+	deferrable="true" defer-type="INITIALLY DEFERRED"
+ table="public.abastece_evento">
+	<columns names="base_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="abastece_evento_employee_id_d0014f92_fk_abastece_employee_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.abastece_employee"
+	deferrable="true" defer-type="INITIALLY DEFERRED"
+ table="public.abastece_evento">
+	<columns names="employee_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="abastece_evento_empresa_id_7a130228_fk_abastece_empresa_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.abastece_empresa"
+	deferrable="true" defer-type="INITIALLY DEFERRED"
+ table="public.abastece_evento">
+	<columns names="empresa_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="abastece_evento_form_id_b7ac70a9_fk_abastece_form_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.abastece_form"
+	deferrable="true" defer-type="INITIALLY DEFERRED"
+ table="public.abastece_evento">
+	<columns names="form_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="abastece_evento_posto_id_69daf19f_fk_abastece_posto_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.abastece_posto"
+	deferrable="true" defer-type="INITIALLY DEFERRED"
+ table="public.abastece_evento">
+	<columns names="posto_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="abastece_inventory_item_id_d9882f14_fk_abastece_item_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.abastece_item"
+	deferrable="true" defer-type="INITIALLY DEFERRED"
+ table="public.abastece_inventory">
+	<columns names="item_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="abastece_invento_warehouse_id_958bf511_fk_abastece_warehouse_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.abastece_warehouse"
+	deferrable="true" defer-type="INITIALLY DEFERRED"
+ table="public.abastece_inventory">
+	<columns names="warehouse_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="abastece_itemcontrolado_item_id_a10ae1fe_fk_abastece_item_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.abastece_item"
+	deferrable="true" defer-type="INITIALLY DEFERRED"
+ table="public.abastece_itemcontrolado">
+	<columns names="item_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="abastece_itemcon_warehouse_id_f6d9e7bd_fk_abastece_warehouse_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.abastece_warehouse"
+	deferrable="true" defer-type="INITIALLY DEFERRED"
+ table="public.abastece_itemcontrolado">
+	<columns names="warehouse_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="abastece_itemcontrolado_posto_id_c9abb2ca_fk_abastece_posto_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.abastece_posto"
+	deferrable="true" defer-type="INITIALLY DEFERRED"
+ table="public.abastece_itemcontrolado">
+	<columns names="posto_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="abastece_mo_warehouse_dest_id_bac97e0b_fk_abastece_warehouse_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.abastece_warehouse"
+	deferrable="true" defer-type="INITIALLY DEFERRED"
+ table="public.abastece_moveitem">
+	<columns names="warehouse_dest_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="abastece__warehouse_origin_id_c3ff2db5_fk_abastece_warehouse_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.abastece_warehouse"
+	deferrable="true" defer-type="INITIALLY DEFERRED"
+ table="public.abastece_moveitem">
+	<columns names="warehouse_origin_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="abastece_posto_base_id_bf576778_fk_abastece_base_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.abastece_base"
+	deferrable="true" defer-type="INITIALLY DEFERRED"
+ table="public.abastece_posto">
+	<columns names="base_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="abastece_posto_classe_id_f4981b05_fk_abastece_classe_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.abastece_classe"
+	deferrable="true" defer-type="INITIALLY DEFERRED"
+ table="public.abastece_posto">
+	<columns names="classe_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="abastece_posto_warehouse_id_1937cbdd_fk_abastece_warehouse_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.abastece_warehouse"
+	deferrable="true" defer-type="INITIALLY DEFERRED"
+ table="public.abastece_posto">
+	<columns names="warehouse_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="abastece_punch_employee_id_80905d7a_fk_abastece_employee_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.abastece_employee"
+	deferrable="true" defer-type="INITIALLY DEFERRED"
+ table="public.abastece_punch">
+	<columns names="employee_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="abastece_tarefa_employee_id_d32ad0df_fk_abastece_employee_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.abastece_employee"
+	deferrable="true" defer-type="INITIALLY DEFERRED"
+ table="public.abastece_tarefa">
+	<columns names="employee_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="abastece_tarefa_posto_id_7f0ed439_fk_abastece_posto_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.abastece_posto"
+	deferrable="true" defer-type="INITIALLY DEFERRED"
+ table="public.abastece_tarefa">
+	<columns names="posto_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="abastece_viatura_employee_id_023454f3_fk_abastece_employee_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.abastece_employee"
+	deferrable="true" defer-type="INITIALLY DEFERRED"
+ table="public.abastece_viatura">
+	<columns names="employee_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="abastece_modeloviatura_id_a5ffeb33_fk_abastece_modeloviatura_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.abastece_modeloviatura"
+	deferrable="true" defer-type="INITIALLY DEFERRED"
+ table="public.abastece_viatura">
+	<columns names="modeloviatura_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="auth_permiss_content_type_id_2f476e4b_fk_django_content_type_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.django_content_type"
+	deferrable="true" defer-type="INITIALLY DEFERRED"
+ table="public.auth_permission">
+	<columns names="content_type_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="auth_group_permissions_group_id_b120cbf9_fk_auth_group_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.auth_group"
+	deferrable="true" defer-type="INITIALLY DEFERRED"
+ table="public.auth_group_permissions">
+	<columns names="group_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="auth_group_permiss_permission_id_84c5c92e_fk_auth_permission_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.auth_permission"
+	deferrable="true" defer-type="INITIALLY DEFERRED"
+ table="public.auth_group_permissions">
+	<columns names="permission_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="auth_user_groups_user_id_6a12ed8b_fk_auth_user_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.auth_user"
+	deferrable="true" defer-type="INITIALLY DEFERRED"
+ table="public.auth_user_groups">
+	<columns names="user_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="auth_user_groups_group_id_97559544_fk_auth_group_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.auth_group"
+	deferrable="true" defer-type="INITIALLY DEFERRED"
+ table="public.auth_user_groups">
+	<columns names="group_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.auth_user"
+	deferrable="true" defer-type="INITIALLY DEFERRED"
+ table="public.auth_user_user_permissions">
+	<columns names="user_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="auth_user_user_per_permission_id_1fbb5f2c_fk_auth_permission_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.auth_permission"
+	deferrable="true" defer-type="INITIALLY DEFERRED"
+ table="public.auth_user_user_permissions">
+	<columns names="permission_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="django_admin_content_type_id_c4bce8eb_fk_django_content_type_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.django_content_type"
+	deferrable="true" defer-type="INITIALLY DEFERRED"
+ table="public.django_admin_log">
+	<columns names="content_type_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="django_admin_log_user_id_c564eba6_fk_auth_user_id" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.auth_user"
+	deferrable="true" defer-type="INITIALLY DEFERRED"
+ table="public.django_admin_log">
+	<columns names="user_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<relationship name="rel_abastece_base_abastece_employee" type="relfk"
+	 custom-color="#5b93cc"
+	 src-table="public.abastece_base"
+	 dst-table="public.abastece_employee"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_abastece_base_abastece_viatura" type="relfk"
+	 custom-color="#025732"
+	 src-table="public.abastece_base"
+	 dst-table="public.abastece_viatura"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_abastece_base_abastece_warehouse" type="relfk"
+	 custom-color="#a545fa"
+	 src-table="public.abastece_base"
+	 dst-table="public.abastece_warehouse"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_abastece_evento_abastece_base" type="relfk"
+	 custom-color="#49f857"
+	 src-table="public.abastece_evento"
+	 dst-table="public.abastece_base"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_abastece_evento_abastece_employee" type="relfk"
+	 custom-color="#ea4bc5"
+	 src-table="public.abastece_evento"
+	 dst-table="public.abastece_employee"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_abastece_evento_abastece_empresa" type="relfk"
+	 custom-color="#41238e"
+	 src-table="public.abastece_evento"
+	 dst-table="public.abastece_empresa"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_abastece_evento_abastece_form" type="relfk"
+	 custom-color="#b6a19d"
+	 src-table="public.abastece_evento"
+	 dst-table="public.abastece_form"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_abastece_evento_abastece_posto" type="relfk"
+	 custom-color="#4d01c9"
+	 src-table="public.abastece_evento"
+	 dst-table="public.abastece_posto"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_abastece_inventory_abastece_item" type="relfk"
+	 custom-color="#9c7902"
+	 src-table="public.abastece_inventory"
+	 dst-table="public.abastece_item"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_abastece_inventory_abastece_warehouse" type="relfk"
+	 custom-color="#9383d2"
+	 src-table="public.abastece_inventory"
+	 dst-table="public.abastece_warehouse"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_abastece_itemcontrolado_abastece_item" type="relfk"
+	 custom-color="#b2e44f"
+	 src-table="public.abastece_itemcontrolado"
+	 dst-table="public.abastece_item"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_abastece_itemcontrolado_abastece_warehouse" type="relfk"
+	 custom-color="#101197"
+	 src-table="public.abastece_itemcontrolado"
+	 dst-table="public.abastece_warehouse"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_abastece_itemcontrolado_abastece_posto" type="relfk"
+	 custom-color="#865d05"
+	 src-table="public.abastece_itemcontrolado"
+	 dst-table="public.abastece_posto"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_abastece_moveitem_abastece_warehouse" type="relfk"
+	 custom-color="#79b722"
+	 src-table="public.abastece_moveitem"
+	 dst-table="public.abastece_warehouse"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_abastece_posto_abastece_base" type="relfk"
+	 custom-color="#3a05a1"
+	 src-table="public.abastece_posto"
+	 dst-table="public.abastece_base"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_abastece_posto_abastece_classe" type="relfk"
+	 custom-color="#54553d"
+	 src-table="public.abastece_posto"
+	 dst-table="public.abastece_classe"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_abastece_posto_abastece_warehouse" type="relfk"
+	 custom-color="#d001b1"
+	 src-table="public.abastece_posto"
+	 dst-table="public.abastece_warehouse"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_abastece_punch_abastece_employee" type="relfk"
+	 custom-color="#ebb914"
+	 src-table="public.abastece_punch"
+	 dst-table="public.abastece_employee"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_abastece_tarefa_abastece_employee" type="relfk"
+	 custom-color="#1ea89b"
+	 src-table="public.abastece_tarefa"
+	 dst-table="public.abastece_employee"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_abastece_tarefa_abastece_posto" type="relfk"
+	 custom-color="#315fed"
+	 src-table="public.abastece_tarefa"
+	 dst-table="public.abastece_posto"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_abastece_viatura_abastece_employee" type="relfk"
+	 custom-color="#c237d5"
+	 src-table="public.abastece_viatura"
+	 dst-table="public.abastece_employee"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_abastece_viatura_abastece_modeloviatura" type="relfk"
+	 custom-color="#697e1e"
+	 src-table="public.abastece_viatura"
+	 dst-table="public.abastece_modeloviatura"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_auth_permission_django_content_type" type="relfk"
+	 custom-color="#44275d"
+	 src-table="public.auth_permission"
+	 dst-table="public.django_content_type"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_auth_group_permissions_auth_group" type="relfk"
+	 custom-color="#323a22"
+	 src-table="public.auth_group_permissions"
+	 dst-table="public.auth_group"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_auth_group_permissions_auth_permission" type="relfk"
+	 custom-color="#71137d"
+	 src-table="public.auth_group_permissions"
+	 dst-table="public.auth_permission"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_auth_user_groups_auth_user" type="relfk"
+	 custom-color="#99b0d1"
+	 src-table="public.auth_user_groups"
+	 dst-table="public.auth_user"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_auth_user_groups_auth_group" type="relfk"
+	 custom-color="#ab3ea2"
+	 src-table="public.auth_user_groups"
+	 dst-table="public.auth_group"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_auth_user_user_permissions_auth_user" type="relfk"
+	 custom-color="#fa5a6b"
+	 src-table="public.auth_user_user_permissions"
+	 dst-table="public.auth_user"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_auth_user_user_permissions_auth_permission" type="relfk"
+	 custom-color="#c28d9b"
+	 src-table="public.auth_user_user_permissions"
+	 dst-table="public.auth_permission"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_django_admin_log_django_content_type" type="relfk"
+	 custom-color="#9bb803"
+	 src-table="public.django_admin_log"
+	 dst-table="public.django_content_type"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_django_admin_log_auth_user" type="relfk"
+	 custom-color="#ddd4dd"
+	 src-table="public.django_admin_log"
+	 dst-table="public.auth_user"
+	 src-required="false" dst-required="false"/>
+
+</dbmodel>

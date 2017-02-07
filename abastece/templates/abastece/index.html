@@ -1,13 +1,12 @@
-{% extends "abastece/base.html" %}
+{% extends "main/base.html" %}
+
+{% block head %}
+{{block.super}}
+
+{% endblock %}
+
 {% block content %}
-  <div class="row">
-    <br>
-    <div class="col-md-2">
-    </div>
-    <div class="col-md-8">
-      {% for id in ids %}
-        <div id="{{id}}"></div>
-      {% endfor %}
-    </div>
-  </div>
+<br>
+<br>
+
 {% endblock %}

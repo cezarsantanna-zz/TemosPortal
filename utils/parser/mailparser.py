@@ -149,7 +149,6 @@ class MailParser(object):
             "message_id": self.message_id,
             "subject": self.subject,
             "to": self.to_,
-            "X-Original-To": self.X_Original_To_,
             "has_defects": self._has_defects,
             "has_anomalies": self._has_anomalies,
         }
@@ -303,11 +302,6 @@ class MailParser(object):
     def to_(self):
         return self._decode_header_part(
             self._message.get('to', self._message.get('delivered-to')))
-
-    @property
-    def X_Original_To_(self):
-        return self._decode_header_part(
-            self._message.get('X-Original-To', self._message.get('X-Original-To')))
 
     @property
     def from_(self):
