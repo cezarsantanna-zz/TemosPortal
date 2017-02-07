@@ -57,11 +57,11 @@ class ModeloViatura(models.Model):
 class Viatura(models.Model):
     active = models.BooleanField(default=True)
     placa = models.CharField(max_length=7)
-    celular = models.CharField(max_length=11)
-    coordx = models.CharField(max_length=20)
-    coordy = models.CharField(max_length=20)
-    quilometragem = models.PositiveIntegerField()
-    employee = models.ForeignKey(Employee, on_delete=models.PROTECT)
+    celular = models.CharField(max_length=11, null=True)
+    coordx = models.CharField(max_length=20, null=True)
+    coordy = models.CharField(max_length=20, null=True)
+    quilometragem = models.PositiveIntegerField(null=True)
+    employee = models.ForeignKey(Employee, on_delete=models.PROTECT, null=True)
     modeloviatura = models.ForeignKey(ModeloViatura, on_delete=models.PROTECT)
 
     def __str__(self):
@@ -81,26 +81,6 @@ class Base(models.Model):
         return self.name
 
 
-class ModeloEquipamento(models.Model):
-    active = models.BooleanField(default=True)
-    name = models.CharField(max_length=80)
-
-    def __str__(self):
-        return self.name
-
-
-class Equipamento(models.Model):
-    active = models.BooleanField(default=True)
-    serial = models.CharField(max_length=80, unique=True)
-    assetnumber1 = models.CharField(max_length=80, unique=True)
-    assetnumber2 = models.CharField(max_length=80, unique=True, null=True)
-    analise = models.CharField(max_length=256, null=True)
-    modeloequipamento = models.ForeignKey(ModeloEquipamento, on_delete=models.PROTECT)
-    warehouse = models.ForeignKey(Warehouse, on_delete=models.PROTECT)
-
-    def __str__(self):
-        return self.assetnumber1
-
 class Posto(models.Model):
     active = models.BooleanField(default=True)
     name = models.CharField(max_length=60)
@@ -114,26 +94,62 @@ class Posto(models.Model):
     warehouse = models.OneToOneField(Warehouse, on_delete=models.PROTECT)
 
     def __str__(self):
-        return self.name
+        return self.cgmp
 
 
-class TipoEvento(models.Model):
+class Item(models.Model):
     active = models.BooleanField(default=True)
-    name = models.CharField(max_length=60)
+    name = models.CharField(max_length=80)
+    model = models.CharField(max_length=40, null=True)
+    maker = models.CharField(max_length=45, null=True)
+    width = models.FloatField(null=True)
+    height = models.FloatField(null=True)
+    depth = models.FloatField(null=True)
+    prazocompra = models.IntegerField(default=0)
 
     def __str__(self):
         return self.name
 
 
+class ItemControlado(models.Model):
+    identificador = models.CharField(max_length=16, primary_key=True)
+    serial = models.CharField(max_length=80, null=True)
+    assetnumber = models.CharField(max_length=80, null=True)
+    item = models.ForeignKey(Item, on_delete=models.PROTECT)
+    posto = models.ForeignKey(Posto, on_delete=models.PROTECT, null=True)
+    warehouse = models.ForeignKey(Warehouse, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return self.identificador
+
+
+class MoveItem(models.Model):
+    timestamp = models.DateField(auto_now_add=True)
+    warehouse_origin = models.ForeignKey(Warehouse, on_delete=models.PROTECT, related_name='origin')
+    warehouse_dest = models.ForeignKey(Warehouse, on_delete=models.PROTECT, related_name='destination')
+
+
+class Inventory(models.Model):
+    entrydate = models.PositiveIntegerField()
+    warehouse = models.ForeignKey(Warehouse, on_delete=models.PROTECT)
+    item = models.ForeignKey(Item, on_delete=models.PROTECT)
+    item_new = models.IntegerField()
+    item_used = models.IntegerField()
+    item_broaked = models.IntegerField()
+
+
 class Evento(models.Model):
     active = models.BooleanField(default=True)
-    data_planejado = models.PositiveIntegerField()
-    data_realizado = models.PositiveIntegerField()
-    number = models.CharField(max_length=20)
+    entry_date = models.DateField(null=True)
+    data_planejado = models.PositiveIntegerField(null=True)
+    data_realizado = models.PositiveIntegerField(null=True)
+    number = models.CharField(max_length=20, null=True)
     resumo = models.TextField(null=True)
-    posto = models.ForeignKey(Posto, on_delete=models.PROTECT)
-    base = models.ForeignKey(Base, on_delete=models.PROTECT)
-    employee = models.ForeignKey(Employee, null=True, on_delete=models.PROTECT)
+    posto = models.ForeignKey(Posto, on_delete=models.PROTECT, null=True)
+    base = models.ForeignKey(Base, on_delete=models.PROTECT, null=True)
+    employee = models.ForeignKey(Employee,
+                                 null=True,
+                                 on_delete=models.PROTECT)
     form = models.ForeignKey(Form, on_delete=models.PROTECT)
     empresa = models.ForeignKey(Empresa, on_delete=models.PROTECT)
 
@@ -170,3 +186,23 @@ class Punch(models.Model):
 
     def __str__(self):
         return self.entry_date
+
+
+class Incidente(models.Model):
+    active = models.BooleanField(default=True)
+    encerrado = models.BooleanField(default=False)
+    numero = models.CharField(max_length=10, unique=True)
+    data_atribuido = models.PositiveIntegerField(null=True)
+    data_fechado = models.PositiveIntegerField(null=True)
+    posto = models.ForeignKey(Posto, on_delete=models.PROTECT, null=True)
+    description = models.CharField(max_length=1024, null=True)
+
+
+class Task(models.Model):
+    active = models.BooleanField(default=True)
+    encerrado = models.BooleanField(default=False)
+    numero = models.CharField(max_length=10, unique=True)
+    data_atribuido = models.PositiveIntegerField(null=True)
+    data_fechado = models.PositiveIntegerField(null=True)
+    posto = models.ForeignKey(Posto, on_delete=models.PROTECT, null=True)
+    description = models.CharField(max_length=1024, null=True)

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% if title %}
+    <title>{{ title }} - Temos Engenharia</title>
+    {% else %}
+    <title>Temos, Engenharia que move pessoas</title>
+    {% endif %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static "main/static/css/bootstrap.min.css" %}">
+    <link rel="apple-touch-icon" sizes="57x57" href="{% static "main/static/images/apple-icon-57x57.png" %}">
+    <link rel="apple-touch-icon" sizes="60x60" href="{% static "main/static/images/apple-icon-60x60.png" %}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{% static "main/static/images/apple-icon-72x72.png" %}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static "main/static/images/apple-icon-76x76.png" %}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{% static "main/static/images/apple-icon-114x114.png" %}">
+    <link rel="apple-touch-icon" sizes="120x120" href="{% static "main/static/images/apple-icon-120x120.png" %}">
+    <link rel="apple-touch-icon" sizes="144x144" href="{% static "main/static/images/apple-icon-144x144.png" %}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{% static "main/static/images/apple-icon-152x152.png" %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static "main/static/images/apple-icon-180x180.png" %}">
+    <link rel="icon" type="image/png" sizes="192x192"  href="{% static "main/static/images/android-icon-192x192.png" %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static "main/static/images/favicon-32x32.png" %}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{% static "main/static/images/favicon-96x96.png" %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static "main/static/images/favicon-16x16.png" %}">
+    <link rel="manifest" href="{% static "main/static/images/manifest.json" %}">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="{% static "main/static/images/ms-icon-144x144.png" %}">
+    <meta name="theme-color" content="#ffffff">
+</head>
+<body>
+  <div class="row">
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/main">Temos Portal</a>
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-menu" aria-expanded="false">
+          <span class="sr-only">Alterne navegação</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <div id="nav-menu" class="collapse navbar-collapse navbar-right">
+        <ul class="nav navbar-nav">
+          <li><a href="/abastece/graficos/diario">Gráfico Diário</a></li>
+          <li><a href="/abastece/graficos/acumulado">Gráfico Acumulado</a></li>
+          <li><a href="/admin/abastece/evento/">Eventos</a></li>
+          <li><span>&nbsp;&nbsp;</span></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+  <section id="body">
+    <br>
+    <br>
+    <div class="container col-md-12">
+      {% block content %}
+      {% endblock %}
+    </div>
+    <br>
+    <br>
+  </section>
+  <footer>
+    <div class="container">
+      <div class="row">
+        <address class="pull-right">
+          <strong> E2i9 Engenharia e Implantação Ltda</strong>
+          <br>Rua Adalgisio Loureiro de Almeida, 385
+          <br>Jardim São Paulo, Sorocaba - SP
+          <br>CEP 18051-490
+          <br><abbr title="Telefone">Tel:</abbr> (15) 3035-9700
+        </address>
+      </div>
+    </div>
+  </footer>
+    <script src="{% static "main/static/js/jquery-3.1.1.min.js" %}"></script>
+    <script src="{% static "main/static/js/bootstrap.min.js" %}"></script>
+</body>
+</html>

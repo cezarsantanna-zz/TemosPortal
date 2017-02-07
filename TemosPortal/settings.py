@@ -25,13 +25,16 @@ SECRET_KEY = 'kglxyrr29gd38_7+3)3w5=n88op)si@d&d#&3jt%zx%nb^r=p4'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['191.32.217.66', '127.0.0.1', '172.20.254.254', 'backoffice01']
 
 
 # Application definition
 
 INSTALLED_APPS = [
     'abastece.apps.AbasteceConfig',
+    'condominios.apps.CondominiosConfig',
+    'main.apps.MainConfig',
+    'admin_view_permission',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
