@@ -83,6 +83,7 @@ class EventoAdmin(admin.ModelAdmin):
     search_fields = (
         'posto__name',
         'posto__cgmp',
+        'number',
     )
 
     ordering = ['entry_date', 'posto',]
