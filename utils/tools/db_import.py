@@ -837,6 +837,53 @@ def importCorretivasCSV(_File):
         return None
 
 
+def importFormCSV(_File):
+    try:
+        with open(_File, 'r') as srcfile:
+            reader = csv.reader(srcfile, delimiter=';')
+            try:
+                with psycopg2.connect(
+                    database=dbName,
+                    user=dbUser,
+                    host=dbHost,
+                    password=dbPass
+                ) as conn_pg:
+                    for row in reader:
+                        form_name = row[0]
+                        try:
+                            with conn_pg.cursor(
+                            ) as conn_pgs:
+                                conn_pgs.execute(
+                                    'INSERT INTO abastece_form \
+                                    (active, name) \
+                                    VALUES \
+                                    (%s, %s);',
+                                    (True, form_name,)
+                                )
+                        except:
+                            import sys
+                            import traceback
+                            print(
+                                'Erro ao inserir %s',
+                                file=sys.stderr
+                            ) % (form_name)
+                            traceback.print_exc(file=sys.stderr)
+                            return None
+            except:
+                import sys
+                import traceback
+                print('Erro ao conectar com o banco de dados', file=sys.stderr)
+                traceback.print_exc(file=sys.stderr)
+                return None
+
+    except:
+        import sys
+        import traceback
+        print('Erro ao abrir arquivo CSV:', file=sys.stderr)
+        traceback.print_exc(file=sys.stderr)
+        return None
+
+
 if __name__ == '__main__':
     if argv[1] == 'warehouse':
         importWarehouseCSV(argv[2])
@@ -848,3 +895,5 @@ if __name__ == '__main__':
         importLinhaBaseCSV(argv[2])
     elif argv[1] == 'corretivas':
         importCorretivasCSV(argv[2])
+    elif argv[1] == 'form':
+        importFormCSV(argv[2])

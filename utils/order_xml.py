@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import sys
 import re
-from base64 import b64decode
+from os import rename
+from sys import argv
 from lxml import etree
-from datetime import datetime
-from parser.mailparser import MailParser
+
 
 def getFormName(_xml):
     _FormName = _xml.find('Form/Name')
@@ -14,6 +13,7 @@ def getFormName(_xml):
     else:
         return None
 
+
 def getEntryType(_xml):
     _EntryType = _xml.find('EntryType')
     if _EntryType is not None:
@@ -21,10 +21,20 @@ def getEntryType(_xml):
     else:
         return None
 
-def saveXML(_attach, _mail):
-    filename = _mail + '.xml'
-    with open(filename, 'wb') as f:
-        f.write(_attach)
+def getEntryDate(_xml):
+    _EntryDate = _xml.find('EntryDate')
+    if _EntryDate is not None:
+        return _EntryDate.text
+    else:
+        return None
+
+def getRefPOICustomerNumber(_xml):
+    _RefPOICustomerNumber = _xml.find(
+        'ReferencedPointsOfInterest/PointOfInterest/CustomerNumber')
+    if _RefPOICustomerNumber is not None:
+        return _RefPOICustomerNumber.text[-4:]
+    else:
+        return None
 
 
 def getEventNumber(_xml):
@@ -67,54 +77,29 @@ def getEventNumber(_xml):
     return 'Null'
 
 
-def main(_mailfile):
-    mail = MailParser()
-    mail.parse_from_file(_mailfile)
-    attach = b64decode(mail.attachments_list[0]['payload'])
-    xml = etree.fromstring(attach)
-    saveXML(attach, _mailfile)
-    EntryDateFromEpoch = xml.find('EntryDate')
-    if EntryDateFromEpoch is not None:
-        EntryDateFromEpoch = EntryDateFromEpoch.text
+
+def main(_xmlfile):
+    xml = etree.fromstring(_xmlfile)
+    source = argv[1]
+    FormName = getFormName(xml)
+    if FormName == 'INVENTÁRIO':
+        pass
     else:
-        EntryDateFromEpoch = 'Null'
-    EmployeeFirstName = xml.find('Employee/FirstName')
-    if EmployeeFirstName is not None:
-        EmployeeFirstName = EmployeeFirstName.text
-    else:
-        EmployeeFirstName = 'Null'
-    FormName = xml.find('Form/Name')
-    if FormName is not None:
-        FormName = FormName.text
-        if 'PREDITIVA' in FormName:
-            FormName = 'PREDITIVA'
-        elif 'PREVENTIVA' in FormName:
-            FormName = 'PREVENTIVA'
-        elif 'CORRETIVA' in FormName:
-            FormName = 'CORRETIVA'
-        elif 'FOTOGRÁFICO' in FormName:
-            FormName = 'N3'
-        else:
-            FormName = 'OUTROS'
+        EntryDate = getEntryDate(xml)
+        CustomerNumber = getRefPOICustomerNumber(xml)
+        EventNumber = getEventNumber(xml)
 
-    EntryType = getEntryType(xml)
-
-    RefPOICustomerNumber = xml.find(
-        'ReferencedPointsOfInterest/PointOfInterest/CustomerNumber')
-    if RefPOICustomerNumber is not None:
-        RefPOICustomerNumber = RefPOICustomerNumber.text
-    else:
-        RefPOICustomerNumber = 'Null'
-    EventNumber = getEventNumber(xml)
-    print(EmployeeFirstName,
-        EntryDateFromEpoch,
-        FormName,
-        EventNumber,
-        RefPOICustomerNumber,
-        EntryType,
-        sep=";")
-
-
+        if EntryDate[2:8] == '012017':
+            print(
+                source,
+                CustomerNumber,
+                EntryDate[0:8],
+                FormName,
+                EventNumber,
+                sep=";"
+            )
 
 if __name__ == '__main__':
-    main(sys.argv[1])
+    with open(argv[1], 'rb') as xmlfile:
+        xml = xmlfile.read()
+        main(xml)
