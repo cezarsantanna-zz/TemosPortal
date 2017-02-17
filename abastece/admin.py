@@ -21,8 +21,8 @@ class PostoAdmin(admin.ModelAdmin):
         'cgmp',
         'status_opc',
         'status_vip',
-        'coordx',
-        'coordy',
+        'getLatitude',
+        'getLongitude',
         'classe',
         'base',
         'warehouse',
@@ -36,6 +36,14 @@ class PostoAdmin(admin.ModelAdmin):
         'name',
         'cgmp',
     )
+
+    def getLatitude(self, obj):
+        return obj.coordy
+    getLatitude.short_description = 'Latitude'
+
+    def getLongitude(self, obj):
+        return obj.coordx
+    getLongitude.short_description = 'Longitude'
 
 
 

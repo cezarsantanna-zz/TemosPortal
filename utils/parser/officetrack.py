@@ -429,7 +429,7 @@ def getEntryLocationY(_xml):
 
 """
 Campos comuns aos XMLs de Tasks
-EntryTypes 21, 22, 23, 24, 25, 26 e 29
+EntryTypes 21, 22, 23, 24, 25, 26, 29, 33 e 34
 """
 def getTaskTaskNumber(_xml):
     _TaskTaskNumber = _xml.find('Task/TaskNumber')
@@ -522,6 +522,7 @@ def getEventNumber(_xml):
             EventNumber = EventNumber.replace(" ", ";")
             regex = re.compile('\;+')
             EventNumber = re.sub(regex, ';', EventNumber)
+            EventNumber = EventNumber.replace(" ", "")
             if 'INC' in EventNumber:
                 EventNumber = EventNumber.replace("INC;", "INC")
                 EventNumber = EventNumber.replace("INC1", "INC01")
@@ -787,7 +788,7 @@ def setTask(_xml, _source):
         return _source.replace('/new/',
             '/OfficeTrack/Task/End/not_parsed/')
     elif getEntryType(_xml) == '26':
-        
+
         return _source.replace('/new/',
             '/OfficeTrack/Task/Close/not_parsed/')
     elif getEntryType(_xml) == '29':
