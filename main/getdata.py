@@ -23,14 +23,7 @@ start_contract = '2016-08-22'
 start_date = end_date - timedelta(days=7)
 
 
-
-def getEventos(_start_date, _end_date, _emp_id):
-    try:
-        pass
-    except Exception as e:
-        raise
-
-def getAtendimentoAcumulados(_emp_id):
+def getKPIs(_emp_id):
     try:
         with psycopg2.connect(
             database=dbName,

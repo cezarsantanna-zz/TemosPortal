@@ -43,9 +43,17 @@
       </div>
       <div id="nav-menu" class="collapse navbar-collapse navbar-right">
         <ul class="nav navbar-nav">
-          <li><a href="/abastece/graficos/diario">Gráfico Diário</a></li>
-          <li><a href="/abastece/graficos/acumulado">Gráfico Acumulado</a></li>
-          <li><a href="/admin/abastece/evento/">Eventos</a></li>
+          <li>
+            <form class="navbar-form navbar-left" role="search" action="/search/">
+              <div class="form-group">
+                <input type="text"
+                       class="form-control"
+                       placeholder="Código CGMP ou Nome do Posto"
+                       name="posto_info">
+              </div>
+              <button type="submit" class="btn btn-default">Buscar</button>
+            </form>
+          </li>
           <li><span>&nbsp;&nbsp;</span></li>
         </ul>
       </div>
