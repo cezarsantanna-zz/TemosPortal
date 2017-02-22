@@ -9,21 +9,23 @@
     <br>
       <table border="1" cellpadding="5" cellspacing="1">
       	  <tr>
-            <th>Nome Service Now</th>
-            <th>Preventiva<br>01/1-13/7</th>
+            <th>Código</th>
+            <th>Posto</th>
+            <th>Preventiva</th>
             <th>As-Built</th>
             <th>Plano Verão</th>
-            <th>Preditivas</th>
-            <th>Retiradas 5.8 GHz</th>
+            <th>Preditiva</th>
+            <th>Retirada 5.8 GHz</th>
             <th>Antena 915 MHz</th>
             <th>Sinalização</th>
             <th>Outros</th>
             <th>ICR</th>
-            <th>Suporte Angular</th>
+            <th>Sup. Angular</th>
          </tr>
         {% for object in object_list %}
           <tr>
-            <td> {{ object.posto }} </td>
+            <td> {{ object.posto_cgmp }} </td>
+            <td> {{ object.posto_nome }} </td>
             <td> {{ object.preventiva }} </td>
             <td> {{ object.asbuilt }} </td>
             <td> {{ object.plano_verao }} </td>
