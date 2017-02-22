@@ -23,7 +23,6 @@ end_date = date.today()
 start_contract = '2016-08-22'
 start_date = end_date - timedelta(days=7)
 
-
 def getEvo():
     trace0 = go.Scatter(
         x=[datetime(year=2017, month=2, day=12),
