@@ -206,3 +206,33 @@ class Task(models.Model):
     data_fechado = models.PositiveIntegerField(null=True)
     posto = models.ForeignKey(Posto, on_delete=models.PROTECT, null=True)
     description = models.CharField(max_length=1024, null=True)
+
+
+class LinhaBase(models.Model):
+    data_entrada = models.DateField()
+    preventiva = models.PositiveIntegerField(null=True)
+    as_built = models.PositiveIntegerField(null=True)
+    plano_verao = models.PositiveIntegerField(null=True)
+    preditiva = models.PositiveIntegerField(null=True)
+    retirada58 = models.PositiveIntegerField(null=True)
+    antena915 = models.PositiveIntegerField(null=True)
+    sinal = models.PositiveIntegerField(null=True)
+    outro = models.PositiveIntegerField(null=True)
+    icr = models.PositiveIntegerField(null=True)
+    suporte_angular = models.PositiveIntegerField(null=True)
+    posto_ok = models.PositiveIntegerField(null=True)
+
+
+class Cronograma(models.Model):
+    data_entrada = models.DateField(null=True, blank=True)
+    posto = models.ForeignKey(Posto, on_delete=models.PROTECT)
+    preventiva = models.DateField(null=True, blank=True)
+    asbuilt = models.DateField(null=True, blank=True)
+    plano_verao = models.DateField(null=True, blank=True)
+    preditiva = models.DateField(null=True, blank=True)
+    retirada58 = models.DateField(null=True, blank=True)
+    antena915 = models.DateField(null=True, blank=True)
+    sinal = models.DateField(null=True, blank=True)
+    outro = models.DateField(null=True, blank=True)
+    icr = models.DateField(null=True, blank=True)
+    suporte_angular = models.DateField(null=True, blank=True)

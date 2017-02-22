@@ -10,13 +10,14 @@ from daemonize import Daemonize
 from utils.parser.mailparser import MailParser
 from utils.parser.officetrack import parserOfficeTrack as parseOT
 from utils.parser.servicenow import parserServiceNow as parseSN
+from utils.parser.linhabase import parserLinhaBase as parseLB
 
 
 pid = '/tmp/mail_monitor.pid'
 
 logdirfile = '/var/log/temosportal/abastece/mail_monitor.log'
 
-mon_dir = '/opt/abastece/Maildir/new'
+mon_dir = '/opt/temosportal/Maildir/new'
 
 # Criando o log da aplicação
 logger = logging.getLogger('Mail_Monitor')
@@ -63,10 +64,12 @@ def parsemail(_mailfile):
     mail.parse_from_file(_mailfile)
     if mail.from_ == 'OfficeTrack Reports <reports@latam.officeTrack.com>':
         destination = parseOT(_mailfile, mail)
-        #print(destination)
         rename(source, destination)
     elif mail.from_ == 'SEM PARAR - CS - Central de Serviços <semparar@service-now.com>':
         destination = parseSN(_mailfile, mail)
+        rename(source, destination)
+    elif mail.to_ == '<linhabase@temos.online>':
+        destination = parseLB(_mailfile, mail)
         rename(source, destination)
     else:
         destination = source.replace('/new/', '/Others/not_parsed/')
@@ -82,8 +85,8 @@ def main():
             for event in i.event_gen():
                 if event is not None:
                     (header, type_names, watch_path, filename) = event
-                    if 'IN_CREATE' in event[1] and len(filename.decode('utf-8')):
-                    #if 'IN_CLOSE_WRITE' in event[1] and len(filename.decode('utf-8')):
+                    #if 'IN_CREATE' in event[1] and len(filename.decode('utf-8')):
+                    if 'IN_CLOSE_WRITE' in event[1] and len(filename.decode('utf-8')):
                         logger.info("WATCH-PATH=[%s] FILENAME=[%s]",
                             watch_path.decode('utf-8'), filename.decode('utf-8'))
                         mailfile = ('%s/%s') % (watch_path.decode('utf-8'), filename.decode('utf-8'))
@@ -104,7 +107,6 @@ def main():
             i.remove_watch(bytes(mon_dir.encode('utf-8'), ))
 
 
-
 if __name__ == '__main__':
     daemon = Daemonize(
         app='mail_monitor',
@@ -112,5 +114,5 @@ if __name__ == '__main__':
         action=main,
         keep_fds=keep_fds
     )
-    daemon.start()
-    #main()
+    #daemon.start()
+    main()

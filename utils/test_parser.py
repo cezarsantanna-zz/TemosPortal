@@ -72,47 +72,48 @@ def main(_mailfile):
     mail.parse_from_file(_mailfile)
     attach = b64decode(mail.attachments_list[0]['payload'])
     xml = etree.fromstring(attach)
-    saveXML(attach, _mailfile)
-    EntryDateFromEpoch = xml.find('EntryDate')
-    if EntryDateFromEpoch is not None:
-        EntryDateFromEpoch = EntryDateFromEpoch.text
-    else:
-        EntryDateFromEpoch = 'Null'
-    EmployeeFirstName = xml.find('Employee/FirstName')
-    if EmployeeFirstName is not None:
-        EmployeeFirstName = EmployeeFirstName.text
-    else:
-        EmployeeFirstName = 'Null'
-    FormName = xml.find('Form/Name')
-    if FormName is not None:
-        FormName = FormName.text
-        if 'PREDITIVA' in FormName:
-            FormName = 'PREDITIVA'
-        elif 'PREVENTIVA' in FormName:
-            FormName = 'PREVENTIVA'
-        elif 'CORRETIVA' in FormName:
-            FormName = 'CORRETIVA'
-        elif 'FOTOGRÁFICO' in FormName:
-            FormName = 'N3'
-        else:
-            FormName = 'OUTROS'
+    print(etree.tostring(xml, pretty_print=True, encoding='unicode'))
+    #saveXML(attach, _mailfile)
+    #EntryDateFromEpoch = xml.find('EntryDate')
+    #if EntryDateFromEpoch is not None:
+    #    EntryDateFromEpoch = EntryDateFromEpoch.text
+    #else:
+    #    EntryDateFromEpoch = 'Null'
+    #EmployeeFirstName = xml.find('Employee/FirstName')
+    #if EmployeeFirstName is not None:
+        #EmployeeFirstName = EmployeeFirstName.text
+    #else:
+        #EmployeeFirstName = 'Null'
+    #FormName = xml.find('Form/Name')
+    #if FormName is not None:
+        #FormName = FormName.text
+        #if 'PREDITIVA' in FormName:
+            #FormName = 'PREDITIVA'
+        #elif 'PREVENTIVA' in FormName:
+            #FormName = 'PREVENTIVA'
+        #elif 'CORRETIVA' in FormName:
+            #FormName = 'CORRETIVA'
+        #elif 'FOTOGRÁFICO' in FormName:
+            #FormName = 'N3'
+        #else:
+            #FormName = 'OUTROS'
 
-    EntryType = getEntryType(xml)
+    #EntryType = getEntryType(xml)
 
-    RefPOICustomerNumber = xml.find(
-        'ReferencedPointsOfInterest/PointOfInterest/CustomerNumber')
-    if RefPOICustomerNumber is not None:
-        RefPOICustomerNumber = RefPOICustomerNumber.text
-    else:
-        RefPOICustomerNumber = 'Null'
-    EventNumber = getEventNumber(xml)
-    print(EmployeeFirstName,
-        EntryDateFromEpoch,
-        FormName,
-        EventNumber,
-        RefPOICustomerNumber,
-        EntryType,
-        sep=";")
+    #RefPOICustomerNumber = xml.find(
+        #'ReferencedPointsOfInterest/PointOfInterest/CustomerNumber')
+    #if RefPOICustomerNumber is not None:
+        #RefPOICustomerNumber = RefPOICustomerNumber.text
+    #else:
+        #RefPOICustomerNumber = 'Null'
+    #EventNumber = getEventNumber(xml)
+    #print(EmployeeFirstName,
+        #EntryDateFromEpoch,
+        #FormName,
+        #EventNumber,
+        #RefPOICustomerNumber,
+        #EntryType,
+        #sep=";")
 
 
 

@@ -1,12 +1,25 @@
 {% extends "main/base.html" %}
+
+{% block head %}
+{{block.super}}
+{% endblock %}
+
 {% block content %}
   <div class="row">
     <br>
-    <div class="col-md-5">
-      <div class="col-md-12">{{graph|safe}}</div>
+    <div class="col-md-6">
+      <div class="col-md-1"></div>
+      <div class="col-md-11">{{graph|safe}}</div>
     </div>
-    <div class="col-md-7">
-      <iframe src="https://www.google.com/maps/d/embed?mid=1giatoCxD0UM7ufJhGut2VS4v8fo" width="900" height="650"></iframe>
+    <div class="col-md-6">
+      <div class="col-md-11">{{plot|safe}}</div>
+      <div class="col-md-1"></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Google Maps - Abastece</h2>
+      <iframe src="https://www.google.com/maps/d/embed?mid=1giatoCxD0UM7ufJhGut2VS4v8fo" width="850" height="550"></iframe>
     </div>
   </div>
 {% endblock %}
