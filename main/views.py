@@ -1,10 +1,11 @@
+from django.views.generic import TemplateView
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 
-from .getdata import getKPIs
+from .getdata import getLinhaBase
+from .getdata import getEvo
 from abastece.models import Cronograma
-
 
 def buscaPosto(request):
     posto_info = request.GET.get('posto_info')
@@ -15,12 +16,11 @@ def buscaPosto(request):
     p['cgmp'] = cgmp
     return render_to_response('search.html',p)
 
-
 class IndexView(TemplateView):
     template_name = 'main/index.html'
 
     def get_context_data(self, **kwargs):
-        context = super(IndexView, self).get_context_data(**kwargs)
-        context['graph'] = getKPIs(1)
-        return context
-
+       context = super(IndexView, self).get_context_data(**kwargs)
+       context['graph'] = getLinhaBase()
+       context['plot'] = getEvo()
+       return context

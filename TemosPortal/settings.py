@@ -25,7 +25,7 @@ SECRET_KEY = 'kglxyrr29gd38_7+3)3w5=n88op)si@d&d#&3jt%zx%nb^r=p4'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['191.32.217.66', '127.0.0.1', '172.20.254.254', 'backoffice01']
+ALLOWED_HOSTS = ['abastece.temos.net', 'abastece.temos.online']
 
 
 # Application definition

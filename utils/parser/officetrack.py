@@ -1177,7 +1177,7 @@ def parserOfficeTrack(_source, _mail):
          EmployeeFirstName == 'Cezar' or
          EmployeeFirstName == 'Engenharia E2i9 TESTE API' or
          'TABLET' in EmployeeFirstName):
-        return _source.replace('/new/', '/trash/')
+        return _source.replace('/new/', '/Trash/')
     else:
         if getEntryType(xml) == '21':
             return setPunch(xml, _source)
