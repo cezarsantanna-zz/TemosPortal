@@ -7,11 +7,33 @@
 {% block content %}
   <div class="row">
     <br>
-      <table border=1>
+      <table border="1" cellpadding="5" cellspacing="1">
+      	  <tr>
+            <th>Nome Service Now</th>
+            <th>Preventiva<br>01/1-13/7</th>
+            <th>As-Built</th>
+            <th>Plano Verão</th>
+            <th>Preditivas</th>
+            <th>Retiradas 5.8 GHz</th>
+            <th>Antena 915 MHz</th>
+            <th>Sinalização</th>
+            <th>Outros</th>
+            <th>ICR</th>
+            <th>Suporte Angular</th>
+         </tr>
         {% for object in object_list %}
           <tr>
             <td> {{ object.posto }} </td>
             <td> {{ object.preventiva }} </td>
+            <td> {{ object.asbuilt }} </td>
+            <td> {{ object.plano_verao }} </td>
+            <td> {{ object.preditiva }} </td>
+            <td> {{ object.retirada58 }} </td>
+            <td> {{ object.antena915 }} </td>
+            <td> {{ object.sinal }} </td>
+            <td> {{ object.outro }} </td>
+            <td> {{ object.icr }} </td>
+            <td> {{ object.suporte_angular }} </td>
           </tr>
         {% endfor %}
       </table>
