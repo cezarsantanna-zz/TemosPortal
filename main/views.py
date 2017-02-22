@@ -1,20 +1,29 @@
-from django.views.generic import TemplateView
+from django.contrib import admin
 from django.shortcuts import render
 from django.views.generic import TemplateView
+from django.views.generic import ListView
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 
 from .getdata import getLinhaBase
 from .getdata import getEvo
 from abastece.models import Cronograma
 
-def buscaPosto(request):
-    posto_info = request.GET.get('posto_info')
-    nomes = Cronograma.objects.filter(name__contains=posto_info)
-    cgmp = Cronograma.objects.filter(cgmp__contains=posto_info)
-    p = getVariables(request)
-    p['nomes'] = nomes
-    p['cgmp'] = cgmp
-    return render_to_response('search.html',p)
+
+class BuscaPosto(ListView):
+    template_name = 'main/search.html'
+    model = Cronograma
+
+    def get_context_data(self, **kwargs):
+        context = super(BuscaPosto, self).get_context_data(**kwargs)
+        return context
+
+    def get_queryset(self):
+        query = self.request.GET.get('posto_info')
+        if query:
+            return Cronograma.objects.filter(posto__cgmp__contains=query)
+        else:
+            return Cronograma.objects.all()
+
 
 class IndexView(TemplateView):
     template_name = 'main/index.html'

@@ -1,0 +1,19 @@
+{% extends "main/base.html" %}
+
+{% block head %}
+{{block.super}}
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <br>
+      <table border=1>
+        {% for object in object_list %}
+          <tr>
+            <td> {{ object.posto }} </td>
+            <td> {{ object.preventiva }} </td>
+          </tr>
+        {% endfor %}
+      </table>
+  </div>
+{% endblock %}
