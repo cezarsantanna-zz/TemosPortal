@@ -56,16 +56,9 @@ def getPostoID(_CGMP):
 
 def checkData(_data):
     if _data == '':
-        return None
-    elif _data == 'OK':
-        return date(year=2016, month=12, day=31)
+        return '-'
     else:
-        data = date(year = int(_data.split('/')[2]),
-                    month = int(_data.split('/')[1]),
-                    day = int(_data.split('/')[0])
-               )
-        return data
-       
+        return _data
 
 
 def parserCronograma(_source, _attach, _data):
@@ -81,34 +74,32 @@ def parserCronograma(_source, _attach, _data):
             password=dbPass
         ) as conn_pg:
             with conn_pg.cursor() as conn_pgs:
+                conn_pgs.execute(
+                    'TRUNCATE abastece_cronograma'
+                )
                 for line in csvreader:
-                    ano = int(_data[0:4])
-                    mes = int(_data[4:6])
-                    dia = int(_data[6:8])
-                    data_entrada = date(year = ano,
-                                        month = mes,
-                                        day = dia)
-                    posto_id = getPostoID(line[0])
-                    preventiva = checkData(line[1])
-                    asbuilt = checkData(line[2])
-                    plano_verao = checkData(line[3])
-                    preditiva = checkData(line[4])
-                    retirada58 = checkData(line[5])
-                    antena915 = checkData(line[6])
-                    sinal = checkData(line[7])
-                    outro = checkData(line[8])
-                    icr = checkData(line[9])
-                    suporte_angular = checkData(line[10])
+                    posto_cgmp = line[0]
+                    posto_nome = line[1]
+                    preventiva = checkData(line[2])
+                    asbuilt = checkData(line[3])
+                    plano_verao = checkData(line[4])
+                    preditiva = checkData(line[5])
+                    retirada58 = checkData(line[6])
+                    antena915 = checkData(line[7])
+                    sinal = checkData(line[8])
+                    outro = checkData(line[9])
+                    icr = checkData(line[10])
+                    suporte_angular = checkData(line[11])
                     conn_pgs.execute(
                         'INSERT INTO abastece_cronograma\
-                         (data_entrada, posto_id,\
+                         (posto_cgmp, posto_nome,\
                           preventiva, asbuilt, plano_verao,\
                           preditiva, retirada58, antena915,\
                           sinal, outro, icr, suporte_angular)\
                          VALUES \
                          (%s, %s, %s, %s, %s, %s, %s, %s, %s,\
                           %s, %s, %s);',
-                         (data_entrada, posto_id,
+                         (posto_cgmp, posto_nome,
                           preventiva, asbuilt, plano_verao,
                           preditiva, retirada58, antena915,
                           sinal, outro, icr, suporte_angular,)
@@ -138,34 +129,32 @@ def parserCronogramaFromFile(_filename):
                 password=dbPass
             ) as conn_pg:
                 with conn_pg.cursor() as conn_pgs:
+                    conn_pgs.execute(
+                        'TRUNCATE abastece_cronograma'
+                    )
                     for line in csvreader:
-                        ano = 2017
-                        mes = 2
-                        dia = 22
-                        data_entrada = date(year = ano,
-                                            month = mes,
-                                            day = dia)
-                        posto_id = getPostoID(line[0])
-                        preventiva = checkData(line[1])
-                        asbuilt = checkData(line[2])
-                        plano_verao = checkData(line[3])
-                        preditiva = checkData(line[4])
-                        retirada58 = checkData(line[5])
-                        antena915 = checkData(line[6])
-                        sinal = checkData(line[7])
-                        outro = checkData(line[8])
-                        icr = checkData(line[9])
-                        suporte_angular = checkData(line[10])
+                        posto_cgmp = line[0]
+                        posto_nome = line[1]
+                        preventiva = checkData(line[2])
+                        asbuilt = checkData(line[3])
+                        plano_verao = checkData(line[4])
+                        preditiva = checkData(line[5])
+                        retirada58 = checkData(line[6])
+                        antena915 = checkData(line[7])
+                        sinal = checkData(line[8])
+                        outro = checkData(line[9])
+                        icr = checkData(line[10])
+                        suporte_angular = checkData(line[11])
                         conn_pgs.execute(
                             'INSERT INTO abastece_cronograma\
-                             (data_entrada, posto_id,\
+                             (posto_cgmp, posto_nome,\
                               preventiva, asbuilt, plano_verao,\
                               preditiva, retirada58, antena915,\
                               sinal, outro, icr, suporte_angular)\
                              VALUES \
                              (%s, %s, %s, %s, %s, %s, %s, %s, %s,\
                               %s, %s, %s);',
-                             (data_entrada, posto_id,
+                             (posto_cgmp, posto_nome,
                               preventiva, asbuilt, plano_verao,
                               preditiva, retirada58, antena915,
                               sinal, outro, icr, suporte_angular,)

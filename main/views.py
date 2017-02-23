@@ -19,10 +19,10 @@ class BuscaPosto(ListView):
 
     def get_queryset(self):
         query = self.request.GET.get('posto_info')
-        if query:
-            return Cronograma.objects.filter(posto__cgmp__contains=query)
+        if len(query) == 4:
+            return Cronograma.objects.filter(posto_cgmp__contains=query)
         else:
-            return Cronograma.objects.all()
+            return None
 
 
 class IndexView(TemplateView):
