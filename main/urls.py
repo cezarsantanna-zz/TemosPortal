@@ -3,5 +3,5 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.IndexView.as_view(), name='index'),
-    url(r'^search/$', views.buscaPosto, name='buscaPosto'),
+    url(r'^search/$', views.BuscaPosto.as_view(), name='search'),
 ]

@@ -1,0 +1,47 @@
+{% extends "main/base.html" %}
+
+{% block head %}
+{{block.super}}
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <br>
+      <table class="table">
+        <thead class="thead-inverse">
+           <tr>
+             <th><center>Código</center></th>
+             <th>Posto</th>
+             <th><center>Preventiva</center></th>
+             <th><center>As-Built</center></th>
+             <th><center>Plano Verão</center></th>
+             <th><center>Preditiva</center></th>
+             <th><center>Retirada 5.8 GHz</center></th>
+             <th><center>Antena 915 MHz</center></th>
+             <th><center>Sinalização</center></th>
+             <th><center>Outros</center></th>
+             <th><center>ICR</center></th>
+             <th><center>Sup. Angular</center></th>
+           </tr>
+        </thead>
+        <tbody>
+          {% for object in object_list %}
+            <tr>
+              <td> <center>{{ object.posto_cgmp }}</center> </td>
+              <td> {{ object.posto_nome }} </td>
+              <td> <center>{{ object.preventiva }}</center> </td>
+              <td> <center>{{ object.asbuilt }}</center> </td>
+              <td> <center>{{ object.plano_verao }}</center> </td>
+              <td> <center>{{ object.preditiva }}</center> </td>
+              <td> <center>{{ object.retirada58 }}</center> </td>
+              <td> <center>{{ object.antena915 }}</center> </td>
+              <td> <center>{{ object.sinal }}</center> </td>
+              <td> <center>{{ object.outro }}</center> </td>
+              <td> <center>{{ object.icr }}</center> </td>
+              <td> <center>{{ object.suporte_angular }}</center> </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+  </div>
+{% endblock %}

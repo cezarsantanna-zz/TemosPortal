@@ -98,151 +98,24 @@ class LinhaBaseAdmin(admin.ModelAdmin):
 class CronogramaAdmin(admin.ModelAdmin):
     model = Cronograma
     list_display = (
-        'data_entrada',
-        'posto',
-        'get_posto_name',
-        'get_status_preventiva',
-        'get_status_asbuilt',
-        'get_status_plano_verao',
-        'get_status_preditiva',
-        'get_status_retirada58',
-        'get_status_antena915',
-        'get_status_sinal',
-        'get_status_outro',
-        'get_status_icr',
-        'get_status_suporte_angular'
+        'posto_cgmp',
+        'posto_nome',
+        'preventiva',
+        'asbuilt',
+        'plano_verao',
+        'preditiva',
+        'retirada58',
+        'antena915',
+        'sinal',
+        'outro',
+        'icr',
+        'suporte_angular'
     )
     search_fields = (
-        'posto__name',
-        'posto__cgmp'
+        'posto_nome',
+        'posto_cgmp'
     )
-    ordering = ['data_entrada', 'posto']
-    date_hierarchy = 'data_entrada'
-
-    def get_posto_name(self, obj):
-        return obj.posto.name
-    get_posto_name.admin_order_field = 'posto'
-    get_posto_name.short_description = 'Nome do posto'
-
-    def get_status_preventiva(self, obj):
-        if obj.preventiva is None:
-            return None
-        else:
-            linha_corte = date(year=2016, month=12, day=31)
-            if obj.preventiva == linha_corte:
-                return 'OK'
-            else:
-                return obj.preventiva
-    get_status_preventiva.admin_order_field = 'preventiva'
-    get_status_preventiva.short_description = 'Preventiva'
-
-    def get_status_asbuilt(self, obj):
-        if obj.asbuilt is None:
-            return None
-        else:
-            linha_corte = date(year=2016, month=12, day=31)
-            if obj.asbuilt == linha_corte:
-                return 'OK'
-            else:
-                return obj.asbuilt
-    get_status_asbuilt.admin_order_field = 'asbuilt'
-    get_status_asbuilt.short_description = 'As Built'
-
-    def get_status_plano_verao(self, obj):
-        if obj.plano_verao is None:
-            return None
-        else:
-            linha_corte = date(year=2016, month=12, day=31)
-            if obj.plano_verao == linha_corte:
-                return 'OK'
-            else:
-                return obj.plano_verao
-    get_status_plano_verao.admin_order_field = 'plano_verao'
-    get_status_plano_verao.short_description = 'Plano Verão'
-
-    def get_status_preditiva(self, obj):
-        if obj.preditiva is None:
-            return None
-        else:
-            linha_corte = date(year=2016, month=12, day=31)
-            if obj.preditiva == linha_corte:
-                return 'OK'
-            else:
-                return obj.preditiva
-    get_status_preditiva.admin_order_field = 'preditiva'
-    get_status_preditiva.short_description = 'Preditiva'
-
-    def get_status_retirada58(self, obj):
-        if obj.retirada58 is None:
-            return None
-        else:
-            linha_corte = date(year=2016, month=12, day=31)
-            if obj.retirada58 == linha_corte:
-                return 'OK'
-            else:
-                return obj.retirada58
-    get_status_retirada58.admin_order_field = 'retirada58'
-    get_status_retirada58.short_description = 'Retirada 5.8'
-
-    def get_status_antena915(self, obj):
-        if obj.antena915 is None:
-            return None
-        else:
-            linha_corte = date(year=2016, month=12, day=31)
-            if obj.antena915 == linha_corte:
-                return 'OK'
-            else:
-                return obj.antena915
-    get_status_antena915.admin_order_field = 'antena915'
-    get_status_antena915.short_description = 'Ajuste Antena 915'
-
-    def get_status_sinal(self, obj):
-        if obj.sinal is None:
-            return None
-        else:
-            linha_corte = date(year=2016, month=12, day=31)
-            if obj.sinal == linha_corte:
-                return 'OK'
-            else:
-                return obj.sinal
-    get_status_sinal.admin_order_field = 'sinal'
-    get_status_sinal.short_description = 'Sinalização'
-
-    def get_status_outro(self, obj):
-        if obj.outro is None:
-            return None
-        else:
-            linha_corte = date(year=2016, month=12, day=31)
-            if obj.outro == linha_corte:
-                return 'OK'
-            else:
-                return obj.outro
-    get_status_outro.admin_order_field = 'outro'
-    get_status_outro.short_description = 'Outro'
-
-    def get_status_icr(self, obj):
-        if obj.icr is None:
-            return None
-        else:
-            linha_corte = date(year=2016, month=12, day=31)
-            if obj.icr == linha_corte:
-                return 'OK'
-            else:
-                return obj.icr
-    get_status_icr.admin_order_field = 'icr'
-    get_status_icr.short_description = 'ICR'
-
-    def get_status_suporte_angular(self, obj):
-        if obj.suporte_angular is None:
-            return None
-        else:
-            linha_corte = date(year=2016, month=12, day=31)
-            if obj.suporte_angular == linha_corte:
-                return 'OK'
-            else:
-                return obj.suporte_angular
-    get_status_suporte_angular.admin_order_field = 'suporte_angular'
-    get_status_suporte_angular.short_description = 'Suporte Angular'
+    ordering = ['posto_cgmp']
 
 
 class EventoAdmin(admin.ModelAdmin):
