@@ -88,8 +88,8 @@ def getLinhaBase():
                      LIMIT 1"
                 )
                 realizado = conn_pgs.fetchall()[0]
-                trace1 = go.Bar(
-                    y=['Sup. Angular',
+                trace0 = go.Scatter(
+                    x=['Sup. Angular',
                        'ICR',
                        'Outros',
                        'Sinalização',
@@ -99,32 +99,7 @@ def getLinhaBase():
                        'Plano Verão',
                        'As Built',
                        'Preventiva'],
-                    x=[realizado[9],
-                       realizado[8],
-                       realizado[7],
-                       realizado[6],
-                       realizado[5],
-                       realizado[4],
-                       realizado[3],
-                       realizado[2],
-                       realizado[1],
-                       realizado[0]],
-                    orientation = 'h',
-                    name = 'Realizado'
-                )
-
-                trace0 = go.Bar(
-                    y=['Sup. Angular',
-                       'ICR',
-                       'Outros',
-                       'Sinalização',
-                       'Ajuste 915',
-                       'Retirada 5.8',
-                       'Preditiva',
-                       'Plano Verão',
-                       'As Built',
-                       'Preventiva'],
-                    x=[8,
+                    y=[8,
                        25,
                        54,
                        216,
@@ -134,9 +109,33 @@ def getLinhaBase():
                        460,
                        460,
                        460],
-                    orientation = 'h',
+                    mode = 'markers',
                     name = 'Total'
                 )
+                trace1 = go.Bar(
+                    x=['Sup. Angular',
+                       'ICR',
+                       'Outros',
+                       'Sinalização',
+                       'Ajuste 915',
+                       'Retirada 5.8',
+                       'Preditiva',
+                       'Plano Verão',
+                       'As Built',
+                       'Preventiva'],
+                    y=[realizado[9],
+                       realizado[8],
+                       realizado[7],
+                       realizado[6],
+                       realizado[5],
+                       realizado[4],
+                       realizado[3],
+                       realizado[2],
+                       realizado[1],
+                       realizado[0]],
+                    name = 'Realizado'
+                )
+
                 data = [trace0, trace1]
                 layout = go.Layout(
                     title='Acumulado das Ações Individuais'
