@@ -41,8 +41,9 @@ def getEvo():
            datetime(year=2017, month=2, day=20),
            datetime(year=2017, month=2, day=21),
            datetime(year=2017, month=2, day=22),
+           datetime(year=2017, month=2, day=23),
           ],
-        y=[5,5,6,8,11,18,21,26],
+        y=[5,5,6,8,11,18,21,26,30],
         mode = 'lines',
         name = 'Postos Realizados'
     )

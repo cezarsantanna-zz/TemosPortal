@@ -65,7 +65,7 @@ def parserCronograma(_source, _attach, _data):
     dest_err = _source.replace('/new/', '/Cronograma/not_parsed/')
     dest_ok = _source.replace('/new/', '/Cronograma/parsed/')
     buffer = StringIO(_attach)
-    csvreader = csv.reader(buffer)
+    csvreader = csv.reader(buffer, delimiter=';')
     try:
         with psycopg2.connect(
             database=dbName,
@@ -78,7 +78,8 @@ def parserCronograma(_source, _attach, _data):
                     'TRUNCATE abastece_cronograma'
                 )
                 for line in csvreader:
-                    posto_cgmp = line[0]
+                    print(line)
+                    posto_cgmp = line[0][:4]
                     posto_nome = line[1]
                     preventiva = checkData(line[2])
                     asbuilt = checkData(line[3])
@@ -159,7 +160,6 @@ def parserCronogramaFromFile(_filename):
                               preditiva, retirada58, antena915,
                               sinal, outro, icr, suporte_angular,)
                         )
-                        status = conn_pgs.statusmessage
         except:
             import sys
             import traceback
