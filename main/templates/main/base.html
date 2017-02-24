@@ -46,12 +46,32 @@
           <li>
             <form class="navbar-form navbar-left" role="search" action="/search/">
               <div class="form-group">
+              	
+              	<select class="form-group" name="typeID">
+              		<option value=-1 selected>Escolha o Filtro:</option>
+					<option value=1>Preventivas</option>
+					<option value=2>As-Built</option>
+					<option value=3>Plano Verão</option>
+					<option value=4>Preditivas</option>
+					<option value=5>Retirada 5.8 GHz</option>
+					<option value=6>Ajuste Antena 915 MHz</option>
+					<option value=7>Sinalização</option>
+					<option value=8>Outros</option>
+					<option value=9>ICR</option>
+					<option value=10>Suporte Antena Angular</option>
+				</select>
+				              
+              	<select class="form-group" name="fOK">
+              		<option value=0 selected>OK</option>
+					<option value=1>Agendados</option>
+				</select>
+                       
                 <input type="text"
                        class="form-group"
                        placeholder="Código CGMP do Posto"
                        name="posto_info">
               </div>
-              <button type="submit" class="btn btn-default">Buscar</button>
+              <button type="submit" class="btn btn-default">Pesquisar</button>
             </form>
           </li>
           <li><a href="/accounts/logout/">Encerra Sessão</a></li>
