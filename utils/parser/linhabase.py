@@ -60,8 +60,11 @@ def checkData(_data):
     else:
         return _data
 
+def DateFromExcel(_data):
+    return date.fromordinal(date(1900, 1, 1).toordinal() + int(_data) - 2)
 
-def parserCronograma(_source, _attach, _data):
+
+def parserCronograma(_source, _attach):
     dest_err = _source.replace('/new/', '/Cronograma/not_parsed/')
     dest_ok = _source.replace('/new/', '/Cronograma/parsed/')
     buffer = StringIO(_attach)
@@ -78,9 +81,8 @@ def parserCronograma(_source, _attach, _data):
                     'TRUNCATE abastece_cronograma'
                 )
                 for line in csvreader:
-                    print(line)
                     posto_cgmp = line[0][:4]
-                    posto_nome = line[1]
+                    posto_nome = line[1][:50]
                     preventiva = checkData(line[2])
                     asbuilt = checkData(line[3])
                     plano_verao = checkData(line[4])
@@ -167,22 +169,70 @@ def parserCronogramaFromFile(_filename):
             traceback.print_exc(file=sys.stderr)
 
 
-def parserTotais(_source, _attach, data_entrada):
+def parserTotais(_source, _attach):
     dest_err = _source.replace('/new/', '/Totais/not_parsed/')
     dest_ok = _source.replace('/new/', '/Totais/parsed/')
-    return dest_err
+    buffer = StringIO(_attach)
+    csvreader = csv.reader(buffer, delimiter=';')
+    try:
+        with psycopg2.connect(
+            database=dbName,
+            user=dbUser,
+            host=dbHost,
+            password=dbPass
+        ) as conn_pg:
+            with conn_pg.cursor() as conn_pgs:
+                for line in csvreader:
+                    preventiva = line[1]
+                    as_built = line[2]
+                    plano_verao = line[3]
+                    preditiva = line[4]
+                    retirada58 = line[5]
+                    antena915 = line[6]
+                    sinal = line[7]
+                    outro = line[8]
+                    icr = line[9]
+                    suporte_angular = line[10]
+                    posto_ok = line[11]
+                    data_entrada = DateFromExcel(line[12])
+                    conn_pgs.execute(
+                        'INSERT INTO abastece_linhabase\
+                         (data_entrada,\
+                          preventiva, as_built, plano_verao,\
+                          preditiva, retirada58, antena915,\
+                          sinal, outro, icr, suporte_angular,\
+                          posto_ok)\
+                         VALUES \
+                         (%s, %s, %s, %s, %s, %s, %s, %s, %s,\
+                          %s, %s, %s);',
+                         (data_entrada,
+                          preventiva, as_built, plano_verao,
+                          preditiva, retirada58, antena915,
+                          sinal, outro, icr, suporte_angular,
+                          posto_ok,)
+                    )
+                    status = conn_pgs.statusmessage
+                    if status == 'INSERT 0':
+                        return dest_err
+                    else:
+                        pass
+                return dest_ok
+    except:
+        import sys
+        import traceback
+        print('Whoops! Problem:', file=sys.stderr)
+        traceback.print_exc(file=sys.stderr)
+        return dest_err
 
 def parserLinhaBase(_source, _mail):
     if 'Cronograma_Atividades_E2i9_Totais' in _mail.subject:
         _attach = _mail.attachments_list[0]['payload']
-        _data_entrada = _mail.subject.split('_')[4]
-        return parserTotais(_source, _attach, _data_entrada)
+        return parserTotais(_source, _attach)
     elif 'Cronograma_Atividades_E2i9' in _mail.subject:
         _attach = _mail.attachments_list[0]['payload']
-        _data_entrada = _mail.subject.split('_')[3]
-        return parserCronograma(_source, _attach, _data_entrada)
+        return parserCronograma(_source, _attach)
     else:
-        return _source.replace('/new/', '/ServiceNow/Others/not_parsed/')
+        return _source.replace('/new/', '/Others/not_parsed/')
 
 
 if __name__ == '__main__':

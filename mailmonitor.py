@@ -63,10 +63,12 @@ def parsemail(_mailfile):
     mail = MailParser()
     mail.parse_from_file(_mailfile)
     if mail.from_ == 'OfficeTrack Reports <reports@latam.officeTrack.com>':
-        destination = parseOT(_mailfile, mail)
+        #destination = parseOT(_mailfile, mail)
+        destination = source.replace('/new/', '/OfficeTrack/not_parsed/')
         rename(source, destination)
     elif mail.from_ == 'SEM PARAR - CS - Central de Serviços <semparar@service-now.com>':
-        destination = parseSN(_mailfile, mail)
+        #destination = parseSN(_mailfile, mail)
+        destination = source.replace('/new/', '/ServiceNow/not_parsed/')
         rename(source, destination)
     elif mail.to_ == '<linhabase@temos.online>':
         destination = parseLB(_mailfile, mail)
@@ -85,8 +87,8 @@ def main():
             for event in i.event_gen():
                 if event is not None:
                     (header, type_names, watch_path, filename) = event
-                    #if 'IN_CREATE' in event[1] and len(filename.decode('utf-8')):
-                    if 'IN_CLOSE_WRITE' in event[1] and len(filename.decode('utf-8')):
+                    if 'IN_CREATE' in event[1] and len(filename.decode('utf-8')):
+                    #if 'IN_CLOSE_WRITE' in event[1] and len(filename.decode('utf-8')):
                         logger.info("WATCH-PATH=[%s] FILENAME=[%s]",
                             watch_path.decode('utf-8'), filename.decode('utf-8'))
                         mailfile = ('%s/%s') % (watch_path.decode('utf-8'), filename.decode('utf-8'))
@@ -114,5 +116,5 @@ if __name__ == '__main__':
         action=main,
         keep_fds=keep_fds
     )
-    #daemon.start()
-    main()
+    daemon.start()
+    #main()
