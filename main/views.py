@@ -58,61 +58,91 @@ class BuscaPosto(ListView):
                     if int(fOK) == 0:
                         return Cronograma.objects.filter(preventiva__icontains='OK')
                     else:
-                        return Cronograma.objects.exclude(preventiva__icontains='OK')
+                        qs_filter1 = Cronograma.objects.exclude(preventiva__icontains='OK')
+                        qs_filter1 = qs_filter1.exclude(preventiva__icontains='-')
+                        qs_filter1 = qs_filter1.exclude(preventiva__icontains=' ')
+                        return qs_filter1
 
                 if int(typeID) == 2:
                     if int(fOK) == 0:
                         return Cronograma.objects.filter(asbuilt__icontains='OK')
                     else:
-                        return Cronograma.objects.exclude(asbuilt__icontains='OK')
+                        qs_filter1 = Cronograma.objects.exclude(asbuilt__icontains='OK')
+                        qs_filter1 = qs_filter1.exclude(asbuilt__icontains='-')
+                        qs_filter1 = qs_filter1.exclude(asbuilt__icontains=' ')
+                        return qs_filter1
                     
                 if int(typeID) == 3:
                     if int(fOK) == 0:
                         return Cronograma.objects.filter(plano_verao__icontains='OK')
                     else:
-                        return Cronograma.objects.exclude(plano_verao__icontains='OK')
+                        qs_filter1 = Cronograma.objects.exclude(plano_verao__icontains='OK')
+                        qs_filter1 = qs_filter1.exclude(plano_verao__icontains='-')
+                        qs_filter1 = qs_filter1.exclude(plano_verao__icontains=' ')
+                        return qs_filter1
 
                 if int(typeID) == 4:
                     if int(fOK) == 0:
                         return Cronograma.objects.filter(preditiva__icontains='OK')
                     else:
-                        return Cronograma.objects.exclude(preditiva__icontains='OK')
+                        qs_filter1 = Cronograma.objects.exclude(preditiva__icontains='OK')
+                        qs_filter1 = qs_filter1.exclude(preditiva__icontains='-')
+                        qs_filter1 = qs_filter1.exclude(preditiva__icontains=' ')
+                        return qs_filter1
 
                 if int(typeID) == 5:
                     if int(fOK) == 0:
                         return Cronograma.objects.filter(retirada58__icontains='OK')
                     else:
-                        return Cronograma.objects.exclude(retirada58__icontains='OK')
+                        qs_filter1 = Cronograma.objects.exclude(retirada58__icontains)
+                        qs_filter1 = qs_filter1.exclude(retirada58__icontains='-')
+                        qs_filter1 = qs_filter1.exclude(retirada58__icontains=' ')
+                        return qs_filter1
                     
                 if int(typeID) == 6:
                     if int(fOK) == 0:
                         return Cronograma.objects.filter(antena915__icontains='OK')
                     else:
-                        return Cronograma.objects.exclude(antena915__icontains='OK')
+                        qs_filter1 = Cronograma.objects.exclude(asbuilt__icontains='OK')
+                        qs_filter1 = qs_filter1.exclude(asbuilt__icontains='-')
+                        qs_filter1 = qs_filter1.exclude(asbuilt__icontains=' ')
+                        return qs_filter1
                     
                 if int(typeID) == 7:
                     if int(fOK) == 0:
                         return Cronograma.objects.filter(sinal__icontains='OK')
                     else:
-                        return Cronograma.objects.exclude(sinal__icontains='OK')
+                        qs_filter1 = Cronograma.objects.exclude(suporte_angular__icontains='OK')
+                        qs_filter1 = qs_filter1.exclude(suporte_angular__icontains='-')
+                        qs_filter1 = qs_filter1.exclude(suporte_angular__icontains=' ')
+                        return qs_filter1
 
                 if int(typeID) == 8:
                     if int(fOK) == 0:
                         return Cronograma.objects.filter(outro__icontains='OK')
                     else:
-                        return Cronograma.objects.exclude(outro__icontains='OK')
+                        qs_filter1 = Cronograma.objects.exclude(outro__icontains='OK')
+                        qs_filter1 = qs_filter1.exclude(outro__icontains='-')
+                        qs_filter1 = qs_filter1.exclude(outro__icontains=' ')
+                        return qs_filter1
                     
                 if int(typeID) == 9:
                     if int(fOK) == 0:
                         return Cronograma.objects.filter(icr__icontains='OK')
                     else:
-                        return Cronograma.objects.exclude(icr__icontains='OK')
+                        qs_filter1 = Cronograma.objects.exclude(icr__icontains='OK')
+                        qs_filter1 = qs_filter1.exclude(icr__icontains='-')
+                        qs_filter1 = qs_filter1.exclude(icr__icontains=' ')
+                        return qs_filter1
                     
                 if int(typeID) == 10:
                     if int(fOK) == 0:
                         return Cronograma.objects.filter(suporte_angular__icontains='OK')
                     else:
-                        return Cronograma.objects.exclude(suporte_angular__icontains='OK')
+                        qs_filter1 = Cronograma.objects.exclude(suporte_angular__icontains='OK')
+                        qs_filter1 = qs_filter1.exclude(suporte_angular__icontains='-')
+                        qs_filter1 = qs_filter1.exclude(suporte_angular__icontains=' ')
+                        return qs_filter1
                 
                 
         #Consulta por codigo do posto
