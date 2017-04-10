@@ -20,6 +20,15 @@ dbUser = "temos"
 dbPass = "tw28()KP"
 
 
+def saveXML(_attach, _mail, _dest):
+    if _dest == 'Iventário':
+        filename = '/opt/temosportal/Inventário/' + _mail + '.xml'
+    elif _dest == 'Formulário':
+        filename = '/opt/temosportal/Formulário/' + _mail + '.xml'
+    with open(filename, 'wb') as f:
+        f.write(_attach)
+
+
 def getFormID(_FormName):
     """
     Esta função retorna o ID do formulário na base abastece_form baseada no
@@ -292,6 +301,7 @@ def getEntryType(_xml):
             _EntryType.text == '25' or
             _EntryType.text == '26' or
             _EntryType.text == '29' or
+            _EntryType.text == '33' or
             _EntryType.text == '60'):
             return _EntryType.text
         else:
@@ -657,10 +667,16 @@ def setPunch(_xml, _source):
     EmployeeFirstName = getEmployeeFirstName(_xml)
 
     if EmployeeFirstName == 'Error':
-        dest_err = _source.replace(
-            '/new/',
-            '/Errors/'
-        )
+        if 'new' in _source:
+            dest_err = _source.replace(
+                '/new/',
+                '/Errors/'
+            )
+        elif 'manual' in _source:
+            dest_err = _source.replace(
+                '/manual/',
+                '/Manual/Errors/'
+            )
         return dest_err
 
     _employee_id = getEmployeeID(EmployeeFirstName)
@@ -668,14 +684,24 @@ def setPunch(_xml, _source):
 
     if EntryType == '21':
         tipo = 'Entrada'
-        dest_ok = _source.replace(
-            '/new/',
-            '/OfficeTrack/RH/PunchIn/parsed/'
-        )
-        dest_err = _source.replace(
-            '/new/',
-            '/OfficeTrack/RH/PunchIn/not_parsed/'
-        )
+        if 'new' in _source:
+            dest_ok = _source.replace(
+                '/new/',
+                '/OfficeTrack/RH/PunchIn/parsed/'
+            )
+            dest_err = _source.replace(
+                '/new/',
+                '/OfficeTrack/RH/PunchIn/not_parsed/'
+            )
+        elif 'manual' in _source:
+            dest_ok = _source.replace(
+                '/manual/',
+                '/Manual/OfficeTrack/RH/PunchIn/parsed/'
+            )
+            dest_err = _source.replace(
+                '/manual/',
+                '/Manual/OfficeTrack/RH/PunchIn/not_parsed/'
+            )
         try:
             with psycopg2.connect(
                 database=dbName,
@@ -708,14 +734,24 @@ def setPunch(_xml, _source):
 
     elif EntryType == '22':
         tipo = 'Saída'
-        dest_ok = _source.replace(
-            '/new/',
-            '/OfficeTrack/RH/PunchOut/parsed/'
-        )
-        dest_err = _source.replace(
-            '/new/',
-            '/OfficeTrack/RH/PunchOut/not_parsed/'
-        )
+        if 'new' in _source:
+            dest_ok = _source.replace(
+                '/new/',
+                '/OfficeTrack/RH/PunchOut/parsed/'
+            )
+            dest_err = _source.replace(
+                '/new/',
+                '/OfficeTrack/RH/PunchOut/not_parsed/'
+            )
+        if 'manual' in _source:
+            dest_ok = _source.replace(
+                '/manual/',
+                '/Manual/OfficeTrack/RH/PunchOut/parsed/'
+            )
+            dest_err = _source.replace(
+                '/manual/',
+                '/Manual/OfficeTrack/RH/PunchOut/not_parsed/'
+            )
         try:
             with psycopg2.connect(
                 database=dbName,
@@ -779,21 +815,47 @@ def setTask(_xml, _source):
     # print(getTaskCustomerCustomerNumber(_xml))
     # print(getTaskCustomerName(_xml))
     if getEntryType(_xml) == '23':
-        return _source.replace('/new/',
-            '/OfficeTrack/Task/Start/not_parsed/')
+        if 'new' in _source:
+            return _source.replace('/new/',
+                '/OfficeTrack/Task/Start/not_parsed/')
+        elif 'manual' in _source:
+            return _source.replace('/manual/',
+                '/OfficeTrack/Task/Start/not_parsed/')
     elif getEntryType(_xml) == '24':
-        return _source.replace('/new/',
-            '/OfficeTrack/Task/Confirmed/not_parsed/')
+        if 'new' in _source:
+            return _source.replace('/new/',
+                '/OfficeTrack/Task/Confirmed/not_parsed/')
+        elif 'manual' in _source:
+            return _source.replace('/manual/',
+                '/Manual/OfficeTrack/Task/Confirmed/not_parsed/')
     elif getEntryType(_xml) == '25':
-        return _source.replace('/new/',
-            '/OfficeTrack/Task/End/not_parsed/')
+        if 'new' in _source:
+            return _source.replace('/new/',
+                '/OfficeTrack/Task/End/not_parsed/')
+        elif 'manual' in _source:
+            return _source.replace('/manual/',
+                '/Manual/OfficeTrack/Task/End/not_parsed/')
     elif getEntryType(_xml) == '26':
-
-        return _source.replace('/new/',
-            '/OfficeTrack/Task/Close/not_parsed/')
+        if 'new' in _source:
+            return _source.replace('/new/',
+                '/OfficeTrack/Task/Close/not_parsed/')
+        elif 'manual' in _source:
+            return _source.replace('/manual/',
+                '/Manual/OfficeTrack/Task/Close/not_parsed/')
     elif getEntryType(_xml) == '29':
-        return _source.replace('/new/',
-            '/OfficeTrack/Task/NotDone/not_parsed/')
+        if 'new' in _source:
+            return _source.replace('/new/',
+                '/OfficeTrack/Task/NotDone/not_parsed/')
+        elif 'manual' in _source:
+            return _source.replace('/manual/',
+                '/Manual/OfficeTrack/Task/NotDone/not_parsed/')
+    elif getEntryType(_xml) == '33':
+        if 'new' in _source:
+            return _source.replace('/new/',
+                '/OfficeTrack/Task/Form/not_parsed/')
+        elif 'manual' in _source:
+            return _source.replace('/manual/',
+                '/Manual/OfficeTrack/Task/Form/not_parsed/')
 
 
 """
@@ -849,14 +911,24 @@ def setForm(_xml, _source):
         empresa_id = 2
     else:
         empresa_id = 1
-    dest_ok = _source.replace(
-        '/new/',
-        '/OfficeTrack/Reports/parsed/'
-    )
-    dest_err = _source.replace(
-        '/new/',
-        '/OfficeTrack/Reports/not_parsed/'
-    )
+    if 'new' in _source:
+        dest_ok = _source.replace(
+            '/new/',
+            '/OfficeTrack/Reports/parsed/'
+        )
+        dest_err = _source.replace(
+            '/new/',
+            '/OfficeTrack/Reports/not_parsed/'
+        )
+    elif 'manual' in _source:
+        dest_ok = _source.replace(
+            '/manual/',
+            '/Manual/OfficeTrack/Reports/parsed/'
+        )
+        dest_err = _source.replace(
+            '/manual/',
+            '/Manual/OfficeTrack/Reports/not_parsed/'
+        )
 
     EventNumber = getEventNumber(_xml)
     if ';' in EventNumber:
@@ -1124,6 +1196,16 @@ def setInvent(_xml, _source):
     EntryDate = getEntryDateFromEpoch(_xml)
     EmployeeFirstName = getEmployeeFirstName(_xml)
     employee_id = getEmployeeID(EmployeeFirstName)
+    if 'manual' in _source:
+        return _source.replace(
+            '/manual/',
+            '/Manual/OfficeTrack/Inventories/not_parsed/'
+        )
+    elif 'new' in _source:
+        return _source.replace(
+            '/new/',
+            '/OfficeTrack/Inventories/not_parsed/'
+        )
     for element in _xml.iter("Field"):
         if element[0].text:
             categoria = element[0].text
@@ -1157,14 +1239,24 @@ def setInvent(_xml, _source):
 
 def updateInventario(_EntryDate, _Wharehouse_id, _Equipamento,
     _q_novo, _q_usado, _q_defeito, _source):
-    dest_ok = _source.replace(
-        '/new/',
-        '/OfficeTrack/Inventories/parsed/'
-    )
-    dest_err = _source.replace(
-        '/new/',
-        '/OfficeTrack/Inventories/not_parsed/'
-    )
+    if 'new' in _source:
+        dest_ok = _source.replace(
+            '/new/',
+            '/OfficeTrack/Inventories/parsed/'
+        )
+        dest_err = _source.replace(
+            '/new/',
+            '/OfficeTrack/Inventories/not_parsed/'
+        )
+    elif 'manual' in _source:
+        dest_ok = _source.replace(
+            '/manual/',
+            '/Manual/OfficeTrack/Inventories/parsed/'
+        )
+        dest_err = _source.replace(
+            '/manual/',
+            '/Manual/OfficeTrack/Inventories/not_parsed/'
+        )
 
 
 def parserOfficeTrack(_source, _mail):
@@ -1203,7 +1295,9 @@ def parserOfficeTrack(_source, _mail):
         elif getEntryType(xml) == '60':
             FormName = getFormName(xml)
             if (FormName == 'INVENTÁRIO' or
-                    FormName == 'INVENTARIO'):
+                FormName == 'INVENTARIO'):
+                FileName = _source.replace('/opt/temosportal/Maildir/new/', '')
+                saveXML(attach, FileName, 'Invetário')
                 return setInvent(xml, _source)
             elif (FormName == 'AÇÕES DE MELHORIAS' or
                   FormName == 'CORRETIVA' or
@@ -1219,9 +1313,90 @@ def parserOfficeTrack(_source, _mail):
                   FormName == 'ANTENA 915' or
                   FormName == 'TREINAMENTO'):
 
+                FileName = _source.replace('/opt/temosportal/Maildir/new/', '')
+                saveXML(attach, FileName, 'Formulário')
                 return setForm(xml, _source)
             else:
                 return _source.replace('/new/',
                                        '/OfficeTrack/Others/not_parsed/')
         else:
             return _source.replace('/new/', '/OfficeTrack/Others/not_parsed/')
+
+
+def parserManualOfficeTrack(_source, _mail):
+    attach = b64decode(_mail.attachments_list[0]['payload'])
+    xml = etree.fromstring(attach)
+    EmployeeFirstName = getEmployeeFirstName(xml)
+    FormName = getFormName(xml)
+    if ((EmployeeFirstName == 'Eduardo' and
+         FormName != 'ICR - SURVEY') or
+         EmployeeFirstName == 'Cezar' or
+         EmployeeFirstName == 'Engenharia E2i9 TESTE API' or
+         'TABLET' in EmployeeFirstName):
+        return _source.replace('/manual/', '/Manual/Trash/')
+    else:
+        if getEntryType(xml) == '21':
+            return _source.replace(
+                '/manual/',
+                '/Manual/OfficeTrack/RH/PunchIn/not_parsed/'
+            )
+
+        elif getEntryType(xml) == '22':
+            return _source.replace(
+                '/manual/',
+                '/Manual/OfficeTrack/RH/PunchOut/not_parsed/'
+            )
+
+        elif getEntryType(xml) == '23':
+            return setTask(xml, _source)
+
+        elif getEntryType(xml) == '24':
+            return setTask(xml, _source)
+
+        elif getEntryType(xml) == '25':
+            return setTask(xml, _source)
+
+        elif getEntryType(xml) == '26':
+            return setTask(xml, _source)
+
+        elif getEntryType(xml) == '29':
+            return setTask(xml, _source)
+
+        elif getEntryType(xml) == '33':
+            return setTask(xml, _source)
+
+        elif getEntryType(xml) == '60':
+            FormName = getFormName(xml)
+            if (FormName == 'INVENTÁRIO' or
+                FormName == 'INVENTARIO'):
+                FileName = _source.replace('/opt/temosportal/Maildir/manual/', '')
+                saveXML(attach, FileName, 'Inventário')
+                return _source.replace(
+                    '/manual/',
+                    '/Manual/OfficeTrack/Inventories/not_parsed/'
+                )
+            elif (FormName == 'AÇÕES DE MELHORIAS' or
+                  FormName == 'CORRETIVA' or
+                  FormName == 'DESINSTALAÇÃO DO POSTO' or
+                  FormName == 'PLANO VERÃO' or
+                  FormName == 'PREDITIVA' or
+                  FormName == 'PREVENTIVA' or
+                  FormName == 'RETIRADA ANTENA 5.8' or
+                  FormName == 'SINALIZAÇÃO'or
+                  FormName == 'ICR - SURVEY' or
+                  FormName == 'ICR - INFRAESTRUTURA' or
+                  FormName == 'ICR - CONEXÃO' or
+                  FormName == 'ANTENA 915' or
+                  FormName == 'TREINAMENTO'):
+
+                FileName = _source.replace('/opt/temosportal/Maildir/manual/', '')
+                saveXML(attach, FileName, 'Formulário')
+                return _source.replace(
+                    '/manual/',
+                    '/Manual/OfficeTrack/Reports/not_parsed/'
+                )
+            else:
+                return _source.replace('/manual/',
+                                       '/Manual/OfficeTrack/Others/not_parsed/')
+        else:
+            return _source.replace('/manual/', '/Manual/OfficeTrack/Others/not_parsed/')

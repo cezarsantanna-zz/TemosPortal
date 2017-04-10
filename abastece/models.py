@@ -236,3 +236,4 @@ class Cronograma(models.Model):
     outro = models.CharField(max_length=10, null=True, blank=True)
     icr = models.CharField(max_length=10, null=True, blank=True)
     suporte_angular = models.CharField(max_length=10, null=True, blank=True)
+    data_ok = models.CharField(max_length=10, null=True, blank=True)

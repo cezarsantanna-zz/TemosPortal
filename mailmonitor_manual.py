@@ -8,16 +8,16 @@ from os import rename
 from time import sleep
 from daemonize import Daemonize
 from utils.parser.mailparser import MailParser
-from utils.parser.officetrack import parserOfficeTrack as parseOT
-from utils.parser.servicenow import parserServiceNow as parseSN
-from utils.parser.linhabase import parserLinhaBase as parseLB
+from utils.parser.officetrack import parserManualOfficeTrack as parseOT
+#from utils.parser.servicenow import parserManualServiceNow as parseSN
+from utils.parser.linhabase import parserManualLinhaBase as parseLB
 
 
 pid = '/tmp/mail_monitor.pid'
 
-logdirfile = '/var/log/temosportal/abastece/mail_monitor.log'
+logdirfile = '/var/log/temosportal/abastece/mail_monitor_manual.log'
 
-mon_dir = '/opt/temosportal/Maildir/new'
+mon_dir = '/opt/temosportal/Maildir/manual'
 
 # Criando o log da aplicação
 logger = logging.getLogger('Mail_Monitor')
@@ -64,17 +64,18 @@ def parsemail(_mailfile):
     mail.parse_from_file(_mailfile)
     if mail.from_ == 'OfficeTrack Reports <reports@latam.officeTrack.com>':
         destination = parseOT(_mailfile, mail)
-        #destination = source.replace('/new/', '/OfficeTrack/not_parsed/')
+        #destination = source.replace('/manual/', '/Manual/OfficeTrack/not_parsed/')
         rename(source, destination)
     elif mail.from_ == 'SEM PARAR - CS - Central de Serviços <semparar@service-now.com>':
         #destination = parseSN(_mailfile, mail)
-        destination = source.replace('/new/', '/ServiceNow/not_parsed/')
+        destination = source.replace('/manual/', '/Manual/ServiceNow/not_parsed/')
         rename(source, destination)
     elif mail.to_ == '<linhabase@temos.online>':
         destination = parseLB(_mailfile, mail)
+        destination = source.replace('/manual/', '/Manual/LinhaBase/not_parsed/')
         rename(source, destination)
     else:
-        destination = source.replace('/new/', '/Others/not_parsed/')
+        destination = source.replace('/manual/', '/Manual/Others/not_parsed/')
         rename(source, destination)
 
 
@@ -87,8 +88,7 @@ def main():
             for event in i.event_gen():
                 if event is not None:
                     (header, type_names, watch_path, filename) = event
-                    if 'IN_CREATE' in event[1] and len(filename.decode('utf-8')):
-                    #if 'IN_CLOSE_WRITE' in event[1] and len(filename.decode('utf-8')):
+                    if 'IN_CLOSE_WRITE' in event[1] and len(filename.decode('utf-8')):
                         logger.info("WATCH-PATH=[%s] FILENAME=[%s]",
                             watch_path.decode('utf-8'), filename.decode('utf-8'))
                         mailfile = ('%s/%s') % (watch_path.decode('utf-8'), filename.decode('utf-8'))
@@ -110,11 +110,4 @@ def main():
 
 
 if __name__ == '__main__':
-    daemon = Daemonize(
-        app='mail_monitor',
-        pid=pid,
-        action=main,
-        keep_fds=keep_fds
-    )
-    #daemon.start()
     main()

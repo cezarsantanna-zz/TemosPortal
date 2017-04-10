@@ -16,7 +16,7 @@ class BuscaPosto(ListView):
     model = Cronograma
 
 
-    # 6 antena915,2 asbuilt,9 icr, id,8 outro,3 plano_verao, posto_cgmp, posto_nome,4 preditiva,1 preventiva,5 retirada58, 7 sinal, 10 suporte_angular
+    # 6 antena915,2 asbuilt,9 icr, id,8 outro,3 plano_verao, posto_cgmp, posto_nome,4 preditiva,1 preventiva,5 retirada58, 7 sinal, 10 suporte_angular, 11 data_ok
 
     # define the function blocks
     def funcPreventivas():

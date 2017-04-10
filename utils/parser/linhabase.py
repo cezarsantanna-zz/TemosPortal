@@ -93,19 +93,22 @@ def parserCronograma(_source, _attach):
                     outro = checkData(line[9])
                     icr = checkData(line[10])
                     suporte_angular = checkData(line[11])
+                    data_ok = checkData(line[12])
                     conn_pgs.execute(
                         'INSERT INTO abastece_cronograma\
                          (posto_cgmp, posto_nome,\
                           preventiva, asbuilt, plano_verao,\
                           preditiva, retirada58, antena915,\
-                          sinal, outro, icr, suporte_angular)\
+                          sinal, outro, icr, suporte_angular,\
+                          data_ok)\
                          VALUES \
                          (%s, %s, %s, %s, %s, %s, %s, %s, %s,\
-                          %s, %s, %s);',
+                          %s, %s, %s, %s);',
                          (posto_cgmp, posto_nome,
                           preventiva, asbuilt, plano_verao,
                           preditiva, retirada58, antena915,
-                          sinal, outro, icr, suporte_angular,)
+                          sinal, outro, icr, suporte_angular,
+                          data_ok)
                     )
                     status = conn_pgs.statusmessage
                     if status == 'INSERT 0':
@@ -224,6 +227,7 @@ def parserTotais(_source, _attach):
         traceback.print_exc(file=sys.stderr)
         return dest_err
 
+
 def parserLinhaBase(_source, _mail):
     if 'Cronograma_Atividades_E2i9_Totais' in _mail.subject:
         _attach = _mail.attachments_list[0]['payload']
@@ -233,6 +237,17 @@ def parserLinhaBase(_source, _mail):
         return parserCronograma(_source, _attach)
     else:
         return _source.replace('/new/', '/Others/not_parsed/')
+
+
+def parserManualLinhaBase(_source, _mail):
+    if 'Cronograma_Atividades_E2i9_Totais' in _mail.subject:
+        _attach = _mail.attachments_list[0]['payload']
+        return parserTotais(_source.replace('/manual/', '/new'), _attach)
+    elif 'Cronograma_Atividades_E2i9' in _mail.subject:
+        _attach = _mail.attachments_list[0]['payload']
+        return parserCronograma(_source.replace('/manual/', '/new/'), _attach)
+    else:
+        return _source.replace('/manual/', '/Others/not_parsed/')
 
 
 if __name__ == '__main__':

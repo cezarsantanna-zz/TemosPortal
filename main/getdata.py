@@ -36,7 +36,8 @@ def getEvo():
                 conn_pgs.execute(
                      "SELECT\
                           data_entrada, posto_ok\
-                      FROM abastece_linhabase"
+                      FROM abastece_linhabase\
+                      ORDER BY data_entrada"
                 )
                 realizado = conn_pgs.fetchall()
 
