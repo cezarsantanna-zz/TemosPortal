@@ -1,0 +1,17 @@
+Script started on Wed 12 Apr 2017 10:14:01 AM BRT
+/opt/temosportal/.virtualenvs/TemosPortal/bin/python: Error while finding spec for 'virtualenvwrapper.hook_loader' (ImportError: No module named 'virtualenvwrapper')
+virtualenvwrapper.sh: There was a problem running the initialization hooks. 
+
+If Python could not import the module virtualenvwrapper.hook_loader,
+check that virtualenvwrapper has been installed for
+VIRTUALENVWRAPPER_PYTHON=/opt/temosportal/.virtualenvs/TemosPortal/bin/python and that PATH is
+set properly.
+/opt/temosportal/.virtualenvs/TemosPortal/bin/python: Error while finding spec for 'virtualenvwrapper.hook_loader' (ImportError: No module named 'virtualenvwrapper')
+/opt/temosportal/.virtualenvs/TemosPortal/bin/python: Error while finding spec for 'virtualenvwrapper.hook_loader' (ImportError: No module named 'virtualenvwrapper')
+(TemosPortal) ]0;temos@vps0583: ~/TemosPortal[01;32mtemos@vps0583[00m:[01;34m~/TemosPortal[00m$ ./manage.py runserver[K[K[Kexit[K[K[K[Kps -ef | gre [Kp manager
+root       102     2  0 Apr06 ?        00:00:00 [charger_[01;31m[Kmanager[m[K]
+temos    13041 12991  0 10:14 pts/5    00:00:00 grep --color=auto [01;31m[Kmanager[m[K
+(TemosPortal) ]0;temos@vps0583: ~/TemosPortal[01;32mtemos@vps0583[00m:[01;34m~/TemosPortal[00m$ exit
+exit
+
+Script done on Wed 12 Apr 2017 10:14:19 AM BRT

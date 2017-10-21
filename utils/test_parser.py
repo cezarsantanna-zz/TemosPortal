@@ -23,6 +23,7 @@ def getEntryType(_xml):
 
 def saveXML(_attach, _mail):
     filename = _mail + '.xml'
+    print(filename)
     with open(filename, 'wb') as f:
         f.write(_attach)
 
@@ -78,9 +79,8 @@ def main(_mailfile):
     mail = MailParser()
     mail.parse_from_file(_mailfile)
     attach = b64decode(mail.attachments_list[0]['payload'])
-    xml = etree.fromstring(attach)
-    #print(etree.tostring(xml, pretty_print=True, encoding='unicode'))
     saveXML(attach, _mailfile)
+    xml = etree.fromstring(attach)
     EntryDateFromEpoch = xml.find('EntryDate')
     if EntryDateFromEpoch is not None:
         EntryDateFromEpoch = EntryDateFromEpoch.text
@@ -90,7 +90,11 @@ def main(_mailfile):
     if EmployeeFirstName is not None:
         EmployeeFirstName = EmployeeFirstName.text
     else:
-        EmployeeFirstName = 'Null'
+        EmployeeFirstName = xml.find('Employee/Name')
+        if EmployeeFirstName is not None:
+            EmployeeFirstName = EmployeeFirstName.text
+        else:
+            EmployeeFirstName = 'Null'
     FormName = xml.find('Form/Name')
     if FormName is not None:
         FormName = FormName.text
@@ -100,6 +104,8 @@ def main(_mailfile):
             FormName = 'PREVENTIVA'
         elif 'CORRETIVA' in FormName:
             FormName = 'CORRETIVA'
+            if FormName == 'CORRETIVA':
+                saveXML(attach, _mailfile)
         elif 'FOTOGRÁFICO' in FormName:
             FormName = 'N3'
         else:
@@ -116,6 +122,7 @@ def main(_mailfile):
     EventNumber = getEventNumberFromTask(xml)
     print(EmployeeFirstName,
         EntryDateFromEpoch,
+        FormName,
         EventNumber,
         RefPOICustomerNumber,
         EntryType,

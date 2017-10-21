@@ -21,10 +21,10 @@ dbPass = "tw28()KP"
 
 
 def saveXML(_attach, _mail, _dest):
-    if _dest == 'Iventário':
+    if _dest == 'Inventário':
         filename = '/opt/temosportal/Inventário/' + _mail + '.xml'
     elif _dest == 'Formulário':
-        filename = '/opt/temosportal/Formulário/' + _mail + '.xml'
+        filename = '/opt/temosportal/xmls/queues/to_process/' + _mail + '.xml'
     with open(filename, 'wb') as f:
         f.write(_attach)
 
@@ -342,7 +342,14 @@ def getEmployeeFirstName(_xml):
     Para os novos relatórios (23/01/2017) esta estrutura não produz efeitos.
     """
     _EmployeeFirstName = _xml.find('Employee/FirstName')
-    FirstName = _EmployeeFirstName.text
+    if _EmployeeFirstName is not None:
+        FirstName = _EmployeeFirstName.text
+    else:
+        _EmployeeFirstName = _xml.find('Employee/Name')
+        if _EmployeeFirstName is not None:
+            FirstName = _EmployeeFirstName.text
+        else:
+            FirstName = None
     try:
         if FirstName is not None:
             if 'SP01' in FirstName:
@@ -803,17 +810,6 @@ def setPunch(_xml, _source):
 Função exclusiva para Tasks Start, Close and Not Done
 """
 def setTask(_xml, _source):
-    # print(getEntryType(_xml))
-    # print(getEntryDateFromEpoch(_xml))
-    # print(getEntryLocationX(_xml))
-    # print(getEntryLocationY(_xml))
-    # print(getEmployeeFirstName(_xml))
-    # print(getTaskTaskNumber(_xml))
-    # print(getTaskDescription(_xml))
-    # print(getTaskTaskTypeCode(_xml))
-    # print(getTaskTaskTypeName(_xml))
-    # print(getTaskCustomerCustomerNumber(_xml))
-    # print(getTaskCustomerName(_xml))
     if getEntryType(_xml) == '23':
         if 'new' in _source:
             return _source.replace('/new/',
@@ -1294,10 +1290,10 @@ def parserOfficeTrack(_source, _mail):
 
         elif getEntryType(xml) == '60':
             FormName = getFormName(xml)
-            if (FormName == 'INVENTÁRIO' or
-                FormName == 'INVENTARIO'):
+            if (FormName.lower() == 'inventário' or
+                FormName.lower() == 'inventario'):
                 FileName = _source.replace('/opt/temosportal/Maildir/new/', '')
-                saveXML(attach, FileName, 'Invetário')
+                saveXML(attach, FileName, 'Inventário')
                 return setInvent(xml, _source)
             elif (FormName == 'AÇÕES DE MELHORIAS' or
                   FormName == 'CORRETIVA' or
@@ -1314,7 +1310,7 @@ def parserOfficeTrack(_source, _mail):
                   FormName == 'TREINAMENTO'):
 
                 FileName = _source.replace('/opt/temosportal/Maildir/new/', '')
-                saveXML(attach, FileName, 'Formulário')
+                #saveXML(attach, FileName, 'Formulário')
                 return setForm(xml, _source)
             else:
                 return _source.replace('/new/',
@@ -1367,8 +1363,8 @@ def parserManualOfficeTrack(_source, _mail):
 
         elif getEntryType(xml) == '60':
             FormName = getFormName(xml)
-            if (FormName == 'INVENTÁRIO' or
-                FormName == 'INVENTARIO'):
+            if (FormName.lower() == 'inventário' or
+                FormName.lower() == 'inventario'):
                 FileName = _source.replace('/opt/temosportal/Maildir/manual/', '')
                 saveXML(attach, FileName, 'Inventário')
                 return _source.replace(
@@ -1390,7 +1386,7 @@ def parserManualOfficeTrack(_source, _mail):
                   FormName == 'TREINAMENTO'):
 
                 FileName = _source.replace('/opt/temosportal/Maildir/manual/', '')
-                saveXML(attach, FileName, 'Formulário')
+                #saveXML(attach, FileName, 'Formulário')
                 return _source.replace(
                     '/manual/',
                     '/Manual/OfficeTrack/Reports/not_parsed/'
